@@ -25,8 +25,8 @@ function connect() {
       .on('disconnected', connect)
     return mongoose.connect(config.db, {
       keepAlive: true,
+      dbName: "test2",
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
   }
-
