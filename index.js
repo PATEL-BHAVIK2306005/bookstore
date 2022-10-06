@@ -1,8 +1,5 @@
 const express = require('express')
 const mongoose = require('mongoose');
-import mongoose from 'mongoose';
-import helmet from 'helmet';
-import logger from 'morgan';
 
 const app = express()
 const port = 3000
@@ -15,5 +12,3 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
-app.use(helmet({ contentSecurityPolicy: { reportOnly: true } }));
-app.use(logger('dev'));
