@@ -1,11 +1,12 @@
 // used for environmental variables
 
-import dotenv from 'dotenv';
-
-dotenv.config();
+require('dotenv').config();
 
 const SESS_LIFETIME = 1000 * 60 * 60 * 24 * 7; // 7 days using this for cookies later
+const CONNECTION_STRING = "mongodb+srv://Galaxor:6HfUAvf8t8FS2Suh@cluster0.vzltvty.mongodb.net/?retryWrites=true&w=majority";
 
-export {
-    SESS_LIFETIME,
+
+module.exports =  {
+    sessionLifetime: SESS_LIFETIME,
+    db: CONNECTION_STRING
 };
