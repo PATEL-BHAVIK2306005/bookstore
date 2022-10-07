@@ -1,4 +1,5 @@
 const {CategoryModel} = require("../models");
+
 const CategoryController = {
     find: async (req,res) => {
         const found = await CategoryModel.find({name: req.params.name})
@@ -14,6 +15,8 @@ const CategoryController = {
         res.json(saveCategory);
     }
 }
+
 module.exports = CategoryController
+
 //update
 //delete
