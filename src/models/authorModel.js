@@ -6,8 +6,6 @@ const AuthorSchema = mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Books",
     },
-    // Add Genre
-    // Add Author
   });
 
   module.exports = mongoose.model('Author', AuthorSchema)

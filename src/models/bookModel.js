@@ -11,8 +11,10 @@ const BookSchema = mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Author",
     },
-    // Add Genre
-    // Add Author
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Categories",
+    },
   });
 
   module.exports = mongoose.model('Books', BookSchema)
