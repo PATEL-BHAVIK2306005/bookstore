@@ -1,6 +1,6 @@
 const BookController = require('./bookController')
 const AuthorController = require('./authorCntroller')
-const CatgeoryController = require('./CategoryController')
+const CategoryController = require('./CategoryController')
 
 
 
