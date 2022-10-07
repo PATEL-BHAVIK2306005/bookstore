@@ -14,8 +14,7 @@ const BookController = {
         res.json(saveBook);
     }
 }
+
 module.exports = BookController
 //update
 //delete
-//list
-//search
