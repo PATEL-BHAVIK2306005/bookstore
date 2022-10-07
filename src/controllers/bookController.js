@@ -19,5 +19,3 @@ const BookController = {
 module.exports = BookController
 //update
 //delete
-//list
-//search
