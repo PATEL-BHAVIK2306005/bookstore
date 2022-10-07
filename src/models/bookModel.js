@@ -6,7 +6,11 @@ const BookSchema = mongoose.Schema({
     cover: String,
     relaseDate: Date,
     price: Number,
-    quantity: Number
+    quantity: Number,
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Author",
+    },
     // Add Genre
     // Add Author
   });
