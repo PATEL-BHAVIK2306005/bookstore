@@ -12,8 +12,10 @@ app.get('/', (req, res) => {
 })
 
 const {BookController} = require('./src/controllers')
-app.get('/books/:name', (req, res) => {BookController.find(req,res)
-})
+app.get('/books/:name', (req, res) => {BookController.find(req, res)});
+app.get('/books/create', (req, res) => {BookController.create(req, res)});
+app.get('/books', (req, res) => {BookController.list(req, res)});
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
