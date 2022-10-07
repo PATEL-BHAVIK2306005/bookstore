@@ -14,3 +14,6 @@ const CategoryController = {
         res.json(saveCategory);
     }
 }
+module.exports = CategoryController
+//update
+//delete
