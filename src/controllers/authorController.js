@@ -1,4 +1,5 @@
 const {AuthorModel} = require("../models");
+
 const AuthorController = {
     find: async (req,res) => {
         const found = await AuthorModel.find({name: req.params.name})
@@ -18,5 +19,6 @@ const AuthorController = {
         res.json(books);
     },
 }
+
 module.exports = AuthorController
 
