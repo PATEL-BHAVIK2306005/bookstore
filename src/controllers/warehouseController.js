@@ -2,7 +2,7 @@ const {WarehouseModel} = require("../models");
 
 const WarehouseController = {
     find: async (req,res) => {
-        const found = await WarehouseModel.find({Coordinates: req.params.Coordinates})
+        const found = await WarehouseModel.find({coordinates: req.params.coordinates})
         res.json(found)
     },
     list: async (req, res) =>{
@@ -39,7 +39,13 @@ const WarehouseController = {
             const newAddress = req.body.newAddress
             const newCoordinates = req.body.newCoordinates
             const newSize = req.body.newSize
-            const output = await WarehouseModel.findOneAndUpdate({coordinates: currentCoordinates}, {coordinates: newCoordinates, city: newCity, address: newAddress, size: newSize})
+            const output = await WarehouseModel.findOneAndUpdate({coordinates: currentCoordinates}, {
+                coordinates: newCoordinates,
+                city: newCity,
+                address: newAddress,
+                size: newSize
+            })
+            
             if (output !== null){
                 res.json("update successfull!")
             }

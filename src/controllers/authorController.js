@@ -1,4 +1,5 @@
 const {AuthorModel} = require("../models");
+const {BookModel} = require("../models");
 
 const AuthorController = {
     find: async (req,res) => {
@@ -10,12 +11,17 @@ const AuthorController = {
         res.json(allBooks);
     },
     create: async(req, res) => {
-        const newAuthor= new AuthorModel(req.body)
-        const saveAuthor = await newAuthor.save();
-        res.json(saveAuthor);
-    },
+        const name = req.body.name
+        const author = new AuthorModel({
+            name,
+          })
+
+          author.save().then((data)=>{
+            res.send(data)
+          })
+        },
     getAllBooks: async(req, res) => {
-        const books = await AuthorModel.find({name:req.params.name}).populate("books")
+        const books = await BookModel.find({author: req.params.author})
         res.json(books);
     },
 }

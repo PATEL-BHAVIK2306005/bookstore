@@ -7,14 +7,16 @@ const BookSchema = mongoose.Schema({
     relaseDate: Date,
     price: Number,
     quantity: Number,
-    author: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Author",
-    },
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Categories",
-    },
+    author: String,
+    category: String,
+    //author: {
+    //  type: mongoose.Schema.Types.ObjectId,
+    //  ref: "Author",
+    //},
+    //category: {
+    //  type: mongoose.Schema.Types.ObjectId,
+    //  ref: "Categories",
+   // },
   });
 
   module.exports = mongoose.model('Books', BookSchema)

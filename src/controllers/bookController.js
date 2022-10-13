@@ -2,7 +2,7 @@ const {BookModel} = require("../models");
 
 const BookController = {
     find: async (req,res) => {
-        const found = await BookModel.find({name: req.params.address})
+        const found = await BookModel.find({name: req.params.name})
         res.json(found)
     },
     list: async (req, res) =>{
@@ -10,23 +10,55 @@ const BookController = {
         res.json(allBooks)
     },
     create: async(req, res) => {
-        const newBook = new BookModel(req.body)
-        const saveBook = await newBook.save()
-        res.json(saveBook)
-    },
-    delete: async(req, res) => {
-        BookModel.findByIdAndRemove(book_id, function (err, book) {
-            if (err){
-                res.json("Couldn't find book")
+        const name = req.body.name
+        const cover = req.body.cover
+        const relaseDate = req.body.releaseDate
+        const price= req.body.price
+        const quantity= req.body.quantity
+        const author= req.body.author
+        const category= req.body.category
+        const book = new BookModel({
+            name,
+            cover,
+            relaseDate,
+            price,
+            quantity,
+            author,
+            category,
+          })
+
+          book.save().then((data)=>{
+            res.send(data)
+          })
+        },
+        delete: async(req, res) => {
+            const nameDelete = req.body.name
+            const output = await BookModel.deleteOne({name: nameDelete})
+            if (output.deletedCount == 1 ){
+                res.json("deletion succesfull!")
             }
-            else{
-                res.json("Removed book : ", book)
+            else res.json("could not find object")
+        },
+        update: async(req, res) => {
+            const currentName = req.body.currentName
+            const newName = req.body.newName
+            const newCover = req.body.newCover
+            const newReleaseDate = req.body.newReleaseDate
+            const newPrice = req.body.newPrice
+            const newQuantity = req.body.newQuantity
+            const output = await BookModel.findOneAndUpdate({name: currentName}, {
+                name: newName,
+                cover: newCover,
+                releaseDate: newReleaseDate,
+                price: newPrice,
+                quantity: newQuantity
+            })
+
+            if (output !== null){
+                res.json("update successfull!")
             }
-        });
-    },
-    update: async(req, res) => {
-        const book = await BookModel.find({name: req.params.name})
-    }
+            else res.json("could not find object")
+        }
 }
 
 module.exports = BookController
