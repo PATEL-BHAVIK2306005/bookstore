@@ -4,6 +4,12 @@ var config = require('./config');
 const mongoose = require('mongoose');
 
 const app = express()
+const session = require('express-session');
+app.use(session({
+    secret: 'foo',    
+    saveUninitialized: false,
+    resave: false
+}))
 const bodyparser = require('body-parser')
 app.use(express.json())
 const port = 3000
@@ -12,11 +18,15 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+// Temp
+app.post('/login', (req, res) => {LoginController.login(req, res)});
+
 //Book
-const {BookController} = require('./src/controllers')
+const {BookController, LoginController} = require('./src/controllers')
 app.get('/books/list', (req, res) => {BookController.list(req, res)});
-app.get('/books/:name', (req, res) => {BookController.find(req, res)});
+app.get('/books/search', (req, res) => {BookController.search(req, res)});
 app.post('/books/create', (req, res) => {BookController.create(req, res)});
+app.get('/books/:name', (req, res) => {BookController.find(req, res)});
 app.post('/books/delete', (req, res) => {BookController.delete(req, res)});
 app.post('/books/update', (req, res) => {BookController.update(req, res)});
 
@@ -32,7 +42,7 @@ app.post('/author/update', (req, res) => {AuthorController.update(req, res)});
 //Category
 const {CategoryController} = require('./src/controllers')
 app.get('/category/list', (req, res) => {CategoryController.list(req, res)});
-app.get('/category/books/:category', (req, res) => {CategoryController.getAllBooks(req, res)});
+app.get('/category/books/:name', (req, res) => {CategoryController.getAllBooks(req, res)});
 app.get('/category/:name', (req, res) => {CategoryController.find(req, res)});
 app.post('/category/create', (req, res) => {CategoryController.create(req, res)});
 app.post('/category/delete', (req, res) => {CategoryController.delete(req, res)});
@@ -45,6 +55,16 @@ app.get('/user/:name', (req, res) => {UserController.find(req, res)});
 app.post('/user/create', (req, res) => {UserController.create(req, res)});
 app.post('/user/delete', (req, res) => {UserController.delete(req, res)});
 app.post('/user/update', (req, res) => {UserController.update(req, res)});
+
+//Role
+const {RoleController} = require('./src/controllers')
+app.get('/role/list', (req, res) => {RoleController.list(req, res)});
+app.get('/role/admins', (req, res) => {RoleController.getAllAdmins(req, res)});
+app.get('/role/users', (req, res) => {RoleController.getAllCustomers(req, res)});
+app.get('/role/:name', (req, res) => {RoleController.find(req, res)});
+app.post('/role/create', (req, res) => {RoleController.create(req, res)});
+app.post('/role/delete', (req, res) => {RoleController.delete(req, res)});
+app.post('/role/update', (req, res) => {RoleController.update(req, res)});
 
 //Warehouse
 const {WarehouseController} = require('./src/controllers')
