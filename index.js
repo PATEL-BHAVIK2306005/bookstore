@@ -12,17 +12,16 @@ app.use(session({
 }))
 const bodyparser = require('body-parser')
 app.use(express.json())
+app.set("view engine", "ejs");
+app.use(express.urlencoded({ extended: false }));  
 const port = 3000
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-// Temp
-app.post('/login', (req, res) => {LoginController.login(req, res)});
-
 //Book
-const {BookController, LoginController} = require('./src/controllers')
+const {BookController} = require('./src/controllers')
 app.get('/books/list', (req, res) => {BookController.list(req, res)});
 app.get('/books/search', (req, res) => {BookController.search(req, res)});
 app.post('/books/create', (req, res) => {BookController.create(req, res)});
@@ -55,6 +54,9 @@ app.get('/user/:name', (req, res) => {UserController.find(req, res)});
 app.post('/user/create', (req, res) => {UserController.create(req, res)});
 app.post('/user/delete', (req, res) => {UserController.delete(req, res)});
 app.post('/user/update', (req, res) => {UserController.update(req, res)});
+app.post('/login', (req, res) => {UserController.login(req, res)});
+app.post('/foo', (req, res) => {UserController.foo(req, res)});
+
 
 //Role
 const {RoleController} = require('./src/controllers')

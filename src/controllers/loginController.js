@@ -1,27 +1,38 @@
+
+/// This is all temp, will be merged into user controller
+
 const loginService = require("../services/login")
+const {UserModel} = require("../models");
 
 const loginController = {
- isLoggedIn: async (req, res, next) => {
+ isLoggedIn: async (req, res, next) => { ////// Not Checked
   if (req.session.username != null)
     return next()
   else
     res.redirect('/login')
  },
- foo: async (req, res) => {  
+ isAdmin: async (req, res, next) => { ////// Not Checked
+  if (req.session.username != null)
+    if (await UserModel.find({_id: req.session.name}).role == "Administrator")
+      return next()
+  else
+    res.send('Admin only!')
+ },
+ foo: async (req, res) => {  /// WTF
   res.render("foo", {username: req.session.username})
  },
 
-loginForm: async (req, res) => { res.render("login", {}) },
+loginForm: async (req, res) => { res.render("login", {}) }, ////// Not Checked
 
 registerForm: async (req, res) => { res.render("register", {}) },
 
-logout: async (req, res) => {
+logout: async (req, res) => { // Not Checked
   req.session.destroy(() => {
     res.redirect('/login');
   });
 },
 
-login: async (req, res) => {
+login: async (req, res) => { //Checked
   const { username, password } = req.body
 
   const result = await loginService.login(username, password)
@@ -33,7 +44,7 @@ login: async (req, res) => {
     res.redirect('/login?error=1')
 },
 
-register: async (req, res) => {
+register: async (req, res) => { ////// Not Checked
   const { username, password } = req.body
 
   try {

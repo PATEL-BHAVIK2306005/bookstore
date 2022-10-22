@@ -1,5 +1,7 @@
 const {AuthorModel} = require("../models");
 const {BookModel} = require("../models");
+const loginService = require("../services/login")
+//const {UserController} = require('../controllers')
 
 const AuthorController = {
     find: async (req,res) => {
@@ -11,28 +13,34 @@ const AuthorController = {
         res.json(allAuthors);
     },
     create: async(req, res) => {
-        const _id = req.body.name
-        const check = await AuthorModel.exists({_id: _id})
-        if (check)
+        //res.json(await loginService.isAdmin(req.session.username))
+        if (! await loginService.isAdmin(req.session.username))
+            res.send("Admin Only")
+        else
         {
-            res.json("Object already exists")
-        }
-        else{
-            const age = req.body.age
-            const bio = req.body.bio
-            const picture = req.body.picture
-            const author = new AuthorModel({
-                _id,
-                age,
-                bio,
-                picture
-            })
+            const _id = req.body.name
+            const check = await AuthorModel.exists({_id: _id})
+            if (check)
+            {
+                res.json("Object already exists")
+            }
+            else{
+                const age = req.body.age
+                const bio = req.body.bio
+                const picture = req.body.picture
+                const author = new AuthorModel({
+                    _id,
+                    age,
+                    bio,
+                    picture
+                })
 
-            author.save().then((data)=>{
-                res.send(data)
-            })
-           }
-        },
+                author.save().then((data)=>{
+                    res.send(data)
+                })
+                }
+        }
+    },
     getAllBooks: async(req, res) => {
         const books = await BookModel.find({author: req.params.author})
         res.json(books);

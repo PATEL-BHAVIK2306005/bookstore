@@ -19,15 +19,15 @@ const RoleController = {
       res.json(customers);
     },
     create: async(req, res) => {
-      const name = req.body.name
+      const _id = req.body.name
       const description = req.body.description
       const role = new RoleModel({
-          name,
-          description,
+          _id,
+          description
         })
 
         role.save().then((data)=>{
-          res.send(data)
+          res.json(data)
         })
       },
     delete: async(req, res) => {

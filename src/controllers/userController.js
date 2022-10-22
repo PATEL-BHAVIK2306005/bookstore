@@ -1,4 +1,5 @@
 const {UserModel} = require("../models");
+const loginService = require("../services/login")
 
 const UserController = {
     find: async (req,res) => {
@@ -59,7 +60,7 @@ const UserController = {
     login: async(req, res) => {
         const username = req.body.username 
         const password = req.body.password
-        const result = await loginService.login(username, password) //need to create login service
+        const result = await loginService.login(username, password)
         if (result) {
             req.session.username = username
             res.redirect('/')
@@ -67,7 +68,22 @@ const UserController = {
         else
             res.redirect('/login?error=1') ///// need to create
         
-}
+    },
+    isLoggedIn: async (req, res, next) => { ////// Not Checked
+        if (req.session.username != null)
+          return next()
+        else
+          res.redirect('/login')
+    },
+    isAdmin: async (req, res, next) => { ////// Not Checked
+        if (!await loginService.isAdmin(req.session.username))
+            res.json("Admin Only!")
+        else
+            return next()
+    },
+    foo: async (req, res) => {  /// WTF
+        res.json(req.session.username)
+       },
 }
 
 
