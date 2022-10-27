@@ -16,7 +16,7 @@ async function isAdmin(username) {
     else
         return false
 }
-async function isLoggedIn (username) { 
+async function isLoggedIn() { 
     if (req.session.username != null)
         return true
     else
