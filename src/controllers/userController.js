@@ -69,20 +69,25 @@ const UserController = {
             res.redirect('/login?error=1') ///// need to create
         
     },
-    isLoggedIn: async (req, res, next) => { ////// Not Checked
-        if (req.session.username != null)
-          return next()
+    isLoggedIn: async (req, res, next) => { // Checked
+        if (!(await loginService.isAdmin(req.session.username)))
+            res.redirect('/login');
         else
-          res.redirect('/login')
+            res.json("Welcome!")
     },
-    isAdmin: async (req, res, next) => { ////// Not Checked
-        if (!await loginService.isAdmin(req.session.username))
+    isAdmin: async (req, res, next) => { /// Checked
+        if (!(await loginService.isAdmin(req.session.username)))
             res.json("Admin Only!")
         else
-            return next()
+            res.json("Welcome!")
     },
-    foo: async (req, res) => {  /// WTF
-        res.json(req.session.username)
+    logout: async (req, res) => { // Checked
+        req.session.destroy(() => {
+          res.redirect('/login');
+        });
+      },
+    foo: async (req, res) => {  // WTF
+        res.json((await UserModel.find({_id: req.session.username}))[0].role)
        },
 }
 

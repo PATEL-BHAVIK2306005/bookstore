@@ -55,7 +55,10 @@ app.post('/user/create', (req, res) => {UserController.create(req, res)});
 app.post('/user/delete', (req, res) => {UserController.delete(req, res)});
 app.post('/user/update', (req, res) => {UserController.update(req, res)});
 app.post('/login', (req, res) => {UserController.login(req, res)});
+app.post('/logout', (req, res) => {UserController.logout(req, res)});
 app.post('/foo', (req, res) => {UserController.foo(req, res)});
+app.post('/isAdmin', (req, res) => {UserController.isAdmin(req, res)});
+app.post('/isLoggedIn', (req, res) => {UserController.isLoggedIn(req, res)});
 
 
 //Role

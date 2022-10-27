@@ -1,5 +1,6 @@
 const { default: mongoose } = require("mongoose");
 const {BookModel} = require("../models");
+const loginService = require("../services/login")
 
 const BookController = {
     find: async (req,res) => {
@@ -22,70 +23,85 @@ const BookController = {
         res.json(allBooks)
     },
     create: async(req, res) => {
-        const _id = req.body.name
-        const check = await BookModel.exists({_id: _id})
-        if (check)
+        if (!(await loginService.isAdmin(req.session.username)))
+            res.send("Admin Only")
+        else
         {
-            res.json("Object already exists")
-        }
-        else{
-            const length = req.body.length
-            const cover = req.body.cover
-            const relaseDate = req.body.releaseDate
-            const price= req.body.price
-            const quantity= req.body.quantity
-            const author= req.body.author
-            const category= req.body.category
-            try{
-                const book = new BookModel({
-                    _id,
-                    length,
-                    cover,
-                    relaseDate,
-                    price,
-                    quantity,
-                    author,
-                    category,
-                })
+            const _id = req.body.name
+            const check = await BookModel.exists({_id: _id})
+            if (check)
+            {
+                res.json("Object already exists")
+            }
+            else{
+                const length = req.body.length
+                const cover = req.body.cover
+                const relaseDate = req.body.releaseDate
+                const price= req.body.price
+                const quantity= req.body.quantity
+                const author= req.body.author
+                const category= req.body.category
+                try{
+                    const book = new BookModel({
+                        _id,
+                        length,
+                        cover,
+                        relaseDate,
+                        price,
+                        quantity,
+                        author,
+                        category,
+                    })
 
-                book.save().then((data)=>{
-                    res.send(data)
-                })
-            }
-            catch(e){
-                res.json(_id)
-            }
-           }   
+                    book.save().then((data)=>{
+                        res.send(data)
+                    })
+                }
+                catch(e){
+                    res.json(_id)
+                 }
+                }
+        }   
         },
         delete: async(req, res) => {
-            const nameDelete = req.body.name
-            const output = await BookModel.deleteOne({_id: nameDelete})
-            if (output.deletedCount == 1 ){
-                res.json("deletion succesfull!")
+            if (!(await loginService.isAdmin(req.session.username)))
+                res.send("Admin Only")
+            else
+            {
+                const nameDelete = req.body.name
+                const output = await BookModel.deleteOne({_id: nameDelete})
+                if (output.deletedCount == 1 ){
+                    res.json("deletion succesfull!")
+                }
+                else res.json("could not find object")
             }
-            else res.json("could not find object")
         },
         update: async(req, res) => {
-            const currentName = req.body.currentName
-            const newName = req.body.newName
-            const newLength = req.body.newLength
-            const newCover = req.body.newCover
-            const newReleaseDate = req.body.newReleaseDate
-            const newPrice = req.body.newPrice
-            const newQuantity = req.body.newQuantity
-            const output = await BookModel.findOneAndUpdate({_id: currentName}, {
-                name: newName,
-                length: newLength,
-                cover: newCover,
-                releaseDate: newReleaseDate,
-                price: newPrice,
-                quantity: newQuantity
-            })
+            if (!(await loginService.isAdmin(req.session.username)))
+                res.send("Admin Only")
+            else
+            {
+                const currentName = req.body.currentName
+                const newName = req.body.newName
+                const newLength = req.body.newLength
+                const newCover = req.body.newCover
+                const newReleaseDate = req.body.newReleaseDate
+                const newPrice = req.body.newPrice
+                const newQuantity = req.body.newQuantity
+                const output = await BookModel.findOneAndUpdate({_id: currentName}, {
+                    name: newName,
+                    length: newLength,
+                    cover: newCover,
+                    releaseDate: newReleaseDate,
+                    price: newPrice,
+                    quantity: newQuantity
+                })
 
-            if (output !== null){
-                res.json("update successfull!")
+                if (output !== null){
+                    res.json("update successfull!")
+                }
+                else res.json("could not find object")
             }
-            else res.json("could not find object")
         }
 }
 

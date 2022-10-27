@@ -1,7 +1,6 @@
 const {AuthorModel} = require("../models");
 const {BookModel} = require("../models");
 const loginService = require("../services/login")
-//const {UserController} = require('../controllers')
 
 const AuthorController = {
     find: async (req,res) => {
@@ -13,8 +12,7 @@ const AuthorController = {
         res.json(allAuthors);
     },
     create: async(req, res) => {
-        //res.json(await loginService.isAdmin(req.session.username))
-        if (! await loginService.isAdmin(req.session.username))
+        if (!(await loginService.isAdmin(req.session.username)))
             res.send("Admin Only")
         else
         {
@@ -46,33 +44,43 @@ const AuthorController = {
         res.json(books);
     },
     delete: async(req, res) => {
-        const nameDelete = req.body.name
-        const output = await AuthorModel.deleteOne({_id: nameDelete})
-        if (output.deletedCount == 1 ){
-            res.json("deletion succesfull!")
+        if (!(await loginService.isAdmin(req.session.username)))
+            res.send("Admin Only")
+        else
+        {
+            const nameDelete = req.body.name
+            const output = await AuthorModel.deleteOne({_id: nameDelete})
+            if (output.deletedCount == 1 ){
+                res.json("deletion succesfull!")
+            }
+            else res.json("could not find object")
         }
-        else res.json("could not find object")
     },
     update: async(req, res) => {
-        const currentName = req.body.currentName
-        const newName = req.body.newName
-        const newAge = req.body.newAge
-        const newBio = req.body.newBio
-        const newPicture = req.body.newPicture
-        const newAuthor = req.body.newAuthor
+        if (!(await loginService.isAdmin(req.session.username)))
+            res.send("Admin Only")
+        else
+        {
+            const currentName = req.body.currentName
+            const newName = req.body.newName
+            const newAge = req.body.newAge
+            const newBio = req.body.newBio
+            const newPicture = req.body.newPicture
+            const newAuthor = req.body.newAuthor
 
-        const output = await AuthorModel.findOneAndUpdate({_id: currentName}, {
-            name: newName,
-            age: newAge,
-            bio: newBio,
-            picture: newPicture,
-            author: newAuthor
-        })
+            const output = await AuthorModel.findOneAndUpdate({_id: currentName}, {
+                name: newName,
+                age: newAge,
+                bio: newBio,
+                picture: newPicture,
+                author: newAuthor
+            })
 
-        if (output !== null){
-            res.json("update successfull!")
+            if (output !== null){
+                res.json("update successfull!")
+            }
+            else res.json("could not find object")
         }
-        else res.json("could not find object")
     },
 }
 

@@ -4,12 +4,21 @@ async function login(username, password) {
     const user = await UserModel.findOne({ _id: username, password });
     return user != null
 }
-async function isAdmin(user) {
-    if (user != null)
-        if (await UserModel.find({_id: user}).role == "Administrator")
+async function isAdmin(username) {
+    if (username != null)
+    {
+        const user = (await UserModel.find({_id: username}))[0]
+        if (user.role == "Administrator")
             return true
         else
             return false
+    }
+    else
+        return false
+}
+async function isLoggedIn (username) { 
+    if (req.session.username != null)
+        return true
     else
         return false
 }
@@ -23,4 +32,4 @@ async function isAdmin(user) {
     await user.save()        
 }
 */
-module.exports = { login, isAdmin } // register }
+module.exports = { login, isAdmin, isLoggedIn } // register }
