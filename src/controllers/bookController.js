@@ -13,7 +13,6 @@ const BookController = {
                 { name: { '$regex': ".*"+req.query.name+".*", $options: 'i'} }, 
                 { author: { '$regex': ".*"+req.query.author+".*", $options: 'i'} },
                 { category: { '$regex': ".*"+req.query.category+".*", $options: 'i'} },
-                // missing length and price 
             ]
         })
         res.json(result)
@@ -36,6 +35,7 @@ const BookController = {
             else{
                 const length = req.body.length
                 const cover = req.body.cover
+                const summary = req.body.summary
                 const relaseDate = req.body.releaseDate
                 const price= req.body.price
                 const quantity= req.body.quantity
@@ -51,6 +51,7 @@ const BookController = {
                         quantity,
                         author,
                         category,
+                        summary
                     })
 
                     book.save().then((data)=>{
@@ -85,6 +86,7 @@ const BookController = {
                 const newName = req.body.newName
                 const newLength = req.body.newLength
                 const newCover = req.body.newCover
+                const newSummary = req.body.newSummary
                 const newReleaseDate = req.body.newReleaseDate
                 const newPrice = req.body.newPrice
                 const newQuantity = req.body.newQuantity
@@ -92,6 +94,7 @@ const BookController = {
                     name: newName,
                     length: newLength,
                     cover: newCover,
+                    summary: newSummary,
                     releaseDate: newReleaseDate,
                     price: newPrice,
                     quantity: newQuantity
