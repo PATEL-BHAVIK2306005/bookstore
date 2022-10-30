@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 
 const app = express()
 const session = require('express-session');
+
+app.set('view engine', 'ejs');
+
 app.use(session({
     secret: 'foo',    
     saveUninitialized: false,
@@ -17,8 +20,9 @@ app.use(express.urlencoded({ extended: false }));
 const port = 3000
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.render('pages/login')
 })
+
 
 //Book
 const {BookController} = require('./src/controllers')
