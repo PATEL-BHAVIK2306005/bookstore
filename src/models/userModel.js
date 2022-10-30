@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const UserSchema = mongoose.Schema({
-    _id: String,
+    _id: String, //////////// need to change id to email
     password: {
       type: String,
       required: true,

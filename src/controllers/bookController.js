@@ -1,4 +1,3 @@
-const { default: mongoose } = require("mongoose");
 const {BookModel} = require("../models");
 const loginService = require("../services/login")
 
@@ -10,7 +9,7 @@ const BookController = {
     search: async (req,res) => {
         const result = await BookModel.find({
             "$and": [
-                { name: { '$regex': ".*"+req.query.name+".*", $options: 'i'} }, 
+                { _id: { '$regex': ".*"+req.query.name+".*", $options: 'i'} }, 
                 { author: { '$regex': ".*"+req.query.author+".*", $options: 'i'} },
                 { category: { '$regex': ".*"+req.query.category+".*", $options: 'i'} },
             ]

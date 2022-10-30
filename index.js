@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 const port = 3000
 
 app.get('/', (req, res) => {
-  res.render('pages/login')
+  res.send('Hello World!')
 })
 
 
