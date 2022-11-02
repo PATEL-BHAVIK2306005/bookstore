@@ -11,6 +11,10 @@ const CategoryController = {
         const allCategories = await CategoryModel.find()
         res.json(allCategories)
     },
+    listAll: async () =>{
+        const allCategories = await CategoryModel.find()
+        return allCategories;
+    },
     create: async(req, res) => {
         if (!(await loginService.isAdmin(req.session.username)))
                 res.send("Admin Only")
