@@ -31,12 +31,18 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
   res.render('login')
 })
-//const {CategoryController} = require('./src/controllers')
-//console.log(CategoryController.listAll().then((value) => {value}))
+
 const {CategoryModel} = require("./src/models");
+const {BookModel} = require("./src/models");
 
 app.get('/home', async (req, res) => {
   res.render('home', {genres: await CategoryModel.find()})
+})
+app.get('/genre/:id', async (req, res) => {
+  const genreId = req.params.id
+  console.log(genreId)
+  res.render('genre', 
+  {books: await BookModel.find({category: genreId}),category:genreId})
 })
 //CategoryController.listAll()
 

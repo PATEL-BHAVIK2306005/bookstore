@@ -63,10 +63,14 @@ const UserController = {
         const result = await loginService.login(username, password)
         if (result) {
             req.session.username = username
-            res.redirect('/')
+            //res.redirect('/')
+            res.json({status:"Success"})
         }
         else
-            res.redirect('/login?error=1') ///// need to create
+        {
+            //res.redirect('/login?error=1') ///// need to create
+            res.json({status:"Failed"})
+        }
         
     },
     isLoggedIn: async (req, res, next) => { // Checked

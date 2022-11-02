@@ -1,7 +1,7 @@
 <html>
 <head>
-    <link rel="stylesheet" href="/home/css/style.css">
-    <script src="/home/js/login.js"></script>
+    <link rel="stylesheet" href="/genre/css/style.css">
+    <script src="/genre/js/login.js"></script>
 </head>
 </head>
 <body>
@@ -13,12 +13,12 @@
     </nav>
     <div id="container">
         <div id="genreContainer">
-            <h2>Genre</h2>
+            <h2><%=category%></h2>
             <div id="genres">
-                <% genres.forEach((genre) =>{ %>
-                <a class="innerGenre" href="/genre/<%=genre._id%>"> 
-                    <h1 class="genreTitle"><%=genre._id%></h1>
-                    <img class="genreImage" src="<%=genre.url%>"></img>
+                <% books.forEach((book) =>{ %>
+                <a class="innerGenre" href="/genre/<%=book._id%>"> 
+                    <h1 class="genreTitle"><%=book._id%></h1>
+                    <img class="genreImage" src="<%=book.cover%>"></img>
                 </a>
                 <% }); %>
             </div>
