@@ -17,20 +17,22 @@ const CategoryController = {
         else
         {
             const _id = req.body.name
+            const url = req.body.url
             const check = await CategoryModel.exists({_id: _id})
             if (check)
             {
                 res.json("Object already exists")
             }
-            else{
+            else
+            {
                 const category = new CategoryModel({
                 _id,
+                url
             })
-            }
-
             category.save().then((data)=>{
                 res.send(data)
             })
+            }
         }
     },
         delete: async(req, res) => {
@@ -46,23 +48,24 @@ const CategoryController = {
             else res.json("could not find object")
         }
     },
-        update: async(req, res) => {//////////////////////////////////////////
+        update: async(req, res) => {
             if (!(await loginService.isAdmin(req.session.username)))
                 res.send("Admin Only")
             else
             {
                 const currentName = req.body.currentName
                 const newName = req.body.newName
+                const newURL = req.body.newURL
                 
-                /*const output = await CategoryModel.findOneAndUpdate({_id: currentName}, {
+                const output = await CategoryModel.findOneAndUpdate({_id: currentName}, {
                     _id: newName,
+                    url: newURL
                 })
                 
                 if (output !== null){
                     res.json("update successfull!")
                 }
                 else res.json("could not find object")
-                */
             }
     },
         getAllBooks: async(req, res) => {
