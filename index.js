@@ -1,10 +1,14 @@
 const express = require('express')
-// TAL NOOBY NOB
+const cors = require('cors');
+
+
+
 var config = require('./config');
 const mongoose = require('mongoose');
 
 const app = express()
 const session = require('express-session');
+app.use(cors());
 
 app.set('view engine', 'ejs');
 
