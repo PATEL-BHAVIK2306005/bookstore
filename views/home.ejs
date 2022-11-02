@@ -1,0 +1,32 @@
+<html>
+<head>
+    <script src="/home/css/style.css"></script>
+    <link rel="stylesheet" href="home.css">
+</head>
+</head>
+<body>
+    <nav class="topnav">
+        <a class="active" href="/home">Home</a>
+        <a href="/account">Account</a>
+        <a href="/stores">Stores</a>
+        <input type="text" placeholder="Search..">
+    </nav>
+    <div id="container">
+        <div id="genreContainer">
+            <h2>Genre</h2>
+            <div container="genres">
+                <% genres.forEach((genre) =>{ %>
+                    <p><%=genre.__v%></p>
+                    
+                <% }); %>
+            </div>
+        </div>
+        <div id="popularBooksContainer">
+
+        </div>
+        <div id="authorsContainer">
+
+        </div>
+    </div>
+</body>
+</html>

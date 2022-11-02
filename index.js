@@ -1,10 +1,16 @@
 const express = require('express')
-// TAL NOOBY NOB
+const cors = require('cors');
+
+
+
 var config = require('./config');
 const mongoose = require('mongoose');
 
 const app = express()
 const session = require('express-session');
+app.use(cors());
+
+app.use(express.static(__dirname + '/public'));
 
 app.set('view engine', 'ejs');
 
@@ -22,10 +28,21 @@ const port = 3000
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
+app.get('/login', (req, res) => {
+  res.render('login')
+})
+//const {CategoryController} = require('./src/controllers')
+//console.log(CategoryController.listAll().then((value) => {value}))
+const {CategoryModel} = require("./src/models");
+
+app.get('/home', async (req, res) => {
+  res.render('home', {genres: await CategoryModel.find()})
+})
+//CategoryController.listAll()
 
 
 //Book
-const {BookController} = require('./src/controllers')
+const {BookController, CategoryController} = require('./src/controllers')
 app.get('/books/list', (req, res) => {BookController.list(req, res)});
 app.get('/books/search', (req, res) => {BookController.search(req, res)});
 app.post('/books/create', (req, res) => {BookController.create(req, res)});
@@ -43,7 +60,7 @@ app.post('/author/delete', (req, res) => {AuthorController.delete(req, res)});
 app.post('/author/update', (req, res) => {AuthorController.update(req, res)});
 
 //Category
-const {CategoryController} = require('./src/controllers')
+//const {CategoryController} = require('./src/controllers')
 app.get('/category/list', (req, res) => {CategoryController.list(req, res)});
 app.get('/category/books/:name', (req, res) => {CategoryController.getAllBooks(req, res)});
 app.get('/category/:name', (req, res) => {CategoryController.find(req, res)});
