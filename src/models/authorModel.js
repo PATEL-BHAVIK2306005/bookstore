@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const AuthorSchema = mongoose.Schema({
-  _id: String,
+    _id: String,
     age: Number,
     bio: String,
     picture: String,

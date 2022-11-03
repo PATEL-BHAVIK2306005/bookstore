@@ -3,9 +3,13 @@ const {BookModel} = require("../models");
 const loginService = require("../services/login")
 
 const CategoryController = {
-    find: async (req,res) => {
+    findOne: async (req,res) => {
+        const found = await CategoryModel.findOne({_id: req.params.name})
+        res.json(found);
+    },
+    findMultiple: async (req,res) => {
         const found = await CategoryModel.find({_id: req.params.name})
-        res.json(found)
+        res.json(found);
     },
     list: async (req, res) =>{
         const allCategories = await CategoryModel.find()

@@ -1,32 +1,26 @@
-const {BookModel} = require("../models");
+const {PaymentModel} = require("../models");
 const loginService = require("../services/login")
 
-const BookController = {
+const PaymentController = {
     findOne: async (req,res) => {
-        const found = await BookModel.findOne({_id: req.params.name})
-        res.json(found)
+        const found = await PaymentModel.findOne({_id: req.params.number})
+        res.json(found);
     },
-    search: async (req,res) => {
-        const result = await BookModel.find({
-            "$and": [
-                { _id: { '$regex': ".*"+req.query.name+".*", $options: 'i'} }, 
-                { author: { '$regex': ".*"+req.query.author+".*", $options: 'i'} },
-                { category: { '$regex': ".*"+req.query.category+".*", $options: 'i'} },
-            ]
-        })
-        res.json(result)
+    findMultiple: async (req,res) => {
+        const found = await PaymentModel.find({_id: req.params.number})
+        res.json(found);
     },
     list: async (req, res) =>{
-        const allBooks = await BookModel.find()
-        res.json(allBooks)
+        const allPayments = await PaymentModel.find()
+        res.json(allPayments)
     },
     create: async(req, res) => {
         if (!(await loginService.isAdmin(req.session.username)))
             res.send("Admin Only")
         else
         {
-            const _id = req.body.name
-            const check = await BookModel.exists({_id: _id})
+            const _id = req.body.number
+            const check = await PaymentModel.exists({_id: _id})
             if (check)
             {
                 res.json("Object already exists")
