@@ -81,30 +81,64 @@ const BookController = {
                 res.send("Admin Only")
             else
             {
-                const currentName = req.body.currentName
-                const newName = req.body.newName
-                const newLength = req.body.newLength
-                const newCover = req.body.newCover
-                const newSummary = req.body.newSummary
-                const newReleaseDate = req.body.newReleaseDate
-                const newPrice = req.body.newPrice
-                const newQuantity = req.body.newQuantity
-                const output = await BookModel.findOneAndUpdate({_id: currentName}, {
-                    name: newName,
-                    length: newLength,
-                    cover: newCover,
-                    summary: newSummary,
-                    releaseDate: newReleaseDate,
-                    price: newPrice,
-                    quantity: newQuantity
-                })
-
-                if (output !== null){
-                    res.json("update successfull!")
+                id = req.body.id
+                const check = await BookModel.exists({_id: id})
+                if (!check)
+                {
+                    res.json("Book does not exist")
                 }
-                else res.json("could not find object")
+                else
+                {
+                    const currentName = req.body.currentName
+                    const newName = req.body.newName
+                    const newLength = req.body.newLength
+                    const newCover = req.body.newCover
+                    const newSummary = req.body.newSummary
+                    const newReleaseDate = req.body.newReleaseDate
+                    const newPrice = req.body.newPrice
+                    const newQuantity = req.body.newQuantity
+                    const output = await BookModel.findOneAndUpdate({_id: currentName}, {
+                        name: newName,
+                        length: newLength,
+                        cover: newCover,
+                        summary: newSummary,
+                        releaseDate: newReleaseDate,
+                        price: newPrice,
+                        quantity: newQuantity
+                    })
+
+                    if (output !== null){
+                        res.json("update successfull!")
+                    }
+                    else res.json("could not find object")
+                }
             }
-        }
+        },
+        updateQuantity: async(req, res) => {
+            if (!(await loginService.isLoggedIn(req.session.username)))
+                res.send("Must be logged in to purchase")
+            else
+                {
+                    const id = req.body.name
+                    const check = await BookModel.exists({_id: id})
+                    if (!check)
+                    {
+                        res.json("Book does not exist")
+                    }
+                    else
+                    {
+                        const quantity = await BookModel.findOne({_id: id})
+                        const newQuantity = quantity - 1
+                        const output = await BookModel.findOneAndUpdate({_id: id}, {
+                            quantity: newQuantity
+                        })
+    
+                        if (output !== null){
+                            res.json("update successfull!")
+                        }
+                        else res.json("could not find object")
+                  
+        }}}
 }
 
 module.exports = BookController

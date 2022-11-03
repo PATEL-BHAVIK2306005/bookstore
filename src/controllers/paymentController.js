@@ -26,25 +26,19 @@ const PaymentController = {
                 res.json("Object already exists")
             }
             else{
-                const length = req.body.length
-                const cover = req.body.cover
-                const summary = req.body.summary
-                const relaseDate = req.body.releaseDate
-                const price= req.body.price
-                const quantity= req.body.quantity
-                const author= req.body.author
-                const category= req.body.category
+                const creditNumber = req.body.creditNumber
+                const amount= req.body.amount
+                const customer = req.body.customer
+                const books = req.body.books
+                const warehouse = req.body.warehouse
                 try{
                     const book = new BookModel({
                         _id,
-                        length,
-                        cover,
-                        relaseDate,
-                        price,
-                        quantity,
-                        author,
-                        category,
-                        summary
+                        creditNumber,
+                        amount,
+                        customer,
+                        books,
+                        warehouse,
                     })
 
                     book.save().then((data)=>{
@@ -70,6 +64,7 @@ const PaymentController = {
                 else res.json("could not find object")
             }
         },
+        //////////////////////////////
         update: async(req, res) => {
             if (!(await loginService.isAdmin(req.session.username)))
                 res.send("Admin Only")

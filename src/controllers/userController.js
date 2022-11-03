@@ -3,15 +3,15 @@ const loginService = require("../services/login")
 
 const UserController = {
     findOne: async (req,res) => {
-        const found = await UserModel.findOne({_id: req.params.name})
+        const found = await UserModel.findOne({username: req.params.username})
         res.json(found);
     },
     findMultiple: async (req,res) => {
-        const found = await UserModel.find({_id: req.params.name})
+        const found = await UserModel.find({username: req.params.username})
         res.json(found);
     },
     create: async(req, res) => {
-        const _id = req.body.username
+        const _id = req.body.email
         const check = await UserModel.exists({_id: _id})
         if (check)
         {
@@ -19,12 +19,14 @@ const UserController = {
         }
         else{
             const password = req.body.password
-            const email = req.body.email
+            const username = req.body.username
             const role = req.body.role
+            const address = req.body.address
             const user = new UserModel({
                 _id,
                 password,
-                email,
+                username,
+                address,
                 role
             })
 
@@ -34,20 +36,20 @@ const UserController = {
             }
         },
     delete: async(req, res) => {
-        const nameDelete = req.body.name
-        const output = await UserModel.deleteOne({name: nameDelete})
+        const nameDelete = req.body.email
+        const output = await UserModel.deleteOne({_id: nameDelete})
         if (output.deletedCount == 1 ){
             res.json("deletion succesfull!")
        }
         else res.json("could not find object")
       },
     update: async(req, res) => {
-        const name = req.body.name
-        const newEmail = req.body.newEmail
+        const email = req.body.email
+        const newUsername = req.body.newUsername
         const newPassword = req.body.newPassword
         const newRole = req.body.newRole
-        const output = await UserModel.findOneAndUpdate({_id: name}, {
-            email: newEmail,
+        const output = await UserModel.findOneAndUpdate({_id: email},{
+            username:newUsername,
             password: newPassword,
             role: newRole,
         })
@@ -56,6 +58,19 @@ const UserController = {
             res.json("update successfull!")
         }
         else res.json("could not find object")
+    },
+    changePassword: async(req, res) => {
+        const id = req.session.username
+        const newPassword = req.body.newPassword
+        const oldPassword = req.body.oldPassword
+        const output = await UserModel.findOneAndUpdate({_id: id,password:oldPassword}, {
+            password: newPassword,
+        })
+
+        if (output !== null){
+            res.json({status:"Success"})
+        }
+        else res.json({status:"Failed"})
     },
     login: async(req, res) => {
         const username = req.body.username 
@@ -74,6 +89,7 @@ const UserController = {
         
     },
     isLoggedIn: async (req, res, next) => { // Checked
+        console.log(req.session.username)
         if (!(await loginService.isAdmin(req.session.username)))
             res.redirect('/login');
         else
