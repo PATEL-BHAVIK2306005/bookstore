@@ -4,10 +4,10 @@ async function login(username, password) {
     const user = await UserModel.findOne({ _id: username, password });
     return user != null
 }
-async function isAdmin(username) {
+async function isAdmin(name) {
     if (username != null)
     {
-        const user = (await UserModel.find({_id: username}))[0]
+        const user = (await UserModel.find({username: name}))[0]
         if (user.role == "Administrator")
             return true
         else
