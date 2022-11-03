@@ -35,3 +35,41 @@
     margin-right: 16px;
     font-size: 17px;
   }
+
+  #searchBar{
+	flex-direction: row;
+	align-items: center;
+	display: flex;
+	flex-shrink: initial;
+	
+	
+  }
+
+  /* The search bar */
+  .dropdown { 
+	margin-right: 20px;
+	width: 100px;     /* customize Select tag(DropDown options) with id="alphalist" */
+	display: inline-block;
+	background-color: #F5F5F5;
+	border-radius: 10px;
+	outline: none;
+	transition: all .5s ease;
+	position: relative;
+	vertical-align: center;
+	font-size: 15px;
+	color: black;
+	height: 30px;
+  }
+
+input { border: 0;
+background-color: #F5F5F5;
+border-radius: 10px;
+-webkit-appearance: none;
+-moz-appearance: none;
+-ms-appearance: none;
+-o-appearance: none;
+appearance: none;
+text-align: left;
+width: 100%;
+height: 32px;        
+}
