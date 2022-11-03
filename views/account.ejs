@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/account/css/style.css">
+        <script src="/account/js/account.js"></script>
+    </head>
+    <body>
+        <nav class="topnav">
+            <a class="active" href="/home">Home</a>
+            <a href="/account">Account</a>
+            <a href="/stores">Stores</a>
+        </nav>
+        <form>
+            <h2>here user name from ejs</h2>
+            <div class="input-div one">
+              <div class="input">
+                <input type="password" id="oldPassword" name="oldPassword" placeholder="Old Password" class="input">
+              </div>
+            </div>
+            <div class="input-div pass">
+              <div class="input">
+                <input type="password" id="newPassword" name="newPassword" placeholder="New Password" class="input">
+              </div>
+            </div>
+            <h2 id="wrongPassword" style="font-size:small; color:red; visibility:hidden">Passowrd is incorrect</h2>
+            <h2 id="changedPassword" style="font-size:small; color:green; visibility:hidden">Passowrd changed</h2>
+            <button type="button" class="btn" onclick="changePassword()" class="btn">Login</button>
+          </form>
+    </body>
+</html>

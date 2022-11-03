@@ -34,14 +34,20 @@ app.get('/login', (req, res) => {
 
 const {CategoryModel} = require("./src/models");
 const {BookModel} = require("./src/models");
+const {AuthorModel} = require("./src/models");
 
 app.get('/home', async (req, res) => {
-  res.render('home', {genres: await CategoryModel.find()})
+  res.render('home', {genres: await CategoryModel.find(), popularBooks: await BookModel.find().limit(10), authors:await AuthorModel.find().limit(10)})
+})
+
+app.get('/account', async (req, res) => {
+  console.log(req.session.username)
+  res.render('account')
 })
 app.get('/genre/:id', async (req, res) => {
-  const genreId = req.params.id
+  const genreID = req.params.id
   res.render('genre', 
-  {books: await BookModel.find({category: genreId}),category:genreId})
+  {books: await BookModel.find({category: genreID}),genreID})
 })
 
 app.get('/book/:id', async (req, res) => {
@@ -49,11 +55,15 @@ app.get('/book/:id', async (req, res) => {
   res.render('book', 
   {book: await BookModel.findOne({_id: bookID})})
 })
-//CategoryController.listAll()
 
+app.get('/author/:id', async (req, res) => {
+  const authorID = req.params.id
+  res.render('author', 
+  {books: await BookModel.find({author: authorID}),authorID})
+})
 
 //Book
-const {BookController, CategoryController} = require('./src/controllers')
+const {BookController, CategoryController } = require('./src/controllers')
 app.get('/books/list', (req, res) => {BookController.list(req, res)});
 app.get('/books/search', (req, res) => {BookController.search(req, res)});
 app.post('/books/create', (req, res) => {BookController.create(req, res)});
@@ -86,6 +96,7 @@ app.get('/user/:name', (req, res) => {UserController.find(req, res)});
 app.post('/user/create', (req, res) => {UserController.create(req, res)});
 app.post('/user/delete', (req, res) => {UserController.delete(req, res)});
 app.post('/user/update', (req, res) => {UserController.update(req, res)});
+app.post('/user/changePassword', (req, res) => {UserController.changePassword(req, res)});
 app.post('/login', (req, res) => {UserController.login(req, res)});
 app.post('/logout', (req, res) => {UserController.logout(req, res)});
 app.post('/foo', (req, res) => {UserController.foo(req, res)});
