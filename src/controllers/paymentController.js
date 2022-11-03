@@ -3,11 +3,11 @@ const loginService = require("../services/login")
 
 const PaymentController = {
     findOne: async (req,res) => {
-        const found = await PaymentModel.findOne({_id: req.params.name})
+        const found = await PaymentModel.findOne({_id: req.params.number})
         res.json(found);
     },
     findMultiple: async (req,res) => {
-        const found = await PaymentModel.find({_id: req.params.name})
+        const found = await PaymentModel.find({_id: req.params.number})
         res.json(found);
     },
     list: async (req, res) =>{
