@@ -4,6 +4,7 @@ const CategoryController = require('./CategoryController')
 const UserController = require('./UserController')
 const LoginController = require('./LoginController')
 const RoleController = require('./RoleController')
+const PaymentController = require('./PaymentController')
 
 
 module.exports = {
@@ -12,5 +13,6 @@ module.exports = {
     CategoryController,
     UserController,
     LoginController,
-    RoleController
+    RoleController,
+    PaymentController
 }

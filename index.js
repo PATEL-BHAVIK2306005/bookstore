@@ -122,6 +122,10 @@ app.post('/warehouse/create', (req, res) => {WarehouseController.create(req, res
 app.post('/warehouse/delete', (req, res) => {WarehouseController.delete(req, res)});
 app.post('/warehouse/update', (req, res) => {WarehouseController.update(req, res)});
 
+//Payment
+const {PaymentController} = require('./src/controllers')
+app.post('/payment/addd', (req, res) => {PaymentController.add(req, res)});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

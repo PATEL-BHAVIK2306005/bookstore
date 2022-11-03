@@ -5,6 +5,11 @@ const AccountPaymentSchema = mongoose.Schema({
     creditNumber: Number,
     date: Date,
     amount: Number,
+    user:
+    {
+        type:String,
+        ref:"Users"
+    },
     cart:
     [
         {

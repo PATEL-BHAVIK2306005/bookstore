@@ -3,6 +3,8 @@ const AuthorModel = require("./authorModel")
 const CategoryModel = require("./categoryModel")
 const UserModel = require("./UserModel")
 const RoleModel = require("./RoleModel")
+const PaymentModel = require("./PaymentModel")
+
 
 
 module.exports = {
@@ -10,5 +12,6 @@ module.exports = {
     AuthorModel,
     CategoryModel,
     UserModel,
-    RoleModel
+    RoleModel,
+    PaymentModel
 }
