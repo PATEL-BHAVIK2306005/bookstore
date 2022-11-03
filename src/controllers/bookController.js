@@ -3,7 +3,7 @@ const loginService = require("../services/login")
 
 const BookController = {
     find: async (req,res) => {
-        const found = await BookModel.find({_id: req.params.name})
+        const found = await BookModel.findOne({_id: req.params.name})
         res.json(found)
     },
     search: async (req,res) => {

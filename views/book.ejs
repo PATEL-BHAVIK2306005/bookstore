@@ -12,17 +12,14 @@
         <input type="text" placeholder="Search..">
     </nav>
     <div id="container">
-        <div id="booksContainer">
-            <h2><%=category%></h2>
-            <div id="books">
-                <% books.forEach((book) =>{ %>
-                <a class="innerBook" href="/book/<%=book._id%>"> 
-                    <h1 class="bookTitle"><%=book._id%></h1>
-                    <img class="bookImage" src="<%=book.cover%>"></img>
-                </a>
-                <% }); %>
-            </div>
+        <div id="bookContainer">
+            <h2 class="bookTitle"><%=book._id%></h2>
+            <img class="bookImage" src="<%=book.cover%>"></img>
+            <h1 class="innerBook"><%=book.price%></h1>
+            <a class="innerBook" href="/author/<%=book.author%>"><%=book.author%></a>
         </div>
+            <button>Buy Now</button>
+    </div>
 
     </div>
 </body>

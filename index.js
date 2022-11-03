@@ -40,9 +40,14 @@ app.get('/home', async (req, res) => {
 })
 app.get('/genre/:id', async (req, res) => {
   const genreId = req.params.id
-  console.log(genreId)
   res.render('genre', 
   {books: await BookModel.find({category: genreId}),category:genreId})
+})
+
+app.get('/book/:id', async (req, res) => {
+  const bookID = req.params.id
+  res.render('book', 
+  {book: await BookModel.findOne({_id: bookID})})
 })
 //CategoryController.listAll()
 
