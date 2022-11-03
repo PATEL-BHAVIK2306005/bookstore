@@ -3,7 +3,11 @@ const {BookModel} = require("../models");
 const loginService = require("../services/login")
 
 const AuthorController = {
-    find: async (req,res) => {
+    findOne: async (req,res) => {
+        const found = await AuthorModel.findOne({_id: req.params.name})
+        res.json(found);
+    },
+    findMultiple: async (req,res) => {
         const found = await AuthorModel.find({_id: req.params.name})
         res.json(found);
     },

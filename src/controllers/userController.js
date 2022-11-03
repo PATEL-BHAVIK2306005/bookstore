@@ -2,13 +2,13 @@ const {UserModel} = require("../models");
 const loginService = require("../services/login")
 
 const UserController = {
-    find: async (req,res) => {
-        const found = await UserModel.find({_id: req.params.name})
+    findOne: async (req,res) => {
+        const found = await UserModel.findOne({_id: req.params.name})
         res.json(found);
     },
-    list: async (req, res) =>{
-        const allUsers = await UserModel.find()
-        res.json(allUsers);
+    findMultiple: async (req,res) => {
+        const found = await UserModel.find({_id: req.params.name})
+        res.json(found);
     },
     create: async(req, res) => {
         const _id = req.body.username

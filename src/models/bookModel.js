@@ -7,10 +7,9 @@ const BookSchema = mongoose.Schema({
     summary: String,
     relaseDate: Date,
     price: Number,
-    quantity: Number,
     author: {
         type: String,
-        ref: "Author",
+        ref: "Authors",
     },
     category: {
       type: String,

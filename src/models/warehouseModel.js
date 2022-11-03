@@ -5,7 +5,11 @@ const WarehouseSchema = mongoose.Schema({
     city: String, 
     address: String,
     size: Number,
-    //stock: 
+    stock: [{
+      type: String,
+      ref: "Books",
+      quantiy: Number
+    }],
   });
 
   module.exports = mongoose.model('Warehouses', WarehouseSchema)

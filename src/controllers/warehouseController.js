@@ -2,13 +2,13 @@ const {WarehouseModel} = require("../models");
 const loginService = require("../services/login")
 
 const WarehouseController = {
-    find: async (req,res) => {
-        const found = await WarehouseModel.find({_id: req.params.coordinates})
-        res.json(found)
+    findOne: async (req,res) => {
+        const found = await WarehouseModel.findOne({_id: req.params.name})
+        res.json(found);
     },
-    list: async (req, res) =>{
-        const allWares = await WarehouseModel.find()
-        res.json(allWares)
+    findMultiple: async (req,res) => {
+        const found = await WarehouseModel.find({_id: req.params.name})
+        res.json(found);
     },
     create: async(req, res) => {
         if (!(await loginService.isAdmin(req.session.username)))
