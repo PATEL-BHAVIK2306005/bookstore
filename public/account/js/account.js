@@ -1,5 +1,7 @@
 async function changePassword (username, password)
 {
+   document.getElementById("wrongPassword").style.visibility = "visible";
+   document.getElementById("changePassword").style.visibility = "visible";
    const oldPassword = document.getElementById("oldPassword").value
    const newPassword =  document.getElementById("newPassword").value
    const response = await fetch("http://localhost:3000/user/changePassword", {
