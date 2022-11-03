@@ -1,24 +1,22 @@
 const mongoose = require('mongoose')
 
-const PaymentSchema = mongoose.Schema({
-    _id: String,
+const AccountPaymentSchema = mongoose.Schema({
+    _id: Number,
     creditNumber: Number,
     date: Date,
-    amount: {
-        type: Number,
-        min: 0,
-    },
-    customer: {
-        type: String,
-        ref: "Authors",
-    },
-    books: [{
-        type: String,
-        ref: "Books",
-      }],
-    warehouse: {
-        type: String,
-        ref: "Warehouses"
-    }
+    amount: Number,
+    cart:
+    [
+        {
+            type:String,
+            ref:"Books"
+        }
+    ],
+    completedTrasactions:[
+        {
+            type:String,
+            ref:"Books"
+        }
+    ],
   });
-  module.exports = mongoose.model('Payments', PaymentSchema)
+  module.exports = mongoose.model('AccountPayment', AccountPaymentSchema)
