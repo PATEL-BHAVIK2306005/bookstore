@@ -1,8 +1,8 @@
 <html>
 <head>
-    <link rel="stylesheet" href="/genre/css/style.css">
+    <link rel="stylesheet" href="/book/css/style.css">
     <link rel="stylesheet" type="text/css" href="/navbar/css/style.css">
-    <script src="/genre/js/login.js"></script>
+    <script src="/book/js/book.js"></script>
 </head>
 </head>
 <body>
@@ -14,7 +14,7 @@
             <h1 class="innerBook"><%=book.price%></h1>
             <a class="innerBook" href="/author/<%=book.author%>"><%=book.author%></a>
         </div>
-            <button>Buy Now</button>
+            <button class="btn" id="btn" onclick="addToCart()">Add To Cart</button>
     </div>
 
     </div>

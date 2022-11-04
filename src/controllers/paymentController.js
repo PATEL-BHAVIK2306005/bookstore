@@ -17,7 +17,7 @@ const PaymentController = {
     },
     listCartItems: async (req, res) =>{
         if (typeof req.session.username == 'undefined')
-                res.json({status:"Failed, error: not logged in"})
+                res.json({status:"Failed",error:"not logged in"})
             else
             {
             const username = req.session.username
@@ -93,12 +93,12 @@ const PaymentController = {
                 if (output !== null){
                     res.json({status:"Success"})
                 }
-                else res.json({status:"Failed, error: could not find object"})
+                else res.json({status:"Failed",error:"could not find object"})
             }
         },
         add: async(req, res) => {
             if (typeof req.session.username == 'undefined')
-                res.json({status:"Failed, error: not logged in"})
+                res.json({status:"Failed",error:"not logged in"})
             else
             {
             const _id = req.body.book
@@ -106,7 +106,7 @@ const PaymentController = {
             const check = await BookModel.exists({_id})
             if (!check)
             {
-                res.json({status:"Failed, error: book doesn't exist"})
+                res.json({status:"Failed",error:"book doesn't exist"})
             }
             else
             {
@@ -117,7 +117,7 @@ const PaymentController = {
                 if (output !== null){
                     res.json({status:"Success"})
                 }
-                else  res.json({status:"Failed, error: couldn't find cart"})
+                else  res.json({status:"Failed",error:"couldn't find cart"})
             }
         }
         },

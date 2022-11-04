@@ -1,10 +1,8 @@
-async function changePassword ()
+async function addToCart ()
 {
-   document.getElementById("wrongPassword").style.visibility = "visible";
-   document.getElementById("changePassword").style.visibility = "visible";
    const oldPassword = document.getElementById("oldPassword").value
    const newPassword =  document.getElementById("newPassword").value
-   const response = await fetch("http://localhost:3000/user/changePassword", {
+   const response = await fetch("http://localhost:3000/payment/changePassword", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -17,8 +15,9 @@ async function changePassword ()
         })
     }).then((value )=> {
         value.json().then((output)=>{
-            if (output.status === "Failed"){
-                document.getElementById("wrongPassword").style.visibility = "visible";
+            if (output.status === "Success"){
+                document.getElementById("btn").disabled = true;
+                document.getElementById("btn").innerHTML = "Added to cart"
             }
             else{
                 document.getElementById("changedPassword").style.visibility = "visible";
