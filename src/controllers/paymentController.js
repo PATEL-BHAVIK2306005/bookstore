@@ -15,6 +15,16 @@ const PaymentController = {
         const allPayments = await PaymentModel.find()
         res.json(allPayments)
     },
+    listCartItems: async (req, res) =>{
+        if (typeof req.session.username == 'undefined')
+                res.json({status:"Failed, error: not logged in"})
+            else
+            {
+            const username = req.session.username
+            items = (await PaymentModel.findOne({username: username})).cart
+            res.json(items) 
+            }
+    },
     create: async(req, res) => {
         const _id = req.body.number
         const check = await PaymentModel.exists({_id: _id})
@@ -72,7 +82,7 @@ const PaymentController = {
                 const newAmount = req.body.newAmount
                 const newUsername = req.body.Username
                 // update cart and payment?
-                
+
                 const output = await PaymentModel.findOneAndUpdate({_id}, {
                     creditNumber: newCreditNumber,
                     date: newDate,
