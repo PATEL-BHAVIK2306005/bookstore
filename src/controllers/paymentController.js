@@ -29,7 +29,7 @@ const PaymentController = {
             const books = req.body.books
             const warehouse = req.body.warehouse
             try{
-                const book = new BookModel({
+                const payment = new PaymentModel({
                     _id,
                     creditNumber,
                     amount,
@@ -38,7 +38,7 @@ const PaymentController = {
                     warehouse,
                 })
 
-                book.save().then((data)=>{
+                payment.save().then((data)=>{
                     res.send(data)
                 })
             }
@@ -46,56 +46,49 @@ const PaymentController = {
                 res.json(_id)
                 }
             }
-        }   
         },
-        delete: async(req, res) => { ////////////////////////////////////
+        delete: async(req, res) => { //////////////////////////////////// check
             if (!(await loginService.isAdmin(req.session.username)))
                 res.send("Admin Only")
             else
             {
-                const nameDelete = req.body.name
-                const output = await BookModel.deleteOne({_id: nameDelete})
+                const nameDelete = req.body.number
+                const output = await PaymentModel.deleteOne({_id: nameDelete})
                 if (output.deletedCount == 1 ){
                     res.json("deletion succesfull!")
                 }
                 else res.json("could not find object")
             }
         },
-        //////////////////////////////
+        ////////////////////////////// check
         update: async(req, res) => {
             if (!(await loginService.isAdmin(req.session.username)))
                 res.send("Admin Only")
             else
             {
-                const currentName = req.body.currentName
-                const newName = req.body.newName
-                const newLength = req.body.newLength
-                const newCover = req.body.newCover
-                const newSummary = req.body.newSummary
-                const newReleaseDate = req.body.newReleaseDate
-                const newPrice = req.body.newPrice
-                const newQuantity = req.body.newQuantity
-                const output = await BookModel.findOneAndUpdate({_id: currentName}, {
-                    name: newName,
-                    length: newLength,
-                    cover: newCover,
-                    summary: newSummary,
-                    releaseDate: newReleaseDate,
-                    price: newPrice,
-                    quantity: newQuantity
+                const _id = req.body.number
+                const newCreditNumber = req.body.newCreditNumber
+                const newDate = req.body.newDate
+                const newAmount = req.body.newAmount
+                const newUsername = req.body.Username
+                // update cart and payment?
+                
+                const output = await PaymentModel.findOneAndUpdate({_id}, {
+                    creditNumber: newCreditNumber,
+                    date: newDate,
+                    amount: newAmount,
+                    username: newUsername,
                 })
 
                 if (output !== null){
-                    res.json("update successfull!")
+                    res.json({status:"Success"})
                 }
-                else res.json("could not find object")
+                else res.json({status:"Failed, error: could not find object"})
             }
         },
         add: async(req, res) => {
-            /*(if (typeof req.session.username != 'undefined')
-                res.json({status:"Failed, error: not logged in"})*/
-            if (false)
-                console.log("check")
+            if (typeof req.session.username == 'undefined')
+                res.json({status:"Failed, error: not logged in"})
             else
             {
             const _id = req.body.book

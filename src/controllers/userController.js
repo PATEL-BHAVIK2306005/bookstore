@@ -1,5 +1,7 @@
 const {UserModel} = require("../models");
+const {PaymentModel} = require("../models");
 const loginService = require("../services/login")
+math = require("mathjs")
 
 const UserController = {
     findOne: async (req,res) => {
@@ -29,7 +31,13 @@ const UserController = {
                 address,
                 role
             })
-
+            // now we create an empty payment placeholder for the user
+            const id = math.floor(Math.random() * 1000 + 1)
+            const payment = new PaymentModel({
+                _id: id,
+                username
+            })
+            payment.save()
             user.save().then((data)=>{
                 res.send(data)
             })

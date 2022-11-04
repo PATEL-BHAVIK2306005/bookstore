@@ -5,7 +5,7 @@ const AccountPaymentSchema = mongoose.Schema({
     creditNumber: Number,
     date: Date,
     amount: Number,
-    user:
+    username:
     {
         type:String,
         ref:"Users"
@@ -24,4 +24,4 @@ const AccountPaymentSchema = mongoose.Schema({
         }
     ],
   });
-  module.exports = mongoose.model('AccountPayment', AccountPaymentSchema)
+  module.exports = mongoose.model('Payment', AccountPaymentSchema)
