@@ -21,8 +21,8 @@ const PaymentController = {
             else
             {
             const username = req.session.username
-            items = (await PaymentModel.findOne({username: username})).cart
-            res.json(items) 
+            items = (await PaymentModel.findOne({username: username}).populate('cart')).cart
+            res.json(items)
             }
     },
     create: async(req, res) => {
