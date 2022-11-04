@@ -1,0 +1,24 @@
+<html>
+<head>
+    <link rel="stylesheet" href="/genre/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/navbar/css/style.css">
+    <script src="/cart/js/cart.js"></script>
+</head>
+</head>
+<body>
+    <%- include('navbar.ejs') %>
+    <div id="container">
+        <div id="booksContainer">
+            <div id="books">
+                <% books.forEach((book) =>{ %>
+                <a class="innerBook" href="/book/<%=book._id%>"> 
+                    <h1 class="bookTitle"><%=book._id%></h1>
+                    <img class="bookImage" src="<%=book.cover%>"></img>
+                </a>
+                <% }); %>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

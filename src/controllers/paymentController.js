@@ -18,12 +18,12 @@ const PaymentController = {
     listCartItems: async (req, res) =>{
         if (typeof req.session.username == 'undefined')
                 res.json({status:"Failed",error:"not logged in"})
-            else
-            {
+        else
+        {
             const username = req.session.username
             items = (await PaymentModel.findOne({username: username}).populate('cart')).cart
             res.json(items)
-            }
+        }
     },
     create: async(req, res) => {
         const _id = req.body.number

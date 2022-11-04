@@ -9,7 +9,7 @@
     <%- include('navbar.ejs') %>
     <div id="container">
         <div id="bookContainer">
-            <h2 class="bookTitle"><%=book._id%></h2>
+            <h2 id="bookTitle" class="bookTitle"><%=book._id%></h2>
             <img class="bookImage" src="<%=book.cover%>"></img>
             <h1 class="innerBook"><%=book.price%></h1>
             <a class="innerBook" href="/author/<%=book.author%>"><%=book.author%></a>

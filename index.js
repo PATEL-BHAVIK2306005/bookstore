@@ -35,6 +35,8 @@ app.get('/login', (req, res) => {
 const {CategoryModel} = require("./src/models");
 const {BookModel} = require("./src/models");
 const {AuthorModel} = require("./src/models");
+const {PaymentModel} = require("./src/models");
+const {PaymentController} = require('./src/controllers')
 
 app.get('/home', async (req, res) => {
   res.render('home', {genres: await CategoryModel.find(), popularBooks: await BookModel.find().limit(10), authors:await AuthorModel.find().limit(10)})
@@ -44,10 +46,16 @@ app.get('/account', async (req, res) => {
   console.log(req.session.username)
   res.render('account')
 })
+
 app.get('/genre/:id', async (req, res) => {
   const genreID = req.params.id
   res.render('genre', 
   {books: await BookModel.find({category: genreID}),genreID})
+})
+app.get('/cart', async (req, res) => {
+  const username = req.session.username
+  res.render('cart', 
+  {books: (await PaymentModel.findOne({username}).populate('cart')).cart})
 })
 
 app.get('/book/:id', async (req, res) => {
@@ -123,7 +131,7 @@ app.post('/warehouse/delete', (req, res) => {WarehouseController.delete(req, res
 app.post('/warehouse/update', (req, res) => {WarehouseController.update(req, res)});
 
 //Payment
-const {PaymentController} = require('./src/controllers')
+
 app.post('/payment/add', (req, res) => {PaymentController.add(req, res)});
 app.post('/payment/listCartItems', (req, res) => {PaymentController.listCartItems(req, res)});
 
