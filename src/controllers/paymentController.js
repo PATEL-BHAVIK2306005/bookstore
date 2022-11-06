@@ -21,8 +21,37 @@ const PaymentController = {
         else
         {
             const username = req.session.username
+            let amount = 0
             items = (await PaymentModel.findOne({username: username}).populate('cart')).cart
+            items.forEach(element => {
+                amount = amount + element.price
+            });
+            items = items.concat(amount)
             res.json(items)
+        }
+    },
+    completeTransaction: async (req, res) =>{
+        if (typeof req.session.username == 'undefined')
+                res.json({status:"Failed",error:"not logged in"})
+        else
+        {
+            const username = req.session.username
+            const credit = req.body.creditNumber
+            const payment = await PaymentModel.findOne({username: username})
+            const currentTransactions = payment.completedTrasactions
+            const date = new Date()
+            const items = (await payment.populate('cart')).cart
+
+            // Add the current cart items to completed transaction items
+            payment.completedTrasactions = await currentTransactions.concat(items)
+            payment.creditNumber = credit
+            payment.date = date
+
+            // We reset the user's cart before finalizing
+            payment.cart = []
+            await payment.save().then(()=>{
+                res.json({status:"Success"})
+            })
         }
     },
     create: async(req, res) => {

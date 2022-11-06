@@ -131,9 +131,9 @@ app.post('/warehouse/delete', (req, res) => {WarehouseController.delete(req, res
 app.post('/warehouse/update', (req, res) => {WarehouseController.update(req, res)});
 
 //Payment
-
 app.post('/payment/add', (req, res) => {PaymentController.add(req, res)});
 app.post('/payment/listCartItems', (req, res) => {PaymentController.listCartItems(req, res)});
+app.post('/payment/completeTransaction', (req, res) => {PaymentController.completeTransaction(req, res)});
 
 
 app.listen(port, () => {
