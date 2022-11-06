@@ -1,10 +1,18 @@
 /* Add a black background color to the top navigation bar */
+
+body {
+  background:  url("/background/background.jpg");
+  width : 100%;
+  height: 100%;
+}
 #container{
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
   .sectionContainer{
+    align-items: center;
     display: flex;
     flex-direction: row;
   }
@@ -21,17 +29,14 @@
     border-radius: 10px;
   }
 
-  .innerGenre{
+  .inner{
+    align-items : center;
     margin-right: 20px;
     display: flex;
     flex-direction: column;
   }
 
-  .innerBook{
-    margin-right: 20px;
-    display: flex;
-    flex-direction: column;
-  }
+
 
   .bookImage
   {
@@ -41,11 +46,91 @@
     max-height: 130px;
     border-radius: 10px;
   }
-  .innerAuthor{
-    margin-right: 20px;
-    display: flex;
-    flex-direction: column;
+
+  h2{
+    color: #3c65bd; 
+    font-family: 'Trocchi', serif;
+    font-size: 45px; 
+    font-weight: normal; 
+    line-height: 48px; 
+    margin: 0
+    
   }
+  .footer{
+    text-align: center;
+    position :absolute;
+    bottom: 0;
+    background-color: skyblue;
+    width : 100%
+
+  }
+  aside {
+    height: 200px;
+    width: 150px;
+    position: sticky;
+    top: 0px;
+    float: right;
+    
+    background-color: lightblue;
+    }
+    
+    aside div {
+    padding: 8px;
+    font-size: 24px;
+    display: block;
+    }
+  }
+  .title {
+    align-items: center;
+    background-color: initial;
+    background-image: linear-gradient(#4779b3, #3d5068);
+    border-radius: 8px;
+    border-width: 0;
+    box-shadow: 0 10px 20px rgba(4, 10, 187, 0.1),0 3px 6px rgba(0, 0, 0, .05);
+    box-sizing: border-box;
+    color: rgb(247, 245, 245);
+    cursor: pointer;
+    display: inline-flex;
+    flex-direction: column;
+    font-family: expo-brand-demi,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 18px;
+    height: 52px;
+    justify-content: center;
+    line-height: 1;
+    margin: 0;
+    outline: none;
+    overflow: hidden;
+    padding: 0 32px;
+    text-align: center;
+    text-decoration: none;
+    transform: translate3d(0, 0, 0);
+    transition: all 150ms;
+    vertical-align: baseline;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  .bookTitle:hover {
+    box-shadow: rgba(0, 1, 0, .2) 0 2px 8px;
+    opacity: .85;
+  }
+  
+  .bookTitle:active {
+    outline: 0;
+  }
+  
+  .bookTitle:focus {
+    box-shadow: rgba(0, 0, 0, .5) 0 0 0 3px;
+  }
+  
+  @media (max-width: 420px) {
+    .bookTitle {
+      height: 48px;
+    }
+  }
+  
 
   .authorImage
   {
