@@ -70,6 +70,16 @@ app.get('/author/:id', async (req, res) => {
   {books: await BookModel.find({author: authorID}),authorID})
 })
 
+app.get('/search', async (req, res) => {
+  res.render('search')
+
+})
+
+app.get('/dashboard', async (req, res) => {
+  res.render('dashboard')
+
+})
+
 //Book
 const {BookController, CategoryController } = require('./src/controllers')
 app.get('/books/list', (req, res) => {BookController.list(req, res)});
