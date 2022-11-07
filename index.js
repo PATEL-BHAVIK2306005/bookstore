@@ -144,7 +144,8 @@ app.post('/warehouse/update', (req, res) => {WarehouseController.update(req, res
 app.post('/payment/add', (req, res) => {PaymentController.add(req, res)});
 app.post('/payment/listCartItems', (req, res) => {PaymentController.listCartItems(req, res)});
 app.post('/payment/completeTransaction', (req, res) => {PaymentController.completeTransaction(req, res)});
-
+app.post('/payment/getPaymentLocation', (req, res) => {PaymentController.getPaymentLocation(req, res)});
+app.post('/payment/getAllLocations', (req, res) => {PaymentController.getAllLocations(req, res)});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

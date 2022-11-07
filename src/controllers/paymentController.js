@@ -21,12 +21,18 @@ const PaymentController = {
         else
         {
             const username = req.session.username
+            const payment = await PaymentModel.findOne({username: username})
             let amount = 0
-            items = (await PaymentModel.findOne({username: username}).populate('cart')).cart
+            items = (await payment.populate('cart')).cart
+
+            // Calculate sum of items
             items.forEach(element => {
                 amount = amount + element.price
             });
+            // Add sum of items to output
             items = items.concat(amount)
+            payment.amount = amount
+            await payment.save()
             res.json(items)
         }
     },
@@ -37,15 +43,17 @@ const PaymentController = {
         {
             const username = req.session.username
             const credit = req.body.creditNumber
+            const address = req.body.address
             const payment = await PaymentModel.findOne({username: username})
-            const currentTransactions = payment.completedTrasactions
+            const currentTransactions = payment.completedTransactions
             const date = new Date()
             const items = (await payment.populate('cart')).cart
 
             // Add the current cart items to completed transaction items
-            payment.completedTrasactions = await currentTransactions.concat(items)
+            payment.completedTransactions = await currentTransactions.concat(items)
             payment.creditNumber = credit
             payment.date = date
+            payment.address = address
 
             // We reset the user's cart before finalizing
             payment.cart = []
@@ -59,7 +67,7 @@ const PaymentController = {
         const check = await PaymentModel.exists({_id: _id})
         if (check)
         {
-            res.json("Object already exists")
+            res.json({status:"Failed",error:"payment number already exists"})
         }
         else{
             const creditNumber = req.body.creditNumber
@@ -94,22 +102,22 @@ const PaymentController = {
                 const nameDelete = req.body.number
                 const output = await PaymentModel.deleteOne({_id: nameDelete})
                 if (output.deletedCount == 1 ){
-                    res.json("deletion succesfull!")
+                    res.json({status:"Success"})
                 }
-                else res.json("could not find object")
+                else res.json({status:"Failed",error:"could not find object"})
             }
         },
         ////////////////////////////// check
         update: async(req, res) => {
             if (!(await loginService.isAdmin(req.session.username)))
-                res.send("Admin Only")
+                res.send({status:"Failed",error:"Admin Only"})
             else
             {
                 const _id = req.body.number
                 const newCreditNumber = req.body.newCreditNumber
                 const newDate = req.body.newDate
                 const newAmount = req.body.newAmount
-                const newUsername = req.body.Username
+                const newUsername = req.body.newUsername
                 // update cart and payment?
 
                 const output = await PaymentModel.findOneAndUpdate({_id}, {
@@ -131,24 +139,48 @@ const PaymentController = {
             else
             {
             const _id = req.body.book
-            const user = req.session.username
+            const username = req.session.username
             const check = await BookModel.exists({_id})
             if (!check)
             {
                 res.json({status:"Failed",error:"book doesn't exist"})
             }
             else
-            {
-                const output = await PaymentModel.updateOne({user}, {
-                    $push: { cart: _id} 
+             {
+                const output = await PaymentModel.updateOne({username: username}, {
+                    $push: {cart: _id} 
                 })
 
                 if (output !== null){
                     res.json({status:"Success"})
                 }
                 else  res.json({status:"Failed",error:"couldn't find cart"})
+             }
             }
-        }
+        },
+        getPaymentLocation: async(req, res) => {
+            const username = req.session.username
+            if (typeof username == 'undefined')
+                res.json({status:"Failed",error:"not logged in"})
+            else
+            {
+                const payment = await PaymentModel.findOne({username: username})
+                const address = payment.address
+                if (typeof address == 'undefined')
+                    res.json({status:"Failed",error:"no location has been entered"})
+                else
+                    res.json(address)
+            }
+        },
+        getAllLocations: async(req, res) => {
+            const user = req.session.username
+            if (!(await loginService.isAdmin(req.session.username)))
+                res.send({status:"Failed",error:"Admin Only"})
+            else
+            {
+                const addresses = await PaymentModel.find().select('address -_id')
+                res.json(addresses)
+            }
         },
 }
 

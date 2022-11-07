@@ -112,9 +112,6 @@ const UserController = {
           res.redirect('/login');
         });
       },
-    foo: async (req, res) => {  // WTF
-        res.json((await UserModel.find({_id: req.session.username}))[0].role)
-       },
 }
 
 
