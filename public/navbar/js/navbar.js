@@ -1,13 +1,61 @@
-function onSearch () 
+async function onSearch () 
 {
     var e = document.getElementById("priceDropdown");
-    var value = e.value;
-    var searchType = e.options[e.selectedIndex].text;
+    
+    var price = Number(e.value);
+    if (price === 0) {price = 10000000}
 
     var searchValue = document.getElementById('searchNav').value
 
+    var e = document.getElementById("firstLetterDropdown");
+    var value = e.value;
+    var firstLetter = e.options[e.selectedIndex].text;
+
+    var e = document.getElementById("genresDropdown");
+    var value = e.value;
+    var genre = e.options[e.selectedIndex].text;
+
+    var e = document.getElementById("authorsDropdown");
+    var value = e.value;
+    var author = e.options[e.selectedIndex].text;
+
+
     var container = document.getElementById("container");
     container.innerHTML = ""
+
+    const response = await fetch("http://localhost:3000/books/search", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin' : "*",
+          },
+        body: JSON.stringify({
+            firstLetterBook: firstLetter,
+            price: price,
+            author:author,
+            genre:genre,
+        })
+    }).then((value )=> {
+        value.json().then((output)=>{
+            output.forEach(item => {
+                var element = document.createElement("a")
+                element.href = "/book/" + item._id
+                element.innerHTML = `
+                <h2 id="bookTitle" class="bookTitle">${item._id}</h2>
+                <img class="bookImage" src="${item.cover}"></img>
+                <h1 class="innerBook">${item.price}</h1>
+                <a class="innerBook" href="/author/${item.author}">${item.author}</a>
+                `
+                container.appendChild(element)
+            })
+        })
+        
+    })
+
+
+
+
     /*if (searchType === "Books"){
         window.location.replace("/search/books/" + searchValue)
     }
@@ -37,26 +85,17 @@ input.addEventListener('keypress', function (e) {
 
 async function getGenres ()
 {
-
-   const response = await fetch("http://localhost:3000/books/search", {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin' : "*",
-          },
-        body: JSON.stringify({
-            name: oldPassword,
-            newPassword: newPassword,
-        })
+    var genresDropdown = document.getElementById("genresDropdown");
+    const response = await fetch("http://localhost:3000/category/listNames", {
+        method: 'GET',        
     }).then((value )=> {
         value.json().then((output)=>{
-            if (output.status === "Failed"){
-                document.getElementById("wrongPassword").style.visibility = "visible";
-            }
-            else{
-                document.getElementById("changedPassword").style.visibility = "visible";
-            }    
+            output.forEach(item => {
+                const element = document.createElement('option')
+                element.innerHTML=item._id   
+                genresDropdown.appendChild(element)
+            });
+             
         })
         
     })
@@ -64,29 +103,23 @@ async function getGenres ()
 
 async function getAuthors ()
 {
-
-   const response = await fetch("http://localhost:3000/books/search", {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin' : "*",
-          },
-        body: JSON.stringify({
-            name: oldPassword,
-            newPassword: newPassword,
-        })
+   var authorsDropdown = document.getElementById("authorsDropdown");
+   const response = await fetch("http://localhost:3000/authors/listNames", {
+        method: 'GET',        
     }).then((value )=> {
         value.json().then((output)=>{
-            if (output.status === "Failed"){
-                document.getElementById("wrongPassword").style.visibility = "visible";
-            }
-            else{
-                document.getElementById("changedPassword").style.visibility = "visible";
-            }    
+            output.forEach(item => {
+                const element = document.createElement('option')
+                element.innerHTML=item._id   
+                authorsDropdown.appendChild(element)
+            });
         })
         
     })
 }
 
+
+
 enterEvent()
+getGenres()
+getAuthors()

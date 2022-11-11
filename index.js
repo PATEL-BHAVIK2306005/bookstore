@@ -77,16 +77,17 @@ app.get('/book/:id', async (req, res) => {
   {book: await BookModel.findOne({_id: bookID})})
 })
 
+
+/*app.get('/search/:var(genre|books|author)/:id', async (req, res) => {
+  res.render('search')
+
+})*/
 app.get('/author/:id', async (req, res) => {
   const authorID = req.params.id
   res.render('author', 
   {books: await BookModel.find({author: authorID}),authorID})
 })
 
-app.get('/search/:var(genre|books|author)/:id', async (req, res) => {
-  res.render('search')
-
-})
 
 app.get('/dashboard', async (req, res) => {
   res.render('dashboard')
@@ -107,7 +108,7 @@ const {AuthorController} = require('./src/controllers')
 app.get('/author/list', (req, res) => {AuthorController.list(req, res)});
 app.get('/author/books/:author', (req, res) => {AuthorController.getAllBooks(req, res)});
 app.get('/author/:name', (req, res) => {AuthorController.find(req, res)});
-app.get('/author/listNames', (req, res) => {AuthorController.listNames(req, res)});
+app.get('/authors/listNames', (req, res) => {AuthorController.listNames(req, res)});
 app.post('/author/create', (req, res) => {AuthorController.create(req, res)});
 app.post('/author/delete', (req, res) => {AuthorController.delete(req, res)});
 app.post('/author/update', (req, res) => {AuthorController.update(req, res)});
@@ -155,9 +156,11 @@ app.post('/payment/add', (req, res) => {PaymentController.add(req, res)});
 app.post('/payment/listCartItems', (req, res) => {PaymentController.listCartItems(req, res)});
 app.post('/payment/completeTransaction', (req, res) => {PaymentController.completeTransaction(req, res)});
 
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
 
 connect();
 
