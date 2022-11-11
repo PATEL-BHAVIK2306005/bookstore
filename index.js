@@ -5,6 +5,7 @@ const cors = require('cors');
 
 var config = require('./config');
 const mongoose = require('mongoose');
+const loginService = require('./src/services/login')
 
 const app = express()
 const session = require('express-session');
@@ -52,7 +53,16 @@ app.get('/admin', async (req, res) => {
   if (typeof req.session.username == 'undefined')
     res.json({status:"Failed",error:"not logged in"})
   else
-    res.render('home', {genres: await CategoryModel.find(), popularBooks: await BookModel.find().limit(10), authors:await AuthorModel.find().limit(10)})
+  {
+    const username = req.session.username
+    const isAdmin = loginService.isAdmin(username)
+    if (isAdmin){
+      res.render('admin')
+    }
+    else{
+      res.json({status:"Failed",error:"User is not an admin"})
+    }
+  }
 })
 
 app.get('/account', async (req, res) => {
@@ -89,10 +99,12 @@ app.get('/author/:id', async (req, res) => {
 })
 
 
-app.get('/dashboard', async (req, res) => {
-  res.render('dashboard')
+app.get('/adminLogin', async (req, res) => {
+  res.render('adminLogin')
 
 })
+
+
 
 //Book
 const {BookController, CategoryController } = require('./src/controllers')
