@@ -161,7 +161,7 @@ const UserController = {
         const password = req.body.password
         const result = await loginService.login(username, password)
         if (result) {
-            if (!(await loginService.isAdmin(user)))
+            if (!(await loginService.isAdmin(username)))
                 res.send({status:"Failed",error:"Admin Only"})
             else
             {

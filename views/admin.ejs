@@ -4,7 +4,41 @@
     <script src="/admin/js/admin.js"></script>
 </head>
 <body>
+    <h2>Create Book</h2>
+    <h2>Create Category</h2>
+    <div id="createBook">
+        <h2>Create Book</h2>
+        <input id="createBookId" class="createBookId" type="text" placeholder="Book Name"/>        
+        <input id="createBookLength" class="createBookLength" type="text" placeholder="Length"/>        
+        <input id="createBookCover" class="createBookCover" type="text" placeholder="Cover picture"/>        
+        <input id="createBookSummary" class="createBookSummary" type="text" placeholder="Summary"/>        
+        <input id="createBookPrice" class="createBookPrice" type="text" placeholder="Price"/>        
+        <input id="createBookReleaseDate" class="createBookReleaseDate" type="date" placeholder="Date"/>        
+        <input id="createBookQuantity" class="createBookQuantity" type="text" placeholder="Quantity"/>        
+        <input id="createBookCategory" class="createBookCategory" type="text" placeholder="Category"/>        
+        <input id="createBookAuthor" class="createBookAuthor" type="text" placeholder="Author"/>        
 
+        <button type="button" class="btn" onclick="createBook()">Create Book</button>
+    </div>
+    <div id="createAuthor">
+        <h2>Create Author</h2>
+        <input id="createAuthorInput" class="createAuthorInput" type="text" placeholder="Author Name"/>        
+        <input id="createAuthorBioInput" class="createAuthorBioInput" type="text" placeholder="Author Bio"/>        
+        <input id="createAuthorAgeInput" class="createAuthorAgeInput" type="text" placeholder="Author Age"/>        
+        <input id="createAuthorPictureInput" class="createAuthorPictureInput" type="text" placeholder="Author Picture"/>        
+        <button type="button" class="btn" onclick="createAuthor()">Create Author</button>
+    </div>
+    <div id="deleteBook">
+        <h2>Delete Book</h2>
+        <input id="deleteBookInput" class="deleteBookInput" type="text" placeholder="Book ID to Delete"/>        
+        <button type="button" class="btn" onclick="deleteBook()">Delete Book</button>
+    </div>
+    <div id="deleteAuthor">
+        <h2>Delete Author</h2>
+        <input id="deleteAuthorInput" class="deleteAuthorInput" type="text" placeholder="Book ID to Delete"/>        
+        <button type="button" class="btn" onclick="deleteAuthor()">Delete Author</button>
+    </div>
+    <h2>Promote to admin</h2>
 </body>
 
 </html>
