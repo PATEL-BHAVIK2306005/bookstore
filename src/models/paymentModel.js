@@ -5,7 +5,7 @@ const AccountPaymentSchema = mongoose.Schema({
     creditNumber: Number,
     date: Date,
     amount: Number,
-    address: String,
+    //address: String,
     username:
     {
         type: String,

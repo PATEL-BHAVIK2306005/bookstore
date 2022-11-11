@@ -12,18 +12,18 @@ const UserController = {
         const found = await UserModel.find({username: req.params.username})
         res.json(found);
     },
-    create: async(req, res) => {
+    createUser: async(req, res) => {
         const _id = req.body.email
         const check = await UserModel.exists({_id: _id})
         if (check)
         {
-            res.send({status:"Failed", error:"Admin Only"})
+            res.send({status:"Failed", error:"User already exists"})
         }
         else{
             const password = req.body.password
             const username = req.body.username
-            const role = req.body.role
             const address = req.body.address
+            const role = "Customer"
             const user = new UserModel({
                 _id,
                 password,
