@@ -4,7 +4,7 @@ async function signUp (username, password)
    const passwordA =  document.getElementById("password").value
    const emailA =  document.getElementById("email").value
    const addressA =  document.getElementById("address").value
-   const response = await fetch("http://localhost:3000/createUser", {
+   const response = await fetch("http://localhost:3000/user/create", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
