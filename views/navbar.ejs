@@ -1,15 +1,19 @@
+<head>
+  <script src="/navbar/js/navbar.js"></script>
+</head>
+
 <nav class="topnav">
     <a class="active" href="/home">Home</a>
     <a href="/account">Account</a>
     <a href="/cart">Cart</a>
     <div id="searchBar">
-    <select class="dropdown" id="alphalist">   
+    <select class="dropdown" id="searchOptions">   
         <option value="Book">Books</option>   
         <option value="Author">Author</option>
         <option value="Genre">Genre</option>
       </select> <br/> <br/>    
       <div class="search_bar">
-        <input class="search_nav" type="text" placeholder="Search..."/>        
+        <input id="searchNav" class="search_nav" type="text" placeholder="Search..."/>        
         <span class="fa fa-search"></span>   
       </div>
     </div>

@@ -31,6 +31,9 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
   res.render('login')
 })
+app.get('/signup', (req, res) => {
+  res.render('signUp')
+})
 
 const {CategoryModel} = require("./src/models");
 const {BookModel} = require("./src/models");
@@ -70,7 +73,7 @@ app.get('/author/:id', async (req, res) => {
   {books: await BookModel.find({author: authorID}),authorID})
 })
 
-app.get('/search', async (req, res) => {
+app.get('/search/:var(genre|books|author)/:id', async (req, res) => {
   res.render('search')
 
 })
