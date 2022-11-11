@@ -53,11 +53,11 @@ const UserController = {
             const output = await UserModel.findOneAndUpdate({username: username},{
                 role: "Administrator",
             })
-            
+
             if (output !== null){
                 res.json({status:"Success"})
             }
-            else res.json({status:"Failed",error:"could not find object")
+            else res.json({status:"Failed",error:"could not find object"})
         }
         },
     delete: async(req, res) => {
@@ -106,7 +106,7 @@ const UserController = {
         if (output !== null){
             res.json({status:"Success"})
         }
-        else res.json({status:"Failed",error:"could not find object")
+        else res.json({status:"Failed",error:"could not find object"})
     },
     changePassword: async(req, res) => {
         const id = req.session.username
