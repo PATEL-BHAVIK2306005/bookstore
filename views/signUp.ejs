@@ -2,10 +2,10 @@
 <html>
   <head>
     <title>Login Form</title>
-    <link rel="stylesheet" type="text/css" href="/login/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/signUp/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
-    <script src="/login/js/login.js"></script>
+    <script src="/signUp/js/signUp.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
@@ -31,9 +31,24 @@
               <input type="password" id="password" name="password" placeholder="Password" class="input">
             </div>
           </div>
-          <a href="/signUp"> Sign Up here</a>
-          <h2 id="wrongPassword" style="font-size:small; color:red; visibility:hidden">Passowrd is incorrect</h2>
-          <button type="button" class="btn" onclick="login()">Login</button>
+          <div class="input-div pass">
+            <div class="i"> 
+              <i class="fas fa-lock"></i>
+            </div>
+            <div class="input">
+              <input id="email" name="email" placeholder="Email" class="input">
+            </div>
+          </div>
+          <div class="input-div pass">
+            <div class="i"> 
+              <i class="fas fa-lock"></i>
+            </div>
+            <div class="input">
+              <input type="address" id="address" name="address" placeholder="Address" class="input">
+            </div>
+          </div>
+          <h2 id="somethingsWrong" style="font-size:small; color:red; visibility:hidden">Something went wrong try again.</h2>
+          <button type="button" class="btn" onclick="signUp()">Sign Up</button>
         </form>
       </div>
     </div>
