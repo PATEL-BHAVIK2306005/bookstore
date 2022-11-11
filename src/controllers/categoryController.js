@@ -15,6 +15,10 @@ const CategoryController = {
         const allCategories = await CategoryModel.find()
         res.json(allCategories)
     },
+    listNames: async (req, res) =>{
+        const allCategories = await CategoryModel.find().select('_id')
+        res.json(allCategories)
+    },
     listAll: async () =>{
         const allCategories = await CategoryModel.find()
         return allCategories;

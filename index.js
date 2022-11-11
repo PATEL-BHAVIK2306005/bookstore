@@ -42,7 +42,17 @@ const {PaymentModel} = require("./src/models");
 const {PaymentController} = require('./src/controllers')
 
 app.get('/home', async (req, res) => {
-  res.render('home', {genres: await CategoryModel.find(), popularBooks: await BookModel.find().limit(10), authors:await AuthorModel.find().limit(10)})
+  if (typeof req.session.username == 'undefined')
+    res.json({status:"Failed",error:"not logged in"})
+  else
+    res.render('home', {genres: await CategoryModel.find(), popularBooks: await BookModel.find().limit(10), authors:await AuthorModel.find().limit(10)})
+})
+
+app.get('/admin', async (req, res) => {
+  if (typeof req.session.username == 'undefined')
+    res.json({status:"Failed",error:"not logged in"})
+  else
+    res.render('home', {genres: await CategoryModel.find(), popularBooks: await BookModel.find().limit(10), authors:await AuthorModel.find().limit(10)})
 })
 
 app.get('/account', async (req, res) => {
@@ -86,7 +96,8 @@ app.get('/dashboard', async (req, res) => {
 //Book
 const {BookController, CategoryController } = require('./src/controllers')
 app.get('/books/list', (req, res) => {BookController.list(req, res)});
-app.get('/books/search', (req, res) => {BookController.search(req, res)});
+app.post('/books/search', (req, res) => {BookController.search(req, res)});
+app.post('/books/search2', (req, res) => {BookController.search2(req, res)});
 app.post('/books/create', (req, res) => {BookController.create(req, res)});
 app.get('/books/:name', (req, res) => {BookController.find(req, res)});
 app.post('/books/delete', (req, res) => {BookController.delete(req, res)});
@@ -97,6 +108,7 @@ const {AuthorController} = require('./src/controllers')
 app.get('/author/list', (req, res) => {AuthorController.list(req, res)});
 app.get('/author/books/:author', (req, res) => {AuthorController.getAllBooks(req, res)});
 app.get('/author/:name', (req, res) => {AuthorController.find(req, res)});
+app.get('/category/listNames', (req, res) => {AuthorController.listNames(req, res)});
 app.post('/author/create', (req, res) => {AuthorController.create(req, res)});
 app.post('/author/delete', (req, res) => {AuthorController.delete(req, res)});
 app.post('/author/update', (req, res) => {AuthorController.update(req, res)});
@@ -104,6 +116,7 @@ app.post('/author/update', (req, res) => {AuthorController.update(req, res)});
 //Category
 //const {CategoryController} = require('./src/controllers')
 app.get('/category/list', (req, res) => {CategoryController.list(req, res)});
+app.get('/category/listNames', (req, res) => {CategoryController.listNames(req, res)});
 app.get('/category/books/:name', (req, res) => {CategoryController.getAllBooks(req, res)});
 app.get('/category/:name', (req, res) => {CategoryController.find(req, res)});
 app.post('/category/create', (req, res) => {CategoryController.create(req, res)});
@@ -123,6 +136,8 @@ app.post('/logout', (req, res) => {UserController.logout(req, res)});
 app.post('/foo', (req, res) => {UserController.foo(req, res)});
 app.post('/isAdmin', (req, res) => {UserController.isAdmin(req, res)});
 app.post('/isLoggedIn', (req, res) => {UserController.isLoggedIn(req, res)});
+app.post('/user/getLocation', (req, res) => {UserController.getLocation(req, res)});
+app.post('/user/getAllLocations', (req, res) => {UserController.getAllLocations(req, res)});
 
 
 //Role
@@ -135,20 +150,11 @@ app.post('/role/create', (req, res) => {RoleController.create(req, res)});
 app.post('/role/delete', (req, res) => {RoleController.delete(req, res)});
 app.post('/role/update', (req, res) => {RoleController.update(req, res)});
 
-//Warehouse
-const {WarehouseController} = require('./src/controllers')
-app.get('/warehouse/list', (req, res) => {WarehouseController.list(req, res)});
-app.get('/warehouse/:coordinates', (req, res) => {WarehouseController.find(req, res)});
-app.post('/warehouse/create', (req, res) => {WarehouseController.create(req, res)});
-app.post('/warehouse/delete', (req, res) => {WarehouseController.delete(req, res)});
-app.post('/warehouse/update', (req, res) => {WarehouseController.update(req, res)});
 
 //Payment
 app.post('/payment/add', (req, res) => {PaymentController.add(req, res)});
 app.post('/payment/listCartItems', (req, res) => {PaymentController.listCartItems(req, res)});
 app.post('/payment/completeTransaction', (req, res) => {PaymentController.completeTransaction(req, res)});
-app.post('/payment/getPaymentLocation', (req, res) => {PaymentController.getPaymentLocation(req, res)});
-app.post('/payment/getAllLocations', (req, res) => {PaymentController.getAllLocations(req, res)});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

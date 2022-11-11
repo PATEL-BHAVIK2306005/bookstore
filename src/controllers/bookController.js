@@ -6,12 +6,22 @@ const BookController = {
         const found = await BookModel.findOne({_id: req.params.name})
         res.json(found)
     },
+    search2: async (req,res) => {
+        const result = await BookModel.find({
+            "$and": [
+                { _id: { '$regex': req.body.firstLetterBook+".*", $options: 'i'} }, 
+                { author: { '$regex': ".*"+req.body.author+".*", $options: 'i'} },
+                { category: { '$regex': ".*"+req.body.genre+".*", $options: 'i'} },
+            ]
+        })
+        res.json(result)
+    },
     search: async (req,res) => {
         const result = await BookModel.find({
             "$and": [
-                { _id: { '$regex': ".*"+req.query.name+".*", $options: 'i'} }, 
-                { author: { '$regex': ".*"+req.query.author+".*", $options: 'i'} },
-                { category: { '$regex': ".*"+req.query.category+".*", $options: 'i'} },
+                { _id: { '$regex': ".*"+req.body.name+".*", $options: 'i'} }, 
+                { author: { '$regex': ".*"+req.body.author+".*", $options: 'i'} },
+                { category: { '$regex': ".*"+req.body.category+".*", $options: 'i'} },
             ]
         })
         res.json(result)

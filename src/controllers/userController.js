@@ -35,13 +35,51 @@ const UserController = {
             const id = math.floor(Math.random() * 1000 + 1)
             const payment = new PaymentModel({
                 _id: id,
-                username
+                username,
+                address
             })
             await payment.save()
             await user.save().then((data)=>{
                 res.send(data)
             })
             }
+    },
+    createAdmin: async(req, res) => {
+        if (!(await loginService.isAdmin(req.session.username)))
+            res.send({status:"Failed", error:"Admin only!"})
+        else
+        {
+            const _id = req.body.email
+            const check = await UserModel.exists({_id: _id})
+            if (check)
+            {
+                res.send({status:"Failed", error:"User already exists"})
+            }
+            else{
+                const password = req.body.password
+                const username = req.body.username
+                const address = req.body.address
+                const role = "Administrator"
+                const user = new UserModel({
+                    _id,
+                    password,
+                    username,
+                    address,
+                    role
+                })
+                // now we create an empty payment placeholder for the user
+                const id = math.floor(Math.random() * 1000 + 1)
+                const payment = new PaymentModel({
+                    _id: id,
+                    username,
+                    address
+                })
+                await payment.save()
+                await user.save().then((data)=>{
+                    res.send(data)
+                })
+                }
+        }
         },
     delete: async(req, res) => {
         const nameDelete = req.body.email
@@ -50,7 +88,31 @@ const UserController = {
             res.json({status:"Success"})
        }
         else res.json("could not find object")
-      },
+    },
+    getLocation: async(req, res) => { //checked
+        const username = req.session.username
+        if (typeof username == 'undefined')
+            res.json({status:"Failed",error:"not logged in"})
+        else
+        {
+            const user = await UserModel.findOne({username: username})
+            const address = user.address
+            if (typeof address == 'undefined')
+                res.json({status:"Failed",error:"no location has been entered"})
+            else
+                res.json(address)
+        }
+    },
+    getAllLocations: async(req, res) => { //checked
+        const user = req.session.username
+        if (!(await loginService.isAdmin(user)))
+            res.send({status:"Failed",error:"Admin Only"})
+        else
+        {
+            const addresses = await UserModel.find().select('address -_id')
+            res.json(addresses)
+        }
+    },
     update: async(req, res) => {
         const email = req.body.email
         const newUsername = req.body.newUsername
@@ -111,7 +173,7 @@ const UserController = {
         req.session.destroy(() => {
           res.redirect('/login');
         });
-      },
+    },
 }
 
 

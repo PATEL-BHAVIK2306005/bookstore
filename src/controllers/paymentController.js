@@ -43,7 +43,6 @@ const PaymentController = { //////////////////////////////////// NOTTT check
         {
             const username = req.session.username
             const credit = req.body.creditNumber
-            const address = req.body.address
             const payment = await PaymentModel.findOne({username: username})
             const currentTransactions = payment.completedTransactions
             const date = new Date()
@@ -53,7 +52,6 @@ const PaymentController = { //////////////////////////////////// NOTTT check
             payment.completedTransactions = await currentTransactions.concat(items)
             payment.creditNumber = credit
             payment.date = date
-            payment.address = address
 
             // We reset the user's cart before finalizing
             payment.cart = []
@@ -74,7 +72,6 @@ const PaymentController = { //////////////////////////////////// NOTTT check
             const amount= req.body.amount
             const customer = req.body.customer
             const books = req.body.books
-            const warehouse = req.body.warehouse
             try{
                 const payment = new PaymentModel({
                     _id,
@@ -82,7 +79,6 @@ const PaymentController = { //////////////////////////////////// NOTTT check
                     amount,
                     customer,
                     books,
-                    warehouse,
                 })
 
                 payment.save().then((data)=>{
@@ -154,30 +150,6 @@ const PaymentController = { //////////////////////////////////// NOTTT check
                 }
                 else  res.json({status:"Failed",error:"couldn't find cart"})
              }
-            }
-        },
-        getPaymentLocation: async(req, res) => { //checked
-            const username = req.session.username
-            if (typeof username == 'undefined')
-                res.json({status:"Failed",error:"not logged in"})
-            else
-            {
-                const payment = await PaymentModel.findOne({username: username})
-                const address = payment.address
-                if (typeof address == 'undefined')
-                    res.json({status:"Failed",error:"no location has been entered"})
-                else
-                    res.json(address)
-            }
-        },
-        getAllLocations: async(req, res) => { //checked
-            const user = req.session.username
-            if (!(await loginService.isAdmin(user)))
-                res.send({status:"Failed",error:"Admin Only"})
-            else
-            {
-                const addresses = await PaymentModel.find().select('address -_id')
-                res.json(addresses)
             }
         },
 }

@@ -15,6 +15,10 @@ const AuthorController = {
         const allAuthors = await AuthorModel.find()
         res.json(allAuthors);
     },
+    listNames: async (req, res) =>{
+        const allAuthors = await AuthorModel.find().select('_id')
+        res.json(allAuthors)
+    },
     create: async(req, res) => {
         if (!(await loginService.isAdmin(req.session.username)))
             res.send({status:"Failed", error:"Admin Only"})
