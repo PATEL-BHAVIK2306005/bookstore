@@ -17,7 +17,7 @@ const UserController = {
         const check = await UserModel.exists({_id: _id})
         if (check)
         {
-            res.json("Object already exists")
+            res.send({status:"Failed", error:"Admin Only"})
         }
         else{
             const password = req.body.password
@@ -37,8 +37,8 @@ const UserController = {
                 _id: id,
                 username
             })
-            payment.save()
-            user.save().then((data)=>{
+            await payment.save()
+            await user.save().then((data)=>{
                 res.send(data)
             })
             }
@@ -47,7 +47,7 @@ const UserController = {
         const nameDelete = req.body.email
         const output = await UserModel.deleteOne({_id: nameDelete})
         if (output.deletedCount == 1 ){
-            res.json("deletion succesfull!")
+            res.json({status:"Success"})
        }
         else res.json("could not find object")
       },
@@ -63,7 +63,7 @@ const UserController = {
         })
 
         if (output !== null){
-            res.json("update successfull!")
+            res.json({status:"Success"})
         }
         else res.json("could not find object")
     },
@@ -90,7 +90,7 @@ const UserController = {
         }
         else
         {
-            res.json({status:"Failed"})
+            res.json({status:"Failed",error:"username or password incorrect"})
         }
         
     },
@@ -99,13 +99,13 @@ const UserController = {
         if (!(await loginService.isAdmin(req.session.username)))
             res.redirect('/login');
         else
-            res.json("Welcome!")
+            res.json({status:"Success"})
     },
     isAdmin: async (req, res, next) => { /// Checked
         if (!(await loginService.isAdmin(req.session.username)))
-            res.json("Admin Only!")
+            res.send({status:"Failed", error:"Admin Only"})
         else
-            res.json("Welcome!")
+            res.json({status:"Success"})
     },
     logout: async (req, res) => { // Checked
         req.session.destroy(() => {

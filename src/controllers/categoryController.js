@@ -21,7 +21,7 @@ const CategoryController = {
     },
     create: async(req, res) => {
         if (!(await loginService.isAdmin(req.session.username)))
-                res.send("Admin Only")
+            res.send({status:"Failed", error:"Admin Only"})
         else
         {
             const _id = req.body.name
@@ -29,7 +29,7 @@ const CategoryController = {
             const check = await CategoryModel.exists({_id: _id})
             if (check)
             {
-                res.json("Object already exists")
+                res.send({status:"Failed", error:"object already exists"})
             }
             else
             {
@@ -45,35 +45,33 @@ const CategoryController = {
     },
         delete: async(req, res) => {
             if (!(await loginService.isAdmin(req.session.username)))
-                res.send("Admin Only")
+                res.send({status:"Failed", error:"Admin Only"})
         else
         {
             const nameDelete = req.body.name
             const output = await CategoryModel.deleteOne({_id: nameDelete})
             if (output.deletedCount == 1 ){
-                res.json("deletion succesfull!")
+                res.send({status:"Success"})
             }
-            else res.json("could not find object")
+            else res.send({status:"Failed", error:"could not find object"})
         }
     },
         update: async(req, res) => {
             if (!(await loginService.isAdmin(req.session.username)))
-                res.send("Admin Only")
+                res.send({status:"Failed", error:"Admin Only"})
             else
             {
-                const currentName = req.body.currentName
-                const newName = req.body.newName
+                const _id = req.body.currentName
                 const newURL = req.body.newURL
                 
-                const output = await CategoryModel.findOneAndUpdate({_id: currentName}, {
-                    _id: newName,
+                const output = await CategoryModel.findOneAndUpdate({_id: _id}, {
                     url: newURL
                 })
                 
                 if (output !== null){
-                    res.json("update successfull!")
+                    res.send({status:"Success"})
                 }
-                else res.json("could not find object")
+                else res.send({status:"Failed", error:"could not find object"})
             }
     },
         getAllBooks: async(req, res) => {

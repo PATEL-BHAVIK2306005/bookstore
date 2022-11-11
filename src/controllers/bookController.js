@@ -22,14 +22,14 @@ const BookController = {
     },
     create: async(req, res) => {
         if (!(await loginService.isAdmin(req.session.username)))
-            res.send("Admin Only")
+            res.send({status:"Failed", error:"Admin only!"})
         else
         {
             const _id = req.body.name
             const check = await BookModel.exists({_id: _id})
             if (check)
             {
-                res.json("Object already exists")
+                res.send({status:"Failed", error:"object already exists"})
             }
             else{
                 const length = req.body.length
@@ -58,46 +58,45 @@ const BookController = {
                     })
                 }
                 catch(e){
-                    res.json(_id)
+                    res.send({status:"Failed", error:"could not create object"})
                  }
                 }
         }   
         },
         delete: async(req, res) => {
             if (!(await loginService.isAdmin(req.session.username)))
-                res.send("Admin Only")
+                res.send({status:"Failed", error:"Admin only!"})
             else
             {
                 const nameDelete = req.body.name
                 const output = await BookModel.deleteOne({_id: nameDelete})
                 if (output.deletedCount == 1 ){
-                    res.json("deletion succesfull!")
+                    res.json({status:"Success"})
                 }
-                else res.json("could not find object")
+                else res.send({status:"Failed", error:"could not find object"})
             }
         },
         update: async(req, res) => {
             if (!(await loginService.isAdmin(req.session.username)))
-                res.send("Admin Only")
+                res.send({status:"Failed", error:"Admin only!"})
             else
             {
                 id = req.body.id
                 const check = await BookModel.exists({_id: id})
                 if (!check)
                 {
-                    res.json("Book does not exist")
+                    res.send({status:"Failed", error:"could not find object"})
                 }
                 else
                 {
-                    const currentName = req.body.currentName
-                    const newName = req.body.newName
+                    const _id = req.body.name
                     const newLength = req.body.newLength
                     const newCover = req.body.newCover
                     const newSummary = req.body.newSummary
                     const newReleaseDate = req.body.newReleaseDate
                     const newPrice = req.body.newPrice
                     const newQuantity = req.body.newQuantity
-                    const output = await BookModel.findOneAndUpdate({_id: currentName}, {
+                    const output = await BookModel.findOneAndUpdate({_id: _id}, {
                         name: newName,
                         length: newLength,
                         cover: newCover,
@@ -108,22 +107,22 @@ const BookController = {
                     })
 
                     if (output !== null){
-                        res.json("update successfull!")
+                        res.json({status:"Success"})
                     }
-                    else res.json("could not find object")
+                    else res.send({status:"Failed", error:"could not find object"})
                 }
             }
         },
         updateQuantity: async(req, res) => {
             if (!(await loginService.isLoggedIn(req.session.username)))
-                res.send("Must be logged in to purchase")
+                res.send({status:"Failed", error:"Please login!"})
             else
                 {
                     const id = req.body.name
                     const check = await BookModel.exists({_id: id})
                     if (!check)
                     {
-                        res.json("Book does not exist")
+                        res.send({status:"Failed", error:"could not find object"})
                     }
                     else
                     {
@@ -134,9 +133,9 @@ const BookController = {
                         })
     
                         if (output !== null){
-                            res.json("update successfull!")
+                            res.json({status:"Success"})
                         }
-                        else res.json("could not find object")
+                        else res.send({status:"Failed", error:"could not find object"})
                   
         }}}
 }

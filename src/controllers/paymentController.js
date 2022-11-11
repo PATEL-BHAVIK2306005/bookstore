@@ -2,20 +2,20 @@ const {PaymentModel} = require("../models");
 const {BookModel} = require("../models");
 const loginService = require("../services/login")
 
-const PaymentController = {
+const PaymentController = { //////////////////////////////////// NOTTT check
     findOne: async (req,res) => {
         const found = await PaymentModel.findOne({_id: req.params.number})
         res.json(found);
     },
-    findMultiple: async (req,res) => {
+    findMultiple: async (req,res) => { /////////////////////////////////////// NOTTT check
         const found = await PaymentModel.find({_id: req.params.number})
         res.json(found);
     },
-    list: async (req, res) =>{
+    list: async (req, res) =>{ //checked
         const allPayments = await PaymentModel.find()
         res.json(allPayments)
     },
-    listCartItems: async (req, res) =>{
+    listCartItems: async (req, res) =>{ //checked
         if (typeof req.session.username == 'undefined')
                 res.json({status:"Failed",error:"not logged in"})
         else
@@ -36,7 +36,7 @@ const PaymentController = {
             res.json(items)
         }
     },
-    completeTransaction: async (req, res) =>{
+    completeTransaction: async (req, res) =>{ // checked
         if (typeof req.session.username == 'undefined')
                 res.json({status:"Failed",error:"not logged in"})
         else
@@ -62,12 +62,12 @@ const PaymentController = {
             })
         }
     },
-    create: async(req, res) => {
+    create: async(req, res) => { //////////////////////////////////// NOTTT check
         const _id = req.body.number
         const check = await PaymentModel.exists({_id: _id})
         if (check)
         {
-            res.json({status:"Failed",error:"payment number already exists"})
+            res.json({status:"Failed",error:"object already exists"})
         }
         else{
             const creditNumber = req.body.creditNumber
@@ -94,9 +94,9 @@ const PaymentController = {
                 }
             }
         },
-        delete: async(req, res) => { //////////////////////////////////// check
+        delete: async(req, res) => { //////////////////////////////////// NOTTT check
             if (!(await loginService.isAdmin(req.session.username)))
-                res.send("Admin Only")
+            res.json({status:"Failed",error:"Admin only"})
             else
             {
                 const nameDelete = req.body.number
@@ -107,8 +107,7 @@ const PaymentController = {
                 else res.json({status:"Failed",error:"could not find object"})
             }
         },
-        ////////////////////////////// check
-        update: async(req, res) => {
+        update: async(req, res) => {  // NOTTT
             if (!(await loginService.isAdmin(req.session.username)))
                 res.send({status:"Failed",error:"Admin Only"})
             else
@@ -118,7 +117,6 @@ const PaymentController = {
                 const newDate = req.body.newDate
                 const newAmount = req.body.newAmount
                 const newUsername = req.body.newUsername
-                // update cart and payment?
 
                 const output = await PaymentModel.findOneAndUpdate({_id}, {
                     creditNumber: newCreditNumber,
@@ -133,7 +131,7 @@ const PaymentController = {
                 else res.json({status:"Failed",error:"could not find object"})
             }
         },
-        add: async(req, res) => {
+        add: async(req, res) => { // checked
             if (typeof req.session.username == 'undefined')
                 res.json({status:"Failed",error:"not logged in"})
             else
@@ -158,7 +156,7 @@ const PaymentController = {
              }
             }
         },
-        getPaymentLocation: async(req, res) => {
+        getPaymentLocation: async(req, res) => { //checked
             const username = req.session.username
             if (typeof username == 'undefined')
                 res.json({status:"Failed",error:"not logged in"})
@@ -172,9 +170,9 @@ const PaymentController = {
                     res.json(address)
             }
         },
-        getAllLocations: async(req, res) => {
+        getAllLocations: async(req, res) => { //checked
             const user = req.session.username
-            if (!(await loginService.isAdmin(req.session.username)))
+            if (!(await loginService.isAdmin(user)))
                 res.send({status:"Failed",error:"Admin Only"})
             else
             {
