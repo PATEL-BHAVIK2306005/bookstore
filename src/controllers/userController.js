@@ -156,6 +156,25 @@ const UserController = {
         }
         
     },
+    adminLogin: async(req, res) => {
+        const username = req.body.username 
+        const password = req.body.password
+        const result = await loginService.login(username, password)
+        if (result) {
+            if (!(await loginService.isAdmin(user)))
+                res.send({status:"Failed",error:"Admin Only"})
+            else
+            {
+                req.session.username = username
+                res.json({status:"Success"})
+            }
+        }
+        else
+        {
+            res.json({status:"Failed",error:"username or password incorrect"})
+        }
+        
+    },
     isLoggedIn: async (req, res, next) => { // Checked
         console.log(req.session.username)
         if (!(await loginService.isAdmin(req.session.username)))
