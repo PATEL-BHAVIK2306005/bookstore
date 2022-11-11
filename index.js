@@ -77,6 +77,26 @@ app.get('/book/:id', async (req, res) => {
   {book: await BookModel.findOne({_id: bookID})})
 })
 
+app.get('/admin', async (req, res) => {
+  if (typeof req.session.username == 'undefined')
+    res.json({status:"Failed",error:"not logged in"})
+  else
+  {
+    const username = req.session.username
+    const isAdmin = loginService.isAdmin(username)
+    if (isAdmin){
+      res.render('admin')
+    }
+    else{
+      res.json({status:"Failed",error:"User is not an admin"})
+    }
+  }
+})
+app.get('/adminLogin', async (req, res) => {
+  res.render('adminLogin')
+
+})
+
 
 /*app.get('/search/:var(genre|books|author)/:id', async (req, res) => {
   res.render('search')
