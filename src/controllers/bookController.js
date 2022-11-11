@@ -7,7 +7,9 @@ const BookController = {
         res.json(found)
     },
     search2: async (req,res) => {
+        const price = req.body.price
         const result = await BookModel.find({
+            price: { $lte: price },
             "$and": [
                 { _id: { '$regex': req.body.firstLetterBook+".*", $options: 'i'} }, 
                 { author: { '$regex': ".*"+req.body.author+".*", $options: 'i'} },
