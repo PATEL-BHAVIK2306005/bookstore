@@ -47,41 +47,41 @@ const CategoryController = {
             }
         }
     },
-        delete: async(req, res) => {
-            if (!(await loginService.isAdmin(req.session.username)))
-                res.send({status:"Failed", error:"Admin Only"})
+    delete: async(req, res) => {
+        if (!(await loginService.isAdmin(req.session.username)))
+            res.send({status:"Failed", error:"Admin Only"})
+    else
+    {
+        const nameDelete = req.body.name
+        const output = await CategoryModel.deleteOne({_id: nameDelete})
+        if (output.deletedCount == 1 ){
+            res.send({status:"Success"})
+        }
+        else res.send({status:"Failed", error:"could not find object"})
+    }
+    },
+    update: async(req, res) => {
+        if (!(await loginService.isAdmin(req.session.username)))
+            res.send({status:"Failed", error:"Admin Only"})
         else
         {
-            const nameDelete = req.body.name
-            const output = await CategoryModel.deleteOne({_id: nameDelete})
-            if (output.deletedCount == 1 ){
+            const _id = req.body.currentName
+            const newURL = req.body.newURL
+            
+            const output = await CategoryModel.findOneAndUpdate({_id: _id}, {
+                url: newURL
+            })
+            
+            if (output !== null){
                 res.send({status:"Success"})
             }
             else res.send({status:"Failed", error:"could not find object"})
         }
     },
-        update: async(req, res) => {
-            if (!(await loginService.isAdmin(req.session.username)))
-                res.send({status:"Failed", error:"Admin Only"})
-            else
-            {
-                const _id = req.body.currentName
-                const newURL = req.body.newURL
-                
-                const output = await CategoryModel.findOneAndUpdate({_id: _id}, {
-                    url: newURL
-                })
-                
-                if (output !== null){
-                    res.send({status:"Success"})
-                }
-                else res.send({status:"Failed", error:"could not find object"})
-            }
+    getAllBooks: async(req, res) => {
+        const books = await BookModel.find({category: req.params.category})
+        res.json(books);
     },
-        getAllBooks: async(req, res) => {
-            const books = await BookModel.find({category: req.params.category})
-            res.json(books);
-        },
 }
 
 module.exports = CategoryController

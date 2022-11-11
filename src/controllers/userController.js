@@ -45,40 +45,19 @@ const UserController = {
             }
     },
     createAdmin: async(req, res) => {
-        if (!(await loginService.isAdmin(req.session.username)))
+        const username = req.session.username
+        if (!(await loginService.isAdmin(username)))
             res.send({status:"Failed", error:"Admin only!"})
         else
         {
-            const _id = req.body.email
-            const check = await UserModel.exists({_id: _id})
-            if (check)
-            {
-                res.send({status:"Failed", error:"User already exists"})
+            const output = await UserModel.findOneAndUpdate({username: username},{
+                role: "Administrator",
+            })
+            
+            if (output !== null){
+                res.json({status:"Success"})
             }
-            else{
-                const password = req.body.password
-                const username = req.body.username
-                const address = req.body.address
-                const role = "Administrator"
-                const user = new UserModel({
-                    _id,
-                    password,
-                    username,
-                    address,
-                    role
-                })
-                // now we create an empty payment placeholder for the user
-                const id = math.floor(Math.random() * 1000 + 1)
-                const payment = new PaymentModel({
-                    _id: id,
-                    username,
-                    address
-                })
-                await payment.save()
-                await user.save().then((data)=>{
-                    res.send(data)
-                })
-                }
+            else res.json({status:"Failed",error:"could not find object")
         }
         },
     delete: async(req, res) => {
@@ -127,7 +106,7 @@ const UserController = {
         if (output !== null){
             res.json({status:"Success"})
         }
-        else res.json("could not find object")
+        else res.json({status:"Failed",error:"could not find object")
     },
     changePassword: async(req, res) => {
         const id = req.session.username

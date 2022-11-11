@@ -169,6 +169,7 @@ app.post('/loginAdmin', (req, res) => {UserController.adminLogin(req, res)});
 app.post('/logout', (req, res) => {UserController.logout(req, res)});
 app.post('/foo', (req, res) => {UserController.foo(req, res)});
 app.post('/isAdmin', (req, res) => {UserController.isAdmin(req, res)});
+app.post('/promoteToAdmin', (req, res) => {UserController.createAdmin(req, res)});
 app.post('/isLoggedIn', (req, res) => {UserController.isLoggedIn(req, res)});
 app.post('/user/getLocation', (req, res) => {UserController.getLocation(req, res)});
 app.post('/user/getAllLocations', (req, res) => {UserController.getAllLocations(req, res)});
