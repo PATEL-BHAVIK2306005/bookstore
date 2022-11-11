@@ -6,7 +6,7 @@ const BookController = {
         const found = await BookModel.findOne({_id: req.params.name})
         res.json(found)
     },
-    search2: async (req,res) => {
+    search: async (req,res) => {
         const price = req.body.price
         const result = await BookModel.find({
             price: { $lte: price },
@@ -18,7 +18,7 @@ const BookController = {
         })
         res.json(result)
     },
-    search: async (req,res) => {
+    /*search: async (req,res) => {
         const result = await BookModel.find({
             "$and": [
                 { _id: { '$regex': ".*"+req.body.name+".*", $options: 'i'} }, 
@@ -27,7 +27,7 @@ const BookController = {
             ]
         })
         res.json(result)
-    },
+    },*/
     list: async (req, res) =>{
         const allBooks = await BookModel.find()
         res.json(allBooks)
