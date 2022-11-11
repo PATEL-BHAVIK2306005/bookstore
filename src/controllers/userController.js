@@ -46,11 +46,12 @@ const UserController = {
     },
     createAdmin: async(req, res) => {
         const username = req.session.username
+        const newAdmin = req.body.name
         if (!(await loginService.isAdmin(username)))
             res.send({status:"Failed", error:"Admin only!"})
         else
         {
-            const output = await UserModel.findOneAndUpdate({username: username},{
+            const output = await UserModel.findOneAndUpdate({username: newAdmin},{
                 role: "Administrator",
             })
 
