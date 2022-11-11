@@ -26,9 +26,6 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));  
 const port = 3000
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 app.get('/login', (req, res) => {
   res.render('login')
 })
@@ -75,11 +72,11 @@ app.get('/genre/:id', async (req, res) => {
   res.render('genre', 
   {books: await BookModel.find({category: genreID}),genreID})
 })
-app.get('/cart', async (req, res) => {
-  const username = req.session.username
-  res.render('cart', 
-  {books: (await PaymentModel.findOne({username}).populate('cart')).cart})
+
+app.get('/cart', async (req, res) => {  
+  res.render('cart',)
 })
+
 
 app.get('/book/:id', async (req, res) => {
   const bookID = req.params.id

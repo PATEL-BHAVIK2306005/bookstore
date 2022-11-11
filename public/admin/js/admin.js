@@ -186,10 +186,10 @@ async function promoteToAdmin(){
     }).then((value )=> {
         value.json().then((output)=>{
             if (output.status === "Failed"){
-                alert("Can't create book")
+                alert("Can't promote to admin, user doesn't exist")
             }
             else{
-                alert("Created")
+                alert("Promoted")
             }    
         })
     })

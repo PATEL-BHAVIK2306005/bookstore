@@ -28,3 +28,26 @@ async function changePassword ()
     })
 }
 
+async function listCompletedTransactions(){
+    const container = document.getElementById('completedTransactions');
+    const totalPriceElement = document.getElementById('totalPrice');
+    const response = await fetch("http://localhost:3000/payment/listCompletedTransactions", {
+            method: 'POST',
+        }).then((value )=> {
+            value.json().then((output)=>{
+                output.forEach(item => {
+                    var element = document.createElement("div")
+                    element.innerHTML = `
+                    <a class="innerBook" href="/book/${item._id}"> 
+                    <h1 class="bookTitle">${item._id}</h1>
+                    <img class="bookImage" src="${item.cover}"></img>
+                    </a>
+                    `
+                    container.appendChild(element)
+                })
+                
+
+            })
+        })
+    }
+listCompletedTransactions()

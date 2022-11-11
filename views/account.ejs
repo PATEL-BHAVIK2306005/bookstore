@@ -2,7 +2,7 @@
     <head>
         <link rel="stylesheet" type="text/css" href="/account/css/style.css">
         <link rel="stylesheet" type="text/css" href="/navbar/css/style.css">
-        <script src="/account/js/account.js"></script>
+        <script defer src="/account/js/account.js"></script>
     </head>
     <body>
         <%- include('navbar.ejs') %>
@@ -22,6 +22,10 @@
             <h2 id="wrongPassword" style="font-size:small; color:red; visibility:hidden">Passowrd is incorrect</h2>
             <h2 id="changedPassword" style="font-size:small; color:green; visibility:hidden">Passowrd changed</h2>
             <button type="button" class="btn" onclick="changePassword()" class="btn">Login</button>
+
+            <div id="completedTransactions">
+                
+            </div>
           </form>
         </div>
     </body>
