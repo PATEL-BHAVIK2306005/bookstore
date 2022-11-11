@@ -18,8 +18,9 @@ const BookController = {
         })
         res.json(result)
     },
-    /*search: async (req,res) => {
+    searchByName: async (req,res) => {
         const result = await BookModel.find({
+            price: { $lte: price },
             "$and": [
                 { _id: { '$regex': ".*"+req.body.name+".*", $options: 'i'} }, 
                 { author: { '$regex': ".*"+req.body.author+".*", $options: 'i'} },
@@ -27,7 +28,7 @@ const BookController = {
             ]
         })
         res.json(result)
-    },*/
+    },
     list: async (req, res) =>{
         const allBooks = await BookModel.find()
         res.json(allBooks)
