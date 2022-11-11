@@ -4,8 +4,6 @@
     <script src="/admin/js/admin.js"></script>
 </head>
 <body>
-    <h2>Create Book</h2>
-    <h2>Create Category</h2>
     <div id="createBook">
         <h2>Create Book</h2>
         <input id="createBookId" class="createBookId" type="text" placeholder="Book Name"/>        
@@ -28,6 +26,13 @@
         <input id="createAuthorPictureInput" class="createAuthorPictureInput" type="text" placeholder="Author Picture"/>        
         <button type="button" class="btn" onclick="createAuthor()">Create Author</button>
     </div>
+
+    <div id="createCategory">
+        <h2>Create Category</h2>
+        <input id="createCategoryInput" class="createCategoryInput" type="text" placeholder="Category Name"/>        
+        <input id="createCategoryPicture" class="createCategoryPicture" type="text" placeholder="Category Picture"/>        
+        <button type="button" class="btn" onclick="createCategory()">Create Category</button>
+    </div>
     <div id="deleteBook">
         <h2>Delete Book</h2>
         <input id="deleteBookInput" class="deleteBookInput" type="text" placeholder="Book ID to Delete"/>        
@@ -35,10 +40,19 @@
     </div>
     <div id="deleteAuthor">
         <h2>Delete Author</h2>
-        <input id="deleteAuthorInput" class="deleteAuthorInput" type="text" placeholder="Book ID to Delete"/>        
+        <input id="deleteAuthorInput" class="deleteAuthorInput" type="text" placeholder="Author name to Delete"/>        
         <button type="button" class="btn" onclick="deleteAuthor()">Delete Author</button>
     </div>
-    <h2>Promote to admin</h2>
+    <div id="deleteCategory">
+        <h2>Delete Category</h2>
+        <input id="deleteCategoryId" class="deleteCategoryId" type="text" placeholder="Category name to Delete"/>        
+        <button type="button" class="btn" onclick="deleteCategory()">Delete Category</button>
+    </div>
+    <div id="promoteToAdmin">
+        <h2>Promote To Admin</h2>
+        <input id="promoteToAdminID" class="promoteToAdminID" type="text" placeholder="Username to Promote"/>        
+        <button type="button" class="btn" onclick="promoteToAdmin()">Promote</button>
+    </div>
 </body>
 
 </html>

@@ -37,7 +37,31 @@ async function deleteAuthor(){
     }).then((value )=> {
         value.json().then((output)=>{
             if (output.status === "Failed"){
-                alert("Can't delete author, book doesn't exist")
+                alert("Can't delete author, author doesn't exist")
+            }
+            else{
+                alert("Deleted")
+            }    
+        })
+    })
+}
+
+async function deleteCategory(){
+    var deleteCategoryId = document.getElementById('deleteCategoryId').value
+    const response = await fetch("http://localhost:3000/category/delete", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin' : "*",
+          },
+        body: JSON.stringify({
+            name:deleteCategoryId
+        })
+    }).then((value )=> {
+        value.json().then((output)=>{
+            if (output.status === "Failed"){
+                alert("Can't delete category, category doesn't exist")
             }
             else{
                 alert("Deleted")
@@ -67,7 +91,34 @@ async function createAuthor(){
     }).then((value )=> {
         value.json().then((output)=>{
             if (output.status === "Failed"){
-                alert("Can't create author, book doesn't exist")
+                alert("Can't create author")
+            }
+            else{
+                alert("Created")
+            }    
+        })
+    })
+}
+
+async function createCategory(){
+    var createCategoryId = document.getElementById('createCategoryInput').value
+    var createCategoryPicture = document.getElementById('createCategoryPicture').value
+
+    const response = await fetch("http://localhost:3000/category/create", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin' : "*",
+          },
+        body: JSON.stringify({
+            name:createCategoryId,
+            url:createCategoryPicture,
+        })
+    }).then((value )=> {
+        value.json().then((output)=>{
+            if (output.status === "Failed"){
+                alert("Can't create category")
             }
             else{
                 alert("Created")
@@ -87,7 +138,7 @@ async function createBook(){
     var createBookAuthor = document.getElementById('createBookAuthor').value
     var createBookCategory = document.getElementById('createBookCategory').value
 
-    const response = await fetch("http://localhost:3000/book/create", {
+    const response = await fetch("http://localhost:3000/books/create", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -109,7 +160,7 @@ async function createBook(){
     }).then((value )=> {
         value.json().then((output)=>{
             if (output.status === "Failed"){
-                alert("Can't create book, book doesn't exist")
+                alert("Can't create book")
             }
             else{
                 alert("Created")
@@ -117,4 +168,31 @@ async function createBook(){
         })
     })
 }
+
+async function promoteToAdmin(){
+    var promoteToAdminID = document.getElementById('promoteToAdminID').value
+
+    const response = await fetch("http://localhost:3000/promoteToAdmin", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin' : "*",
+          },
+        body: JSON.stringify({
+            name:promoteToAdminID,
+            
+        })
+    }).then((value )=> {
+        value.json().then((output)=>{
+            if (output.status === "Failed"){
+                alert("Can't create book")
+            }
+            else{
+                alert("Created")
+            }    
+        })
+    })
+}
+
 
