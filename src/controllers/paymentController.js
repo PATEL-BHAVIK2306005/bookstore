@@ -36,6 +36,16 @@ const PaymentController = { //////////////////////////////////// NOTTT check
             res.json(items)
         }
     },
+    listCompletedTransactions: async (req, res) =>{ //checked
+        if (typeof req.session.username == 'undefined')
+                res.json({status:"Failed",error:"not logged in"})
+        else
+        {
+            const username = req.session.username
+            const payment = await PaymentModel.findOne({username: username})
+            res.json(payment.completedTransactions)
+        }
+    },
     completeTransaction: async (req, res) =>{ // checked
         if (typeof req.session.username == 'undefined')
                 res.json({status:"Failed",error:"not logged in"})
