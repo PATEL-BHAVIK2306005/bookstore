@@ -17,14 +17,14 @@ const AuthorController = {
     },
     create: async(req, res) => {
         if (!(await loginService.isAdmin(req.session.username)))
-            res.send("Admin Only")
+            res.send({status:"Failed", error:"Admin Only"})
         else
         {
             const _id = req.body.name
             const check = await AuthorModel.exists({_id: _id})
             if (check)
             {
-                res.json("Object already exists")
+                res.send({status:"Failed",error:"Object already exists"})
             }
             else{
                 const age = req.body.age
@@ -49,31 +49,29 @@ const AuthorController = {
     },
     delete: async(req, res) => {
         if (!(await loginService.isAdmin(req.session.username)))
-            res.send("Admin Only")
+            res.send({status:"Failed", error:"Admin Only"})
         else
         {
             const nameDelete = req.body.name
             const output = await AuthorModel.deleteOne({_id: nameDelete})
             if (output.deletedCount == 1 ){
-                res.json("deletion succesfull!")
+                res.json({status:"Success"})
             }
-            else res.json("could not find object")
+            else res.send({status:"Failed", error:"could not find object"})
         }
     },
     update: async(req, res) => {
         if (!(await loginService.isAdmin(req.session.username)))
-            res.send("Admin Only")
+            res.send({status:"Failed", error:"Admin Only"})
         else
         {
-            const currentName = req.body.currentName
-            const newName = req.body.newName
+            const _id = req.body.name
             const newAge = req.body.newAge
             const newBio = req.body.newBio
             const newPicture = req.body.newPicture
             const newAuthor = req.body.newAuthor
 
-            const output = await AuthorModel.findOneAndUpdate({_id: currentName}, {
-                name: newName,
+            const output = await AuthorModel.findOneAndUpdate({_id: _id}, {
                 age: newAge,
                 bio: newBio,
                 picture: newPicture,
@@ -81,9 +79,9 @@ const AuthorController = {
             })
 
             if (output !== null){
-                res.json("update successfull!")
+                res.json({status:"Success"})
             }
-            else res.json("could not find object")
+            else res.send({status:"Failed", error:"could not find object"})
         }
     },
 }

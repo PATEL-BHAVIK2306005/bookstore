@@ -22,14 +22,5 @@ async function isLoggedIn() {
     else
         return false
 }
-/*async function register(_id, password) {
 
-    const user = new User({
-        _id,
-        password
-    });
-
-    await user.save()        
-}
-*/
 module.exports = { login, isAdmin, isLoggedIn } // register }
