@@ -87,6 +87,26 @@ app.get('/book/:id', async (req, res) => {
   {book: await BookModel.findOne({_id: bookID})})
 })
 
+app.get('/admin', async (req, res) => {
+  if (typeof req.session.username == 'undefined')
+    res.json({status:"Failed",error:"not logged in"})
+  else
+  {
+    const username = req.session.username
+    const isAdmin = loginService.isAdmin(username)
+    if (isAdmin){
+      res.render('admin')
+    }
+    else{
+      res.json({status:"Failed",error:"User is not an admin"})
+    }
+  }
+})
+app.get('/adminLogin', async (req, res) => {
+  res.render('adminLogin')
+
+})
+
 
 /*app.get('/search/:var(genre|books|author)/:id', async (req, res) => {
   res.render('search')
@@ -114,6 +134,7 @@ app.post('/books/create', (req, res) => {BookController.create(req, res)});
 app.get('/books/:name', (req, res) => {BookController.find(req, res)});
 app.post('/books/delete', (req, res) => {BookController.delete(req, res)});
 app.post('/books/update', (req, res) => {BookController.update(req, res)});
+app.post('/books/searchByName', (req, res) => {BookController.searchByName(req, res)});
 
 //Author
 const {AuthorController} = require('./src/controllers')
@@ -144,6 +165,7 @@ app.post('/user/delete', (req, res) => {UserController.delete(req, res)});
 app.post('/user/update', (req, res) => {UserController.update(req, res)});
 app.post('/user/changePassword', (req, res) => {UserController.changePassword(req, res)});
 app.post('/login', (req, res) => {UserController.login(req, res)});
+app.post('/adminLogin', (req, res) => {UserController.adminLogin(req, res)});
 app.post('/logout', (req, res) => {UserController.logout(req, res)});
 app.post('/foo', (req, res) => {UserController.foo(req, res)});
 app.post('/isAdmin', (req, res) => {UserController.isAdmin(req, res)});
