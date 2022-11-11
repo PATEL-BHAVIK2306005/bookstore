@@ -102,6 +102,7 @@ app.post('/books/create', (req, res) => {BookController.create(req, res)});
 app.get('/books/:name', (req, res) => {BookController.find(req, res)});
 app.post('/books/delete', (req, res) => {BookController.delete(req, res)});
 app.post('/books/update', (req, res) => {BookController.update(req, res)});
+app.post('/books/searchByName', (req, res) => {BookController.searchByName(req, res)});
 
 //Author
 const {AuthorController} = require('./src/controllers')
