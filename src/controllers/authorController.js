@@ -78,15 +78,15 @@ const AuthorController = {
             else
             {
                 const author = await AuthorModel.findOne({_id: _id})
-                const newAge = req.body.newAge
+                let newAge = req.body.newAge
                 if (!(newAge))
                         newAge = author.age
 
-                const newBio = req.body.newBio
+                let newBio = req.body.newBio
                 if (!(newBio))
                         newBio = author.bio
-                        
-                const newPicture = req.body.newPicture
+
+                let newPicture = req.body.newPicture
                 if (!(newPicture))
                         newPicture = author.picture
     

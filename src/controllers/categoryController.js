@@ -71,8 +71,10 @@ const CategoryController = {
             {
                 res.send({status:"Failed", error:"could not find object"})
             }
-            
-            const newURL = req.body.newURL
+            let newURL = req.body.newURL
+            if (!(newURL))
+                        newURL = book.url
+
             const output = await CategoryModel.findOneAndUpdate({_id: _id}, {
                 url: newURL
             })

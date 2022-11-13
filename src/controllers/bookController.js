@@ -103,35 +103,35 @@ const BookController = {
                 else
                 {
                     const book = await BookModel.findOne({_id: _id})
-                    const newLength = req.body.newLength
+                    let newLength = req.body.newLength
                     if (!(newLength))
                         newLength = book.length
 
-                    const newCover = req.body.newCover
+                    let newCover = req.body.newCover
                     if (!(newCover))
                         newCover = book.cover
 
-                    const newSummary = req.body.newSummary
+                    let newSummary = req.body.newSummary
                     if (!(newSummary))
                         newSummary = book.summary
 
-                    const newReleaseDate = req.body.newReleaseDate
+                    let newReleaseDate = req.body.newReleaseDate
                     if (!(newReleaseDate))
                         newReleaseDate = book.relaseDate
 
-                    const newPrice = req.body.newPrice
+                    let newPrice = req.body.newPrice
                     if (!(newPrice))
                         newPrice = book.price
 
-                    const newQuantity = req.body.newQuantity
+                    let newQuantity = req.body.newQuantity
                     if (!(newQuantity))
                         newQuantity = book.quantity
                     
-                    const newCategory = req.body.newCategory
+                    let newCategory = req.body.newCategory
                     if (!(newCategory))
                         newQuantity = book.quantity
                     
-                    const newAuthor = req.body.newAuthor
+                    let newAuthor = req.body.newAuthor
                     if (!(newAuthor))
                         newAuthor = book.author
 
