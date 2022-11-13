@@ -1,7 +1,7 @@
 async function login (username, password)
 {
-   const usernameA = document.getElementById("username").value
-   const passwordA =  document.getElementById("password").value
+   const usernameA = $("#username").val()
+   const passwordA =  $("#password").val()
    const response = await fetch("http://localhost:3000/login", {
         method: 'POST',
         headers: {
@@ -16,7 +16,7 @@ async function login (username, password)
     }).then((value )=> {
         value.json().then((output)=>{
             if (output.status === "Failed"){
-                document.getElementById("wrongPassword").style.visibility = "visible";
+                $("#wrongPassword").show();
             }
             else{
                 window.location.replace("/home")

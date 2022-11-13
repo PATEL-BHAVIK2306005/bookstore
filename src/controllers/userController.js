@@ -156,7 +156,6 @@ const UserController = {
         
     },
     isLoggedIn: async (req, res, next) => { // Checked
-        console.log(req.session.username)
         if (!(await loginService.isAdmin(req.session.username)))
             res.redirect('/login');
         else
