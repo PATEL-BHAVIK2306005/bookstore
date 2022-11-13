@@ -1,50 +1,87 @@
-<html>
-<head>
-    <link rel="stylesheet" href="/style.css">
+<%- include('header.ejs') %>
     <link rel="stylesheet" href="/home/css/style.css">
     <link rel="stylesheet" type="text/css" href="/navbar/css/style.css">
     <script src="/home/js/login.js"></script>
 </head>
-</head>
 <body>
-    <%- include('navbar.ejs') %>
-    </div>
-    <div id="container">
-        <h2>Genre</h2>
-        <div id="genres">
-            <div class="sectionContainer">
+    <%- include('navbar.ejs') %> 
+    <div 
+        class="bg-image"
+        style="
+        background-image:  url('/background/background.jpg');
+        height: 100vh;
+        "
+
+   >
+
+   <div class="col-sm-6 text-md-center">
+        <h2 class="text-md-center">Genre</h2>
+
+            <div class="card-deck align-items row">
                 <% genres.forEach((genre) =>{ %>
-                    <a class="inner" href="/genre/<%=genre._id%>"> 
-                        <h1 class="title"><%=genre._id%></h1>
-                        <img class="genreImage" src="<%=genre.url%>"></img>
-                    </a>
+                <div 
+                    class="card"
+                    style="max-width: 18rem;
+                        max-heigth: 18rem;
+                        display:inline;">
+            
+                <img src="<%=genre.url%>" class="card-img-top" alt="Card image cap">
+
+         
+                        <div class="card-body text-white">
+                            <h1 class="card-title"><%=genre._id%></h1>
+                            <p class="card-text">does this show</p>
+                        </div>
+
+                
+                </div>
                 <% }); %>
             </div>
-        </div>
+
+
+        <hr class="hr hr-blurry" />
+
+    
         <h2>Popular Books</h2>
-        <div id="popularBooks" >
-            <div class="sectionContainer">
+        <div class="card-deck">
+
             <% popularBooks.forEach((book) =>{ %>
-                <a class="inner" href="/book/<%=book._id%>"> 
-                    <h1 class="title"><%=book._id%></h1>
-                    <img class="bookImage" src="<%=book.cover%>"></img>
-                </a>
+            
+                    <div 
+                    class="card"
+                    style="max-width: 18rem;">
+                    <img src="<%=book.url%>" class="card-img-top">
+                    <div class="card-body text-white">
+                        <h1 class="card-title"><%=book._id%></h1>
+                    </div>
+
+                    
+                    </div>
             <% }); %>
             </div>
-        </div>
+        <hr class="hr hr-blurry" />
+
         <h2>Popular Authors</h2>
-        <div id="popularAuthors">
-            <div class="sectionContainer">
+        <div class="card-deck">
             <% authors.forEach((author) =>{ %>
-                <a class="inner" href="/author/<%=author._id%>"> 
-                    <h1 class="title"><%=author._id%></h1>
-                    <img class="authorImage" src="<%=author.picture%>"></img>
-                </a>
+                    <div 
+                    class="card card-1 shadow-1-strong"
+                    style="max-width: 18rem;">
+
+                        <div class="card-body text-white">
+                            <h1 class="card-title"><%=author._id%></h1>
+                        </div>
+
+            
+                    </div>
             <% }); %>
             </div>
         </div>
-    </div>
-    <aside>
-        <div>Frequently asked questions</div>
-    </aside>
+    </div>  
+        <aside>
+            <div>Frequently asked questions</div>
+        </aside>
+
+  
 <%- include('footer.ejs') %>
+
