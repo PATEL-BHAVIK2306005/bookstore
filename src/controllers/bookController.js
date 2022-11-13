@@ -8,17 +8,32 @@ const BookController = {
     },
     search: async (req,res) => {
         const price = req.body.price
-        const result = await BookModel.find({
-            price: { $lte: price },
-            "$and": [
-                { _id: { '$regex': req.body.firstLetterBook+".*", $options: 'i'} }, 
-                { author: { '$regex': ".*"+req.body.author+".*", $options: 'i'} },
-                { category: { '$regex': ".*"+req.body.genre+".*", $options: 'i'} },
-            ]
-        })
+        const name =req.body.name
+        if (!(name))
+        {
+            const result = await BookModel.find({
+                price: { $lte: price },
+                "$and": [
+                    { _id: { '$regex': req.body.firstLetterBook+".*", $options: 'i'} }, 
+                    { author: { '$regex': ".*"+req.body.author+".*", $options: 'i'} },
+                    { category: { '$regex': ".*"+req.body.genre+".*", $options: 'i'} },
+                ]
+            })
+        }
+        else
+        {
+            const result = await BookModel.find({
+                price: { $lte: price },
+                "$and": [
+                    { _id: { '$regex': ".*"+req.body.name+".*", $options: 'i'} }, 
+                    { author: { '$regex': ".*"+req.body.author+".*", $options: 'i'} },
+                    { category: { '$regex': ".*"+req.body.genre+".*", $options: 'i'} },
+                ]
+            })
+        }
         res.json(result)
     },
-    searchByName: async (req,res) => {
+    /*searchByName: async (req,res) => {
         const result = await BookModel.find({
             price: { $lte: price },
             "$and": [
@@ -28,7 +43,7 @@ const BookController = {
             ]
         })
         res.json(result)
-    },
+    },*/
     list: async (req, res) =>{
         const allBooks = await BookModel.find()
         res.json(allBooks)
