@@ -19,6 +19,7 @@ const BookController = {
                     { category: { '$regex': ".*"+req.body.genre+".*", $options: 'i'} },
                 ]
             })
+            res.json(result)
         }
         else
         {
@@ -30,8 +31,8 @@ const BookController = {
                     { category: { '$regex': ".*"+req.body.genre+".*", $options: 'i'} },
                 ]
             })
+            res.json(result)
         }
-        res.json(result)
     },
     /*searchByName: async (req,res) => {
         const result = await BookModel.find({
