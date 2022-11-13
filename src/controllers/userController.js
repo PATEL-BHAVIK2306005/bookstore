@@ -168,7 +168,7 @@ const UserController = {
     },
     logout: async (req, res) => { // Checked
         req.session.destroy(() => {
-          res.redirect('/login');
+            res.json({status:"Success"})
         });
     },
 }
