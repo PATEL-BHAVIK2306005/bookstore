@@ -169,6 +169,48 @@ async function createBook(){
     })
 }
 
+async function updateBook(){
+    var updateBookId = document.getElementById('updateBookId').value
+    var updateBookLength = Number(document.getElementById('updateBookLength').value)
+    var updateBookCover = document.getElementById('updateBookCover').value
+    var updateBookSummary = document.getElementById('updateBookSummary').value
+    var updateBookReleaseDate = new Date(document.getElementById('updateBookReleaseDate').value)
+    var updateBookPrice = Number(document.getElementById('updateBookPrice').value)
+    var updateBookQuantity = Number(document.getElementById('updateBookQuantity').value)
+    var updateBookAuthor = document.getElementById('createBookAuthor').value
+    var updateBookCategory = document.getElementById('createBookCategory').value
+
+    const response = await fetch("http://localhost:3000/books/create", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin' : "*",
+          },
+        body: JSON.stringify({
+            name : createBookId,
+            summary : createBookSummary,
+            cover : createBookCover,
+            length : createBookLength,
+            releaseDate : createBookReleaseDate,
+            price : createBookPrice,
+            quantity : createBookQuantity,
+            author : createBookAuthor,
+            category : createBookCategory,
+            
+        })
+    }).then((value )=> {
+        value.json().then((output)=>{
+            if (output.status === "Failed"){
+                alert("Can't update book")
+            }
+            else{
+                alert("Updated")
+            }    
+        })
+    })
+}
+
 async function promoteToAdmin(){
     var promoteToAdminID = document.getElementById('promoteToAdminID').value
 

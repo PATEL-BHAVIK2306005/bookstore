@@ -63,7 +63,6 @@ app.get('/admin', async (req, res) => {
 })
 
 app.get('/account', async (req, res) => {
-  console.log(req.session.username)
   res.render('account')
 })
 

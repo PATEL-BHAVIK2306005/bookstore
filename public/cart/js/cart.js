@@ -33,8 +33,6 @@ async function listCart(){
                     
                     element.innerHTML = `
                     <a class="innerBook" href="/book/${item._id}"> 
-                    <h1 class="bookTitle">${item._id}</h1>
-                    <img class="bookImage" src="${item.cover}"></img>
                     </a>
                     `
                     container.appendChild(element)

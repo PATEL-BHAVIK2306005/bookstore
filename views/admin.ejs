@@ -2,8 +2,22 @@
 <head>
     <link rel="stylesheet" href="/admin/css/style.css">
     <script src="/admin/js/admin.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+    <div id="updateBook">
+        <h2>Update Book</h2>
+        <input id="updateBookId" class="updateBookId" type="text" placeholder="Book Name"/>        
+        <input id="updateBookLength" class="updateBookLength" type="text" placeholder="Length"/>        
+        <input id="updateBookCover" class="updateBookCover" type="text" placeholder="Cover picture"/>        
+        <input id="updateBookSummary" class="updateBookSummary" type="text" placeholder="Summary"/>        
+        <input id="updateBookReleaseDate" class="updateBookReleaseDate" type="text" placeholder="Price"/>        
+        <input id="updateBookPrice" class="updateBookPrice" type="date" placeholder="Date"/>        
+        <input id="updateBookQuantity" class="updateBookQuantity" type="text" placeholder="Quantity"/>        
+        <input id="updateBookAuthor" class="updateBookAuthor" type="text" placeholder="Category"/>        
+        <input id="updateBookCategory" class="updateBookCategory" type="text" placeholder="Author"/>        
+        <button type="button" class="btn" onclick="updateBook()">Update Book</button>
+    </div>
     <div id="createBook">
         <h2>Create Book</h2>
         <input id="createBookId" class="createBookId" type="text" placeholder="Book Name"/>        

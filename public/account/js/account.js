@@ -1,9 +1,9 @@
 async function changePassword ()
 {
-   document.getElementById("wrongPassword").style.visibility = "visible";
-   document.getElementById("changePassword").style.visibility = "visible";
-   const oldPassword = document.getElementById("oldPassword").value
-   const newPassword =  document.getElementById("newPassword").value
+   $("#wrongPassword").show();
+   $("#changePassword").show();
+   const oldPassword = $("#oldPassword").val()
+   const newPassword =  $("#newPassword").val()
    const response = await fetch("http://localhost:3000/user/changePassword", {
         method: 'POST',
         headers: {
@@ -18,17 +18,17 @@ async function changePassword ()
     }).then((value )=> {
         value.json().then((output)=>{
             if (output.status === "Failed"){
-                document.getElementById("wrongPassword").style.visibility = "visible";
+                $("#wrongPassword").show();
             }
             else{
-                document.getElementById("changedPassword").style.visibility = "visible";
+                $("#changedPassword").show();
             }    
         })
         
     })
 }
 
-async function listCompletedTransactions(){
+/*async function listCompletedTransactions(){
     const container = document.getElementById('completedTransactions');
     const totalPriceElement = document.getElementById('totalPrice');
     const response = await fetch("http://localhost:3000/payment/listCompletedTransactions", {
@@ -51,3 +51,4 @@ async function listCompletedTransactions(){
         })
     }
 listCompletedTransactions()
+*/

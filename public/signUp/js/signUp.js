@@ -1,9 +1,9 @@
 async function signUp (username, password)
 {
-   const usernameA = document.getElementById("username").value
-   const passwordA =  document.getElementById("password").value
-   const emailA =  document.getElementById("email").value
-   const addressA =  document.getElementById("address").value
+   const usernameA = $("#username").val()
+   const passwordA =  $("#password").val()
+   const emailA =  $("#email").val()
+   const addressA =  $("#address").val()
    const response = await fetch("http://localhost:3000/user/create", {
         method: 'POST',
         headers: {
@@ -20,7 +20,7 @@ async function signUp (username, password)
     }).then((value )=> {
         value.json().then((output)=>{
             if (output.status === "Failed"){
-                document.getElementById("somethingsWrong").style.visibility = "visible";
+                $("#somethingsWrong").show();
             }
             else{
                 window.location.replace("/home")
