@@ -1,6 +1,7 @@
+
 async function completeTransaction(){
 
-    const creditCardNumber = Number(document.getElementById('creditCardNumber'))
+    const creditCardNumber = Number(document.getElementById('creditCardNumber').value)
     const response = await fetch("http://localhost:3000/payment/completeTransaction", {
         method: 'POST',
         headers: {

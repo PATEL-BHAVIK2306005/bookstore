@@ -35,6 +35,7 @@ async function onSearch ()
             price: price,
             author:author,
             genre:genre,
+            name:searchValue,
         })
     }).then((value )=> {
         value.json().then((output)=>{
