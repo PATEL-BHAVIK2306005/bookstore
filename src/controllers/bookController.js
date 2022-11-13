@@ -94,23 +94,40 @@ const BookController = {
                 res.send({status:"Failed", error:"Admin only!"})
             else
             {
-                id = req.body.id
-                const check = await BookModel.exists({_id: id})
+                const _id = req.body.name
+                const check = await BookModel.exists({_id: _id})
                 if (!check)
                 {
                     res.send({status:"Failed", error:"could not find object"})
                 }
                 else
                 {
-                    const _id = req.body.name
+                    const book = await BookModel.findOne({_id: _id})
                     const newLength = req.body.newLength
+                    if (!(newLength))
+                        newLength = book.length
+
                     const newCover = req.body.newCover
+                    if (!(newCover))
+                        newCover = book.cover
+
                     const newSummary = req.body.newSummary
+                    if (!(newSummary))
+                        newSummary = book.summary
+
                     const newReleaseDate = req.body.newReleaseDate
+                    if (!(newReleaseDate))
+                        newReleaseDate = book.relaseDate
+
                     const newPrice = req.body.newPrice
+                    if (!(newPrice))
+                        newPrice = book.price
+
                     const newQuantity = req.body.newQuantity
+                    if (!(newQuantity))
+                        newQuantity = book.quantity
+                        
                     const output = await BookModel.findOneAndUpdate({_id: _id}, {
-                        name: newName,
                         length: newLength,
                         cover: newCover,
                         summary: newSummary,

@@ -53,6 +53,8 @@ const PaymentController = { //////////////////////////////////// NOTTT check
         {
             const username = req.session.username
             const credit = req.body.creditNumber
+            if (!(credit))
+                res.json({status:"Failed",error:"please enter credit info"})
             const payment = await PaymentModel.findOne({username: username})
             const currentTransactions = payment.completedTransactions
             const date = new Date()

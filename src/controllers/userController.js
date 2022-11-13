@@ -110,13 +110,12 @@ const UserController = {
         else res.json({status:"Failed",error:"could not find object"})
     },
     changePassword: async(req, res) => {
-        const id = req.session.username
+        const username = req.session.username
         const newPassword = req.body.newPassword
         const oldPassword = req.body.oldPassword
-        const output = await UserModel.findOneAndUpdate({_id: id,password:oldPassword}, {
+        const output = await UserModel.findOneAndUpdate({username: username,password:oldPassword}, {
             password: newPassword,
         })
-
         if (output !== null){
             res.json({status:"Success"})
         }

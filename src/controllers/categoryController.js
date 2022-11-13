@@ -65,9 +65,14 @@ const CategoryController = {
             res.send({status:"Failed", error:"Admin Only"})
         else
         {
-            const _id = req.body.currentName
-            const newURL = req.body.newURL
+            const _id = req.body.name
+            const check = await CategoryModel.exists({_id: _id})
+            if (!check)
+            {
+                res.send({status:"Failed", error:"could not find object"})
+            }
             
+            const newURL = req.body.newURL
             const output = await CategoryModel.findOneAndUpdate({_id: _id}, {
                 url: newURL
             })

@@ -70,22 +70,37 @@ const AuthorController = {
         else
         {
             const _id = req.body.name
-            const newAge = req.body.newAge
-            const newBio = req.body.newBio
-            const newPicture = req.body.newPicture
-            const newAuthor = req.body.newAuthor
-
-            const output = await AuthorModel.findOneAndUpdate({_id: _id}, {
-                age: newAge,
-                bio: newBio,
-                picture: newPicture,
-                author: newAuthor
-            })
-
-            if (output !== null){
-                res.json({status:"Success"})
+            const check = await AuthorModel.exists({_id: _id})
+            if (!check)
+            {
+                res.send({status:"Failed", error:"could not find object"})
             }
-            else res.send({status:"Failed", error:"could not find object"})
+            else
+            {
+                const author = await AuthorModel.findOne({_id: _id})
+                const newAge = req.body.newAge
+                if (!(newAge))
+                        newAge = author.age
+
+                const newBio = req.body.newBio
+                if (!(newBio))
+                        newBio = author.bio
+                        
+                const newPicture = req.body.newPicture
+                if (!(newPicture))
+                        newPicture = author.picture
+    
+                const output = await AuthorModel.findOneAndUpdate({_id: _id}, {
+                    age: newAge,
+                    bio: newBio,
+                    picture: newPicture,
+                })
+    
+                if (output !== null){
+                    res.json({status:"Success"})
+                }
+                else res.send({status:"Failed", error:"could not find object"})
+            }
         }
     },
 }
