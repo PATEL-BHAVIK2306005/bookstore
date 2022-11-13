@@ -2,12 +2,14 @@ const {UserModel} = require("../models");
 
 async function login(username, password) {
     const user = await UserModel.findOne({ username, password });
-    return user != null
+    if (user != null)
+        return true
+    return false
 }
 async function isAdmin(username) {
     if (username != null)
     {
-        const user = (await UserModel.find({username}))[0]
+        const user = await UserModel.findOne({username})
         if (user.role == "Administrator")
             return true
         else

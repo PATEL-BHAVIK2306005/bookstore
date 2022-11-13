@@ -151,8 +151,9 @@ const PaymentController = { //////////////////////////////////// NOTTT check
             }
             else
              {
+                const book = await BookModel.find({_id: _id})
                 const output = await PaymentModel.updateOne({username: username}, {
-                    $push: {cart: _id} 
+                    $push: {cart: book} 
                 })
 
                 if (output !== null){
