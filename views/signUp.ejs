@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Login Form</title>
-    <link rel="stylesheet" type="text/css" href="/login/css/style.css">
+    <title>Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="/signUp/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
-    <script src="/login/js/login.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="/signUp/js/signUp.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -14,8 +15,7 @@
     <div class="container">
       <div class="login-content">
         <form>
-          <img src="img/avatar.svg">
-          <h2 class="title">Log In</h2>
+          <h2 class="title">Sign Up</h2>
           <div class="input-div one">
             <div class="i">
               <i class="fas fa-user"></i>
@@ -32,9 +32,24 @@
               <input type="password" id="password" name="password" placeholder="Password" class="input">
             </div>
           </div>
-          <a href="/signUp"> Sign Up here</a>
-          <h2 id="wrongPassword" style="font-size:small; color:red; visibility:hidden">Passowrd is incorrect</h2>
-          <button type="button" class="btn" onclick="login()">Login</button>
+          <div class="input-div">
+            <div class="i"> 
+                <i class="material-icons" style="font-size:20px;color:lightgray">email</i>
+            </div>
+            <div class="input">
+              <input id="email" name="email" placeholder="Email" class="input">
+            </div>
+          </div>
+          <div class="input-div">
+            <div class="i"> 
+                <i class="material-icons" style="font-size:20px;color:lightgray">location_city</i>
+            </div>
+            <div class="input">
+              <input type="address" id="address" name="address" placeholder="Address" class="input">
+            </div>
+          </div>
+          <h2 id="somethingsWrong" style="font-size:small; color:red; visibility:hidden">Something went wrong try again.</h2>
+          <button type="button" class="btn" onclick="signUp()">Sign Up</button>
         </form>
       </div>
     </div>

@@ -15,16 +15,20 @@ const AuthorController = {
         const allAuthors = await AuthorModel.find()
         res.json(allAuthors);
     },
+    listNames: async (req, res) =>{
+        const allAuthors = await AuthorModel.find().select('_id')
+        res.json(allAuthors)
+    },
     create: async(req, res) => {
         if (!(await loginService.isAdmin(req.session.username)))
-            res.send("Admin Only")
+            res.send({status:"Failed", error:"Admin Only"})
         else
         {
             const _id = req.body.name
             const check = await AuthorModel.exists({_id: _id})
             if (check)
             {
-                res.json("Object already exists")
+                res.send({status:"Failed",error:"Object already exists"})
             }
             else{
                 const age = req.body.age
@@ -49,41 +53,54 @@ const AuthorController = {
     },
     delete: async(req, res) => {
         if (!(await loginService.isAdmin(req.session.username)))
-            res.send("Admin Only")
+            res.send({status:"Failed", error:"Admin Only"})
         else
         {
             const nameDelete = req.body.name
             const output = await AuthorModel.deleteOne({_id: nameDelete})
             if (output.deletedCount == 1 ){
-                res.json("deletion succesfull!")
+                res.json({status:"Success"})
             }
-            else res.json("could not find object")
+            else res.send({status:"Failed", error:"could not find object"})
         }
     },
     update: async(req, res) => {
         if (!(await loginService.isAdmin(req.session.username)))
-            res.send("Admin Only")
+            res.send({status:"Failed", error:"Admin Only"})
         else
         {
-            const currentName = req.body.currentName
-            const newName = req.body.newName
-            const newAge = req.body.newAge
-            const newBio = req.body.newBio
-            const newPicture = req.body.newPicture
-            const newAuthor = req.body.newAuthor
-
-            const output = await AuthorModel.findOneAndUpdate({_id: currentName}, {
-                name: newName,
-                age: newAge,
-                bio: newBio,
-                picture: newPicture,
-                author: newAuthor
-            })
-
-            if (output !== null){
-                res.json("update successfull!")
+            const _id = req.body.name
+            const check = await AuthorModel.exists({_id: _id})
+            if (!check)
+            {
+                res.send({status:"Failed", error:"could not find object"})
             }
-            else res.json("could not find object")
+            else
+            {
+                const author = await AuthorModel.findOne({_id: _id})
+                let newAge = req.body.newAge
+                if (!(newAge))
+                        newAge = author.age
+
+                let newBio = req.body.newBio
+                if (!(newBio))
+                        newBio = author.bio
+
+                let newPicture = req.body.newPicture
+                if (!(newPicture))
+                        newPicture = author.picture
+    
+                const output = await AuthorModel.findOneAndUpdate({_id: _id}, {
+                    age: newAge,
+                    bio: newBio,
+                    picture: newPicture,
+                })
+    
+                if (output !== null){
+                    res.json({status:"Success"})
+                }
+                else res.send({status:"Failed", error:"could not find object"})
+            }
         }
     },
 }
