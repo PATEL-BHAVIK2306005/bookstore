@@ -177,10 +177,10 @@ async function updateBook(){
     var updateBookReleaseDate = new Date(document.getElementById('updateBookReleaseDate').value)
     var updateBookPrice = Number(document.getElementById('updateBookPrice').value)
     var updateBookQuantity = Number(document.getElementById('updateBookQuantity').value)
-    var updateBookAuthor = document.getElementById('createBookAuthor').value
-    var updateBookCategory = document.getElementById('createBookCategory').value
+    var updateBookAuthor = document.getElementById('updateBookAuthor').value
+    var updateBookCategory = document.getElementById('updateBookCategory').value
 
-    const response = await fetch("http://localhost:3000/books/create", {
+    const response = await fetch("http://localhost:3000/books/update", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -188,21 +188,78 @@ async function updateBook(){
             'Access-Control-Allow-Origin' : "*",
           },
         body: JSON.stringify({
-            name : createBookId,
-            summary : createBookSummary,
-            cover : createBookCover,
-            length : createBookLength,
-            releaseDate : createBookReleaseDate,
-            price : createBookPrice,
-            quantity : createBookQuantity,
-            author : createBookAuthor,
-            category : createBookCategory,
+            name : updateBookId,
+            newSummary : updateBookSummary,
+            newCover : updateBookCover,
+            newLength : updateBookLength,
+            newReleaseDate : updateBookReleaseDate,
+            newPrice : updateBookPrice,
+            newQuantity : updateBookQuantity,
+            newAuthor : updateBookAuthor,
+            newCategory : updateBookCategory,
             
         })
     }).then((value )=> {
         value.json().then((output)=>{
             if (output.status === "Failed"){
                 alert("Can't update book")
+            }
+            else{
+                alert("Updated")
+            }    
+        })
+    })
+}
+
+async function updateCategory(){
+    var updateCategoryId = document.getElementById('updateCategoryInput').value
+    var updateCategoryPicture = document.getElementById('updateCategoryPicture').value
+
+    const response = await fetch("http://localhost:3000/category/update", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin' : "*",
+          },
+        body: JSON.stringify({
+            name:updateCategoryId,
+            newURL:updateCategoryPicture,
+        })
+    }).then((value )=> {
+        value.json().then((output)=>{
+            if (output.status === "Failed"){
+                alert("Can't update category")
+            }
+            else{
+                alert("Updated")
+            }    
+        })
+    })
+}
+
+async function updateAuthor(){
+    var updateAuthorId = document.getElementById('updateAuthorInput').value
+    var updateAuthorBio = document.getElementById('updateAuthorBioInput').value
+    var updateAuthorAge = document.getElementById('updateAuthorAgeInput').value
+    var updateAuthorPicture = document.getElementById('updateAuthorPictureInput').value
+    const response = await fetch("http://localhost:3000/author/update", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin' : "*",
+          },
+        body: JSON.stringify({
+            name:updateAuthorId,
+            newBio:updateAuthorBio,
+            newAge: updateAuthorAge,
+            newPicture:updateAuthorPicture
+        })
+    }).then((value )=> {
+        value.json().then((output)=>{
+            if (output.status === "Failed"){
+                alert("Can't Update author")
             }
             else{
                 alert("Updated")
