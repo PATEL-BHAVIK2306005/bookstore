@@ -57,21 +57,26 @@ const PaymentController = { //////////////////////////////////// NOTTT check
                 res.json({status:"Failed",error:"please enter credit info"})
             else
             {
-                const payment = await PaymentModel.findOne({username: username})
-                const currentTransactions = payment.completedTransactions
-                const date = new Date()
-                const items = (await payment.populate('cart')).cart
+                if (credit.length != 16)
+                    res.json({status:"Failed",error:"please enter a valid credit card number"})
+                else
+                {
+                    const payment = await PaymentModel.findOne({username: username})
+                    const currentTransactions = payment.completedTransactions
+                    const date = new Date()
+                    const items = (await payment.populate('cart')).cart
 
-                // Add the current cart items to completed transaction items
-                payment.completedTransactions = await currentTransactions.concat(items)
-                payment.creditNumber = credit
-                payment.date = date
+                    // Add the current cart items to completed transaction items
+                    payment.completedTransactions = await currentTransactions.concat(items)
+                    payment.creditNumber = credit
+                    payment.date = date
 
-                // We reset the user's cart before finalizing
-                payment.cart = []
-                await payment.save().then(()=>{
-                    res.json({status:"Success"})
-            })
+                    // We reset the user's cart before finalizing
+                    payment.cart = []
+                    await payment.save().then(()=>{
+                        res.json({status:"Success"})
+                    })
+                }
             }
         }
     },
