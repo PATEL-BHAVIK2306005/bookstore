@@ -126,14 +126,24 @@ const BookController = {
                     const newQuantity = req.body.newQuantity
                     if (!(newQuantity))
                         newQuantity = book.quantity
-                        
+                    
+                    const newCategory = req.body.newCategory
+                    if (!(newCategory))
+                        newQuantity = book.quantity
+                    
+                    const newAuthor = req.body.newAuthor
+                    if (!(newAuthor))
+                        newAuthor = book.author
+
                     const output = await BookModel.findOneAndUpdate({_id: _id}, {
                         length: newLength,
                         cover: newCover,
                         summary: newSummary,
                         releaseDate: newReleaseDate,
                         price: newPrice,
-                        quantity: newQuantity
+                        quantity: newQuantity,
+                        category: newCategory,
+                        author: newAuthor
                     })
 
                     if (output !== null){
