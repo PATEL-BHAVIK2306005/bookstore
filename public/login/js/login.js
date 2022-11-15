@@ -16,7 +16,7 @@ async function login (username, password)
     }).then((value )=> {
         value.json().then((output)=>{
             if (output.status === "Failed"){
-                $("#wrongPassword").show();
+                $("#wrongPassword").css("visibility", "visible");
             }
             else{
                 window.location.replace("/home")
