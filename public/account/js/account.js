@@ -1,7 +1,7 @@
 async function changePassword ()
 {
-   $("#wrongPassword").show();
-   $("#changePassword").show();
+   $("#wrongPassword").css("visibility", "visible");
+   $("#changePassword").css("visibility", "visible");
    const oldPassword = $("#oldPassword").val()
    const newPassword =  $("#newPassword").val()
    const response = await fetch("http://localhost:3000/user/changePassword", {
@@ -18,10 +18,10 @@ async function changePassword ()
     }).then((value )=> {
         value.json().then((output)=>{
             if (output.status === "Failed"){
-                $("#wrongPassword").show();
+                $("#wrongPassword").css("visibility", "visible");
             }
             else{
-                $("#changedPassword").show();
+                $("#changedPassword").css("visibility", "visible");
             }    
         })
         

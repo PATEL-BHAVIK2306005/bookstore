@@ -20,7 +20,7 @@ async function signUp (username, password)
     }).then((value )=> {
         value.json().then((output)=>{
             if (output.status === "Failed"){
-                $("#somethingsWrong").show();
+                $("#somethingsWrong").css("visibility", "visible");
             }
             else{
                 window.location.replace("/home")
