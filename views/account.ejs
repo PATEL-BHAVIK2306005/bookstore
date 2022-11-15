@@ -2,10 +2,12 @@
     <head>
         <link rel="stylesheet" type="text/css" href="/account/css/style.css">
         <link rel="stylesheet" type="text/css" href="/navbar/css/style.css">
-        <script src="/account/js/account.js"></script>
+        <script defer src="/account/js/account.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     </head>
     <body>
         <%- include('navbar.ejs') %>
+        <div id="container">
         <form>
             <h2>here user name from ejs</h2>
             <div class="input-div one">
@@ -21,6 +23,11 @@
             <h2 id="wrongPassword" style="font-size:small; color:red; visibility:hidden">Passowrd is incorrect</h2>
             <h2 id="changedPassword" style="font-size:small; color:green; visibility:hidden">Passowrd changed</h2>
             <button type="button" class="btn" onclick="changePassword()" class="btn">Login</button>
+
+            <div id="completedTransactions">
+                
+            </div>
           </form>
+        </div>
     </body>
 </html>

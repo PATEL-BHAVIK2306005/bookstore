@@ -2,7 +2,8 @@
 <head>
     <link rel="stylesheet" href="/genre/css/style.css">
     <link rel="stylesheet" type="text/css" href="/navbar/css/style.css">
-    <script src="/cart/js/cart.js"></script>
+    <script defer src="/cart/js/cart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 </head>
 <body>
@@ -10,13 +11,10 @@
     <div id="container">
         <div id="booksContainer">
             <div id="books">
-                <% books.forEach((book) =>{ %>
-                <a class="innerBook" href="/book/<%=book._id%>"> 
-                    <h1 class="bookTitle"><%=book._id%></h1>
-                    <img class="bookImage" src="<%=book.cover%>"></img>
-                </a>
-                <% }); %>
             </div>
+            <h1 id="totalPrice"></h1>
+            <input maxlength="18" id="creditCardNumber" class="creditCardNumber" type="text" placeholder="Credit Card Number"/>        
+            <button type="button" class="btn" onclick="completeTransaction()">Buy it all</button>
         </div>
 
     </div>
