@@ -1,25 +1,3 @@
-
-async function completeTransaction(){
-
-    const creditCardNumber = Number(document.getElementById('creditCardNumber').value)
-    const response = await fetch("http://localhost:3000/payment/completeTransaction", {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin' : "*",
-          },
-        body: JSON.stringify({
-            creditNumber: creditCardNumber,
-        })
-    }).then((value )=> {
-        value.json().then((output)=>{
-            if (output.status === "Success")
-                alert("Items bought")        
-        })
-    })
-}
-
 async function listCart(){
     const container = document.getElementById('books');
     const totalPriceElement = document.getElementById('totalPrice');

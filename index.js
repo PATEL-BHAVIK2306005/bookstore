@@ -76,6 +76,10 @@ app.get('/cart', async (req, res) => {
   res.render('cart',)
 })
 
+app.get('/books', async (req, res) => {  
+  res.render('books')
+})
+
 
 app.get('/book/:id', async (req, res) => {
   const bookID = req.params.id
