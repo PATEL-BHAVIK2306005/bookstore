@@ -1,11 +1,7 @@
 /* Add a black background color to the top navigation bar */
 
 
-#container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+
 
   .sectionContainer{
     align-items: center;
