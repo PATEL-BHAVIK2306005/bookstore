@@ -89,9 +89,14 @@ const PaymentController = { //////////////////////////////////// NOTTT check
                     const currentTransactions = payment.completedTransactions
                     const date = new Date().getMonth()
                     const items = (await payment.populate('cart')).cart
-
+                    let result = []
+                    console.log(items)
+                    await items.forEach((element) => {
+                        result.push(JSON.stringify({book:element._id, date:date}))
+                      });
+                    console.log(result)
                     // Add the current cart items to completed transaction items
-                    payment.completedTransactions = await currentTransactions.concat(items)
+                    payment.completedTransactions = [...result, ...currentTransactions]
                     payment.creditNumber = credit
                     payment.date = date
 
