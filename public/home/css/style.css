@@ -1,17 +1,14 @@
 /* Add a black background color to the top navigation bar */
-#container{
-  display: flex;
-  flex-direction: column;
-}
+
+
+
 
   .sectionContainer{
+    align-items: center;
     display: flex;
     flex-direction: row;
   }
 
-  h1{
-    font-size: medium;
-  }
   .genreImage
   {
     height: auto; 
@@ -21,17 +18,14 @@
     border-radius: 10px;
   }
 
-  .innerGenre{
+  .inner{
+    align-items : center;
     margin-right: 20px;
     display: flex;
     flex-direction: column;
   }
 
-  .innerBook{
-    margin-right: 20px;
-    display: flex;
-    flex-direction: column;
-  }
+
 
   .bookImage
   {
@@ -41,11 +35,32 @@
     max-height: 130px;
     border-radius: 10px;
   }
-  .innerAuthor{
-    margin-right: 20px;
-    display: flex;
-    flex-direction: column;
+
+
+
+
+  
+
+  
+  .bookTitle:hover {
+    box-shadow: rgba(0, 1, 0, .2) 0 2px 8px;
+    opacity: .85;
   }
+  
+  .bookTitle:active {
+    outline: 0;
+  }
+  
+  .bookTitle:focus {
+    box-shadow: rgba(0, 0, 0, .5) 0 0 0 3px;
+  }
+  
+  @media (max-width: 420px) {
+    .bookTitle {
+      height: 48px;
+    }
+  }
+  
 
   .authorImage
   {
