@@ -172,7 +172,7 @@ app.post('/category/update', (req, res) => {CategoryController.update(req, res)}
 //User
 const {UserController} = require('./src/controllers')
 app.get('/user/list', (req, res) => {UserController.list(req, res)});
-app.get('/user/:name', (req, res) => {UserController.find(req, res)});
+app.get('/user/:name', (req, res) => {UserController.findOne(req, res)});
 app.post('/user/create', (req, res) => {UserController.createUser(req, res)});
 app.post('/user/delete', (req, res) => {UserController.delete(req, res)});
 app.post('/user/update', (req, res) => {UserController.update(req, res)});
