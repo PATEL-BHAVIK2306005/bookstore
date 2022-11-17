@@ -124,7 +124,20 @@ app.get('/adminLogin', async (req, res) => {
 
 })
 
+app.get('/', async(req,res) => {
+  if (typeof req.session.username == 'undefined')
+    res.render('login')
+  else
+    res.render('home')
 
+})
+app.get('/index.js', async(req,res) => {
+  if (typeof req.session.username == 'undefined')
+    res.render('login')
+  else
+    res.render('home')
+
+})
 
 //Book
 const {BookController, CategoryController } = require('./src/controllers')
