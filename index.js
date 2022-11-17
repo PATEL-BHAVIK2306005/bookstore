@@ -43,7 +43,7 @@ app.get('/home', async (req, res) => {
   if (typeof req.session.username == 'undefined')
     res.json({status:"Failed",error:"not logged in"})
   else
-    res.render('home', {genres: await CategoryModel.find(), popularBooks: await BookModel.find().limit(10), authors:await AuthorModel.find().limit(10)})
+    res.render('home', {username: req.session.username,genres: await CategoryModel.find(), popularBooks: await BookModel.find().limit(10), authors:await AuthorModel.find().limit(10)})
 })
 
 app.get('/admin', async (req, res) => {
@@ -153,7 +153,7 @@ app.post('/books/update', (req, res) => {BookController.update(req, res)});
 const {AuthorController} = require('./src/controllers')
 app.get('/author/list', (req, res) => {AuthorController.list(req, res)});
 app.get('/author/books/:author', (req, res) => {AuthorController.getAllBooks(req, res)});
-app.get('/author/:name', (req, res) => {AuthorController.find(req, res)});
+app.get('/authors/:name', (req, res) => {AuthorController.findOne(req, res)});
 app.get('/authors/listNames', (req, res) => {AuthorController.listNames(req, res)});
 app.post('/author/create', (req, res) => {AuthorController.create(req, res)});
 app.post('/author/delete', (req, res) => {AuthorController.delete(req, res)});

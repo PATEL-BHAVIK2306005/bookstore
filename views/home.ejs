@@ -1,12 +1,13 @@
 <%- include('header.ejs') %>
     <link rel="stylesheet" type="text/css" href="/navbar/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script defer src="/home/js/weather.js"></script>
 
-    <script src="/home/js/login.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
     <%- include('navbar.ejs') %> 
+
     <div 
         class="bg-image"
         style="
@@ -15,9 +16,21 @@
         "
 
    >
-
+    
    <div class="align-items-center ">
+
+    <div class="jumbotron" style="bg-color: blue">
+        <div class="row">
+        <div class="col-xs-12">
+        <h1 class="text-center">Welcome to the Home page, <%=username%> :) </h1>
+        <h5 class="text-center" id="city"></h5>
+        <h5 id="temperature" class="text-center"></h5>
+        </div>
+        </div>
+        </div>
+        </div>
     <div class="container">
+
         <h2 class="display-3 text-md-center">Genre</h2>
 
             <div class="row mb-3 text-center">
@@ -35,7 +48,7 @@
          
                         <div class="card-body text-black">
                             <h1 class="card-title"><%=genre._id%></h1>
-                            <a href="/genre/<%=genre.url%>" class="btn btn-primary">Genre Page</a>
+                            <a href="/genre/<%=genre._id%>" class="btn btn-primary">Genre Page</a>
                         </div>
 
                 
@@ -82,7 +95,7 @@
 
                         <div class="card-body text-black">
                             <h1 class="card-title"><%=author._id%></h1>
-                            <a href="/author/<%=author._id%>" class="btn btn-primary">Genre Page</a>
+                            <a href="/author/<%=author._id%>" class="btn btn-primary">Author Page</a>
                         </div>
 
             
