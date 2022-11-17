@@ -14,14 +14,15 @@ const UserController = {
     },
     createUser: async(req, res) => {
         const _id = req.body.email
-        const check = await UserModel.exists({_id: _id})
-        if (check)
+        const username = req.body.username
+        const check1 = await UserModel.exists({_id: _id})
+        const check2 = await UserModel.exists({username: username})
+        if (check1 || check2)
         {
             res.send({status:"Failed", error:"User already exists"})
         }
         else{
             const password = req.body.password
-            const username = req.body.username
             const address = req.body.address
             const role = "Customer"
             const user = new UserModel({
