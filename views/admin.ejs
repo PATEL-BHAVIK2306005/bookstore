@@ -3,86 +3,94 @@
     <link rel="stylesheet" href="/admin/css/style.css">
     <script src="/admin/js/admin.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
 </head>
 <body>
-    <div id="updateBook">
+    <div class="containerAction" id="updateBook">
+        <h1>Admin Panel</h1>
         <h2>Update Book</h2>
-        <input id="updateBookId" class="updateBookId" type="text" placeholder="Book Name"/>        
-        <input id="updateBookLength" class="updateBookLength" type="text" placeholder="Length"/>        
-        <input id="updateBookCover" class="updateBookCover" type="text" placeholder="Cover picture"/>        
-        <input id="updateBookSummary" class="updateBookSummary" type="text" placeholder="Summary"/>        
-        <input id="updateBookPrice" class="updateBookPrice" type="text" placeholder="Price"/>        
-        <input id="updateBookReleaseDate" class="updateBookReleaseDate" type="date" placeholder="Date"/>        
-        <input id="updateBookQuantity" class="updateBookQuantity" type="text" placeholder="Quantity"/>        
-        <input id="updateBookCategory" class="updateBookCategory" type="text" placeholder="Category"/>        
-        <input id="updateBookAuthor" class="updateBookAuthor" type="text" placeholder="Author"/>        
+        <input id="updateBookId" class="textInput" type="text" placeholder="Book Name"/>        
+        <input id="updateBookLength" class="textInput" type="text" placeholder="Length"/>        
+        <input id="updateBookCover" class="textInput" type="text" placeholder="Cover picture"/>        
+        <input id="updateBookSummary" class="textInput" type="text" placeholder="Summary"/>        
+        <input id="updateBookPrice" class="textInput" type="text" placeholder="Price"/>        
+        <input id="updateBookReleaseDate" class="textInput" type="date" placeholder="Date"/>        
+        <input id="updateBookQuantity" class="textInput" type="text" placeholder="Quantity"/>        
+        <input id="updateBookCategory" class="textInput" type="text" placeholder="Category"/>        
+        <input id="updateBookAuthor" class="textInput" type="text" placeholder="Author"/>        
         <button type="button" class="btn" onclick="updateBook()">Update Book</button>
     </div>
 
-    <div id="updateCategory">
+    <div class="containerAction" id="updateCategory">
         <h2>Update Category</h2>
-        <input id="updateCategoryInput" class="updateCategoryInput" type="text" placeholder="Category Name"/>        
-        <input id="updateCategoryPicture" class="updateCategoryPicture" type="text" placeholder="Category Picture"/>        
+        <input id="updateCategoryInput" class="textInput" type="text" placeholder="Category Name"/>        
+        <input id="updateCategoryPicture" class="textInput" type="text" placeholder="Category Picture"/>        
         <button type="button" class="btn" onclick="updateCategory()">Update Category</button>
     </div>
 
-    <div id="updateAuthor">
+    <div class="containerAction" id="updateAuthor">
         <h2>Update Author</h2>
-        <input id="updateAuthorInput" class="updateAuthorInput" type="text" placeholder="Author Name"/>        
-        <input id="updateAuthorBioInput" class="updateAuthorBioInput" type="text" placeholder="Author Bio"/>        
-        <input id="updateAuthorAgeInput" class="updateAuthorAgeInput" type="text" placeholder="Author Age"/>        
-        <input id="updateAuthorPictureInput" class="updateAuthorPictureInput" type="text" placeholder="Author Picture"/>        
+        <input id="updateAuthorInput" class="textInput" type="text" placeholder="Author Name"/>        
+        <input id="updateAuthorBioInput" class="textInput" type="text" placeholder="Author Bio"/>        
+        <input id="updateAuthorAgeInput" class="textInput" type="text" placeholder="Author Age"/>        
+        <input id="updateAuthorPictureInput" class="textInput" type="text" placeholder="Author Picture"/>        
         <button type="button" class="btn" onclick="updateAuthor()">Update Author</button>
     </div>
 
-    <div id="createBook">
+    <div class="containerAction" id="createBook">
         <h2>Create Book</h2>
-        <input id="createBookId" class="createBookId" type="text" placeholder="Book Name"/>        
-        <input id="createBookLength" class="createBookLength" type="text" placeholder="Length"/>        
-        <input id="createBookCover" class="createBookCover" type="text" placeholder="Cover picture"/>        
-        <input id="createBookSummary" class="createBookSummary" type="text" placeholder="Summary"/>        
-        <input id="createBookPrice" class="createBookPrice" type="text" placeholder="Price"/>        
-        <input id="createBookReleaseDate" class="createBookReleaseDate" type="date" placeholder="Date"/>        
-        <input id="createBookQuantity" class="createBookQuantity" type="text" placeholder="Quantity"/>        
-        <input id="createBookCategory" class="createBookCategory" type="text" placeholder="Category"/>        
-        <input id="createBookAuthor" class="createBookAuthor" type="text" placeholder="Author"/>        
+        <input id="createBookId" class="textInput" type="text" placeholder="Book Name"/>        
+        <input id="createBookLength" class="textInput" type="text" placeholder="Length"/>        
+        <input id="createBookCover" class="textInput" type="text" placeholder="Cover picture"/>        
+        <input id="createBookSummary" class="textInput" type="text" placeholder="Summary"/>        
+        <input id="createBookPrice" class="textInput" type="text" placeholder="Price"/>        
+        <input id="createBookReleaseDate" class="textInput" type="date" placeholder="Date"/>        
+        <input id="createBookQuantity" class="textInput" type="text" placeholder="Quantity"/>        
+        <input id="createBookCategory" class="textInput" type="text" placeholder="Category"/>        
+        <input id="createBookAuthor" class="textInput" type="text" placeholder="Author"/>        
 
         <button type="button" class="btn" onclick="createBook()">Create Book</button>
     </div>
-    <div id="createAuthor">
+    <div class="containerAction" id="createAuthor">
         <h2>Create Author</h2>
-        <input id="createAuthorInput" class="createAuthorInput" type="text" placeholder="Author Name"/>        
-        <input id="createAuthorBioInput" class="createAuthorBioInput" type="text" placeholder="Author Bio"/>        
-        <input id="createAuthorAgeInput" class="createAuthorAgeInput" type="text" placeholder="Author Age"/>        
-        <input id="createAuthorPictureInput" class="createAuthorPictureInput" type="text" placeholder="Author Picture"/>        
+        <input id="createAuthorInput" class="textInput" type="text" placeholder="Author Name"/>        
+        <input id="createAuthorBioInput" class="textInput" type="text" placeholder="Author Bio"/>        
+        <input id="createAuthorAgeInput" class="textInput" type="text" placeholder="Author Age"/>        
+        <input id="createAuthorPictureInput" class="textInput" type="text" placeholder="Author Picture"/>        
         <button type="button" class="btn" onclick="createAuthor()">Create Author</button>
     </div>
 
-    <div id="createCategory">
+    <div class="containerAction" id="createCategory">
         <h2>Create Category</h2>
-        <input id="createCategoryInput" class="createCategoryInput" type="text" placeholder="Category Name"/>        
-        <input id="createCategoryPicture" class="createCategoryPicture" type="text" placeholder="Category Picture"/>        
+        <input id="createCategoryInput" class="textInput" type="text" placeholder="Category Name"/>        
+        <input id="createCategoryPicture" class="textInput" type="text" placeholder="Category Picture"/>        
         <button type="button" class="btn" onclick="createCategory()">Create Category</button>
     </div>
-    <div id="deleteBook">
+    <div  class="containerAction" id="deleteBook">
         <h2>Delete Book</h2>
-        <input id="deleteBookInput" class="deleteBookInput" type="text" placeholder="Book ID to Delete"/>        
+        <input id="deleteBookInput" class="textInput" type="text" placeholder="Book ID to Delete"/>        
         <button type="button" class="btn" onclick="deleteBook()">Delete Book</button>
     </div>
-    <div id="deleteAuthor">
+    <div class="containerAction" id="deleteAuthor">
         <h2>Delete Author</h2>
-        <input id="deleteAuthorInput" class="deleteAuthorInput" type="text" placeholder="Author name to Delete"/>        
+        <input id="deleteAuthorInput" class="textInput" type="text" placeholder="Author name to Delete"/>        
         <button type="button" class="btn" onclick="deleteAuthor()">Delete Author</button>
     </div>
-    <div id="deleteCategory">
+    <div class="containerAction" id="deleteCategory">
         <h2>Delete Category</h2>
-        <input id="deleteCategoryId" class="deleteCategoryId" type="text" placeholder="Category name to Delete"/>        
+        <input id="deleteCategoryId" class="textInput" type="text" placeholder="Category name to Delete"/>        
         <button type="button" class="btn" onclick="deleteCategory()">Delete Category</button>
     </div>
-    <div id="promoteToAdmin">
+    <div class="containerAction" id="promoteToAdmin">
         <h2>Promote To Admin</h2>
-        <input id="promoteToAdminID" class="promoteToAdminID" type="text" placeholder="Username to Promote"/>        
+        <input id="promoteToAdminID" class="textInput" type="text" placeholder="Username to Promote"/>        
         <button type="button" class="btn" onclick="promoteToAdmin()">Promote</button>
+    </div>
+    <div class="containerAction">
+        <div id="graph1">
+
+        </div>
+        <h2>Graphs</h2>
     </div>
 </body>
 
