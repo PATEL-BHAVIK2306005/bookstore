@@ -62,6 +62,22 @@ app.get('/admin', async (req, res) => {
   }
 })
 
+app.get('/admin/graph', async (req, res) => {
+  if (typeof req.session.username == 'undefined')
+    res.json({status:"Failed",error:"not logged in"})
+  else
+  {
+    const username = req.session.username
+    const isAdmin = loginService.isAdmin(username)
+    if (isAdmin){
+      res.render('adminGraph')
+    }
+    else{
+      res.json({status:"Failed",error:"User is not an admin"})
+    }
+  }
+})
+
 app.get('/account', async (req, res) => {
   res.render('account')
 })
