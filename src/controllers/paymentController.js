@@ -14,7 +14,7 @@ const T = new Twit({
 
 const tweet = (username) => {
 
-    const tweetText = `New Book has been purchesed at ${username}` +Date();
+    const tweetText = `New Book has been purchesed by ${username} at ` +Date();
     const onFinish = (err, reply) => {
       if (err) {
         //console.log("Error: ", err.message);
