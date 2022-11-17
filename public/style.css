@@ -46,6 +46,7 @@ body {
 
     top: 0px;
     float: right;
+    display : block;
     
     background-color: lightblue;
     }
@@ -90,4 +91,7 @@ body {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+}
+.footer{
+
 }
