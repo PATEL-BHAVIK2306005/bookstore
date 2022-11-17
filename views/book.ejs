@@ -1,21 +1,29 @@
-<html>
-<head>
+<%- include('header.ejs') %>
     <link rel="stylesheet" href="/book/css/style.css">
     <link rel="stylesheet" type="text/css" href="/navbar/css/style.css">
     <script src="/book/js/book.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-</head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
 </head>
 <body>
     <%- include('navbar.ejs') %>
     <div id="container">
-        <div id="bookContainer">
-            <h2 id="bookTitle" class="bookTitle"><%=book._id%></h2>
-            <img class="bookImage" src="<%=book.cover%>"></img>
-            <h1 class="innerBook"><%=book.price%></h1>
-            <a class="innerBook" href="/author/<%=book.author%>"><%=book.author%></a>
-        </div>
-            <button class="btn" id="btn" onclick="addToCart()">Add To Cart</button>
+        <div class="row mb-3 text-center">
+            <div 
+                    class="card mb-4 shadow-sm"
+                    style="max-width: 12rem;
+                    max-height: 20 rem;">
+            
+            <img src="<%=book.cover%>" class="card-img-top" style="min-height: 10rem; max-height: 10 rem;">
+            <div class="card-body text-black">
+                <h2 id="bookTitle" class="card-title"><%=book._id%></h2>
+                <h1 class="h6"><%=book.price%> Shekels</h1>
+                <a class="h7" href="/author/<%=book.author%>"><%=book.author%></a>
+                <button class="btn btn-primary" id="btn" onclick="addToCart()">Add To Cart</button>
+            </div>
+            </div>
+            
     </div>
 
     </div>
