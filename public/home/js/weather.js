@@ -14,10 +14,21 @@ function loadUrl(pos) {
   fetchApi(url);
 };
 
-async function fetchApi(url) {
-  let response = await fetch(url);
-  let { main, name } = await response.json();
-  let temperature = (main.temp).toFixed(1);
-  CITY.innerText = `${name}:`;
-  TEMPERATURE.innerText = `${temperature} ºC`;
-}
+   
+function fetchApi(url) {
+        let json=  fetch(url).then((response) => response.json())
+        .then((jsoner) => {
+            return jsoner;
+                
+        });
+        const putInsideDocument = async () => {
+            const a = await json;
+            let temperature = (a.main.temp).toFixed(1);
+            CITY.innerText = `${a.name}:`;
+            TEMPERATURE.innerText = `${temperature} ºC`;
+    }
+        
+    putInsideDocument();        
+};
+    
+    

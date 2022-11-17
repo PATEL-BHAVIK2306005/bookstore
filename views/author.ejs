@@ -1,24 +1,39 @@
 <%- include('header.ejs') %>
     <link rel="stylesheet" href="/genre/css/style.css">
     <link rel="stylesheet" type="text/css" href="/navbar/css/style.css">
-    <script src="/genre/js/login.js"></script>
+    <script defer src="/author/js/author.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
 </head>
 <body>
     <%- include('navbar.ejs') %>
+    <div class="jumbotron">
+        <h2 id="authorid" class="text-center"><%=authorID%></h2>
+        <h5 id="authorbio" class="text-center"></h5>
+    </div>
     <div id="container">
-        <div id="booksContainer">
-            <h2><%=authorID%></h2>
-            <div id="books">
+    
+            
+            
+            <div class="row mb-3 text-center">
                 <% books.forEach((book) =>{ %>
-                <a class="innerBook" href="/book/<%=book._id%>"> 
-                    <h1 class="bookTitle"><%=book._id%></h1>
-                    <img class="bookImage" src="<%=book.cover%>"></img>
+                <div class="col-md-4">
+                <div 
+            class="card mb-4 shadow-sm"
+            style="max-width: 12rem;
+            max-height: 20 rem;">
+                    <img src="<%=book.cover%>" class="card-img-top" style="min-height: 10rem; max-height: 10 rem;">
+                <div class="card-body text-black">
+                    <h1 id="bookTitle" class="card-title"><%=book._id%></h1>
+                    <a href="/book/<%=book._id%>" class="btn btn-primary" id="btn">Book Page</a>
+
                 </a>
-                <% }); %>
+                
             </div>
+            </div>
+            </div>
+            <% }); %>
         </div>
 
     </div>
