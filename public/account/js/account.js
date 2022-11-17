@@ -28,6 +28,36 @@ async function changePassword ()
     })
 }
 
+async function showMap(){
+    
+    
+    something = ""
+    const response = await fetch("http://localhost:3000/user/getLocation", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin' : "*",
+          },
+    }).then((value )=> {
+        value.json().then((output)=>{
+            url = `https://maps.google.com/maps?q=${output}t=&z=13&ie=UTF8&iwloc=&output=embed`
+            $("#gmap_canvas_m").attr("src",url);
+            $("#map").css("visibility", "visible");
+            if (output.status === "Failed"){
+                //$("#wrongPassword").css("visibility", "visible");
+
+            }
+            else{
+                //$("#changedPassword").css("visibility", "visible");
+            }    
+        })
+        
+    })
+}
+
+
+
 /*async function listCompletedTransactions(){
     const container = document.getElementById('completedTransactions');
     const totalPriceElement = document.getElementById('totalPrice');

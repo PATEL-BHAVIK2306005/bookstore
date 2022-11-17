@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const AccountPaymentSchema = mongoose.Schema({
     _id: Number,
     creditNumber: Number,
-    date: Date,
+    date: Number,
     amount: Number,
     username:
     {

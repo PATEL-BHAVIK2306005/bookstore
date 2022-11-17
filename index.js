@@ -43,7 +43,7 @@ app.get('/home', async (req, res) => {
   if (typeof req.session.username == 'undefined')
     res.json({status:"Failed",error:"not logged in"})
   else
-    res.render('home', {genres: await CategoryModel.find(), popularBooks: await BookModel.find().limit(10), authors:await AuthorModel.find().limit(10)})
+    res.render('home', {username: req.session.username,genres: await CategoryModel.find(), popularBooks: await BookModel.find().limit(10), authors:await AuthorModel.find().limit(10)})
 })
 
 app.get('/admin', async (req, res) => {
@@ -124,14 +124,27 @@ app.get('/adminLogin', async (req, res) => {
 
 })
 
+app.get('/', async(req,res) => {
+  if (typeof req.session.username == 'undefined')
+    res.render('login')
+  else
+    res.render('home')
 
+})
+app.get('/index.js', async(req,res) => {
+  if (typeof req.session.username == 'undefined')
+    res.render('login')
+  else
+    res.render('home')
+
+})
 
 //Book
 const {BookController, CategoryController } = require('./src/controllers')
 app.get('/books/list', (req, res) => {BookController.list(req, res)});
 app.post('/books/search', (req, res) => {BookController.search(req, res)});
 app.post('/books/create', (req, res) => {BookController.create(req, res)});
-app.get('/books/:name', (req, res) => {BookController.find(req, res)});
+app.get('/books/:name', (req, res) => {BookController.findOne(req, res)});
 app.post('/books/delete', (req, res) => {BookController.delete(req, res)});
 app.post('/books/update', (req, res) => {BookController.update(req, res)});
 //app.post('/books/searchByName', (req, res) => {BookController.searchByName(req, res)});
@@ -140,7 +153,7 @@ app.post('/books/update', (req, res) => {BookController.update(req, res)});
 const {AuthorController} = require('./src/controllers')
 app.get('/author/list', (req, res) => {AuthorController.list(req, res)});
 app.get('/author/books/:author', (req, res) => {AuthorController.getAllBooks(req, res)});
-app.get('/author/:name', (req, res) => {AuthorController.find(req, res)});
+app.get('/authors/:name', (req, res) => {AuthorController.findOne(req, res)});
 app.get('/authors/listNames', (req, res) => {AuthorController.listNames(req, res)});
 app.post('/author/create', (req, res) => {AuthorController.create(req, res)});
 app.post('/author/delete', (req, res) => {AuthorController.delete(req, res)});
@@ -150,8 +163,9 @@ app.post('/author/update', (req, res) => {AuthorController.update(req, res)});
 //const {CategoryController} = require('./src/controllers')
 app.get('/category/list', (req, res) => {CategoryController.list(req, res)});
 app.get('/category/listNames', (req, res) => {CategoryController.listNames(req, res)});
+app.get('/category/listCategoriesByAmount', (req, res) => {CategoryController.listCategoriesByAmount(req, res)});
 app.get('/category/books/:name', (req, res) => {CategoryController.getAllBooks(req, res)});
-app.get('/category/:name', (req, res) => {CategoryController.find(req, res)});
+app.get('/category/:name', (req, res) => {CategoryController.findOne(req, res)});
 app.post('/category/create', (req, res) => {CategoryController.create(req, res)});
 app.post('/category/delete', (req, res) => {CategoryController.delete(req, res)});
 app.post('/category/update', (req, res) => {CategoryController.update(req, res)});
@@ -159,7 +173,7 @@ app.post('/category/update', (req, res) => {CategoryController.update(req, res)}
 //User
 const {UserController} = require('./src/controllers')
 app.get('/user/list', (req, res) => {UserController.list(req, res)});
-app.get('/user/:name', (req, res) => {UserController.find(req, res)});
+app.get('/user/:name', (req, res) => {UserController.findOne(req, res)});
 app.post('/user/create', (req, res) => {UserController.createUser(req, res)});
 app.post('/user/delete', (req, res) => {UserController.delete(req, res)});
 app.post('/user/update', (req, res) => {UserController.update(req, res)});
@@ -191,6 +205,7 @@ app.post('/payment/add', (req, res) => {PaymentController.add(req, res)});
 app.post('/payment/listCartItems', (req, res) => {PaymentController.listCartItems(req, res)});
 app.post('/payment/completeTransaction', (req, res) => {PaymentController.completeTransaction(req, res)});
 app.post('/payment/listCompletedTransactions', (req, res) => {PaymentController.listCompletedTransactions(req, res)});
+app.post('/payment/getPaymentDates', (req, res) => {PaymentController.getPaymentDates(req, res)});
 
 
 

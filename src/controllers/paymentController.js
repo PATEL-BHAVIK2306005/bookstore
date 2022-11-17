@@ -1,6 +1,30 @@
 const {PaymentModel} = require("../models");
 const {BookModel} = require("../models");
 const loginService = require("../services/login")
+const {API_KEY, API_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET}  = require('../../config')
+const Twit = require("twit");
+
+const T = new Twit({
+    consumer_key: API_KEY,
+    consumer_secret: API_SECRET,
+    access_token: ACCESS_TOKEN,
+    access_token_secret: ACCESS_TOKEN_SECRET,
+  })
+
+
+const tweet = (username) => {
+
+    const tweetText = `New Book has been purchesed by ${username} at ` +Date();
+    const onFinish = (err, reply) => {
+      if (err) {
+        //console.log("Error: ", err.message);
+      } else {
+        //console.log("Success: ", reply);
+      }
+    };
+  
+    T.post("statuses/update", { status: tweetText }, onFinish);
+  };
 
 const PaymentController = { //////////////////////////////////// NOTTT check
     findOne: async (req,res) => {
@@ -57,13 +81,13 @@ const PaymentController = { //////////////////////////////////// NOTTT check
                 res.json({status:"Failed",error:"please enter credit info"})
             else
             {
-                if (credit.length != 16)
+                if (credit.length >= 16)
                     res.json({status:"Failed",error:"please enter a valid credit card number"})
                 else
                 {
                     const payment = await PaymentModel.findOne({username: username})
                     const currentTransactions = payment.completedTransactions
-                    const date = new Date()
+                    const date = new Date().getMonth()
                     const items = (await payment.populate('cart')).cart
 
                     // Add the current cart items to completed transaction items
@@ -74,6 +98,7 @@ const PaymentController = { //////////////////////////////////// NOTTT check
                     // We reset the user's cart before finalizing
                     payment.cart = []
                     await payment.save().then(()=>{
+                        tweet(username)
                         res.json({status:"Success"})
                     })
                 }
@@ -173,6 +198,16 @@ const PaymentController = { //////////////////////////////////// NOTTT check
              }
             }
         },
+        getPaymentDates: async(req, res) => {  // NOTTT
+            if (!(await loginService.isAdmin(req.session.username)))
+                res.send({status:"Failed",error:"Admin Only"})
+            else
+            {
+                const allPaymentDates = await PaymentModel.aggregate().sortByCount("date");
+                res.json(allPaymentDates)
+            }
+            
+        }
 }
 
 module.exports = PaymentController

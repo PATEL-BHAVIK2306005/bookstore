@@ -1,13 +1,19 @@
-<html>
-    <head>
+<%- include('header.ejs') %>
         <link rel="stylesheet" type="text/css" href="/account/css/style.css">
         <link rel="stylesheet" type="text/css" href="/navbar/css/style.css">
         <script defer src="/account/js/account.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    </head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+      </head>
     <body>
+      
         <%- include('navbar.ejs') %>
+      <div id="align-items-center">
         <div id="container">
+        <div id="jumbotron">
+          <h1>"Lets go"</h1>
+        </div>
         <form>
           <div id="changePasswordContainer">
             <h2>Change Password</h2>
@@ -24,13 +30,13 @@
             <h2 id="wrongPassword" style="font-size:small; color:red; visibility:hidden">Passowrd is incorrect</h2>
             <h2 id="changedPassword" style="font-size:small; color:green; visibility:hidden">Passowrd changed</h2>
             <button type="button" class="btn" onclick="changePassword()" class="btn">Change Password</button>
-
-            <div id="completedTransactions">
-                
+            <button type="button" class="btn" onclick="showMap()" class="btn">Show Map</button>
+            <div id="map" style="visibility:hidden">
+              <div class="mapouter"><div class="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas_m" src="https://maps.google.com/maps?q=המכללה למנהל&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://fmovies-online.net">fmovies</a><br><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}</style><a href="https://www.embedgooglemap.net">make google maps responsive</a><style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style></div></div>
             </div>
           </div>
           </form>
         
         </div>
-    </body>
-</html>
+      </div>
+<%- include('footer.ejs') %>
