@@ -40,7 +40,8 @@ const UserController = {
             })
             await payment.save()
             await user.save().then((data)=>{
-                res.send(data)
+                req.session.username = username
+                res.json({status:"Success"})
             })
             }
     },
