@@ -1,6 +1,30 @@
 const {PaymentModel} = require("../models");
 const {BookModel} = require("../models");
 const loginService = require("../services/login")
+const {API_KEY, API_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET}  = require('../../config')
+const Twit = require("twit");
+
+const T = new Twit({
+    consumer_key: API_KEY,
+    consumer_secret: API_SECRET,
+    access_token: ACCESS_TOKEN,
+    access_token_secret: ACCESS_TOKEN_SECRET,
+  })
+
+
+const tweet = (username) => {
+
+    const tweetText = `New Book has been purchesed at ${username}` +Date();
+    const onFinish = (err, reply) => {
+      if (err) {
+        //console.log("Error: ", err.message);
+      } else {
+        //console.log("Success: ", reply);
+      }
+    };
+  
+    T.post("statuses/update", { status: tweetText }, onFinish);
+  };
 
 const PaymentController = { //////////////////////////////////// NOTTT check
     findOne: async (req,res) => {
@@ -57,7 +81,7 @@ const PaymentController = { //////////////////////////////////// NOTTT check
                 res.json({status:"Failed",error:"please enter credit info"})
             else
             {
-                if (credit.length != 16)
+                if (credit.length >= 16)
                     res.json({status:"Failed",error:"please enter a valid credit card number"})
                 else
                 {
@@ -74,6 +98,7 @@ const PaymentController = { //////////////////////////////////// NOTTT check
                     // We reset the user's cart before finalizing
                     payment.cart = []
                     await payment.save().then(()=>{
+                        tweet(username)
                         res.json({status:"Success"})
                     })
                 }
