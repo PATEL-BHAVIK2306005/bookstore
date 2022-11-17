@@ -43,7 +43,7 @@ app.get('/home', async (req, res) => {
   if (typeof req.session.username == 'undefined')
     res.json({status:"Failed",error:"not logged in"})
   else
-    res.render('home', {genres: await CategoryModel.find(), popularBooks: await BookModel.find().limit(10), authors:await AuthorModel.find().limit(10)})
+    res.render('home', {username: req.session.username,genres: await CategoryModel.find(), popularBooks: await BookModel.find().limit(10), authors:await AuthorModel.find().limit(10)})
 })
 
 app.get('/admin', async (req, res) => {
