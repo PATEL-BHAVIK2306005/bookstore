@@ -17,55 +17,63 @@ const RoleController = {
     },
     getAllAdmins: async(req, res) => {
       if (!(await loginService.isAdmin(req.session.username)))
-                res.send("Admin Only")
+        res.send({status:"Failed", error:"Admin Only"})
         else
         {
-        const admins = await UserModel.find({role: "admin"})
+        const admins = await UserModel.find({role:"Administrator"})
         res.json(admins);
         }
     },
     getAllCustomers: async(req, res) => {
       if (!(await loginService.isAdmin(req.session.username)))
-          res.send("Admin Only")
+        res.send({status:"Failed", error:"Admin Only"})
       else
         {
-          const customers = await UserModel.find({role: "customer"})
+          const customers = await UserModel.find({role:"Customer"})
           res.json(customers);
         }
     },
     create: async(req, res) => { ////////need to check if duplicate
       if (!(await loginService.isAdmin(req.session.username)))
-          res.send("Admin Only")
+        res.send({status:"Failed", error:"Admin Only"})
       else
         {
-        const _id = req.body.name
-        const description = req.body.description
-        const role = new RoleModel({
-            _id,
-            description
-          })
+          const check = await CategoryModel.exists({_id: _id})
+          if (check)
+          {
+            res.send({status:"Failed", error:"object already exists"})
+          }
+          else
+          {
+            const _id = req.body.name
+            const description = req.body.description
+            const role = new RoleModel({
+                _id,
+                description
+              })
 
-          role.save().then((data)=>{
-            res.json(data)
-          })
+              role.save().then((data)=>{
+                res.json(data)
+              })
+          }
         }
       },
     delete: async(req, res) => {
       if (!(await loginService.isAdmin(req.session.username)))
-          res.send("Admin Only")
+        res.send({status:"Failed", error:"Admin Only"})
       else
         {
           const nameDelete = req.body.name
           const output = await RoleModel.deleteOne({_id: nameDelete})
           if (output.deletedCount == 1 )
-              res.json("deletion succesfull!")
+            res.send({status:"Success"})
           else
             res.json("could not find object")
         }
       },
     update: async(req, res) => {
       if (!(await loginService.isAdmin(req.session.username)))
-          res.send("Admin Only")
+        res.send({status:"Failed", error:"Admin Only"})
       else
         {
           const currentName = req.body.currentName
@@ -76,9 +84,9 @@ const RoleController = {
           })
 
           if (output !== null){
-              res.json("update successfull!")
+            res.send({status:"Success"})
           }
-          else res.json("could not find object")
+          else res.send({status:"Failed", error:"could not find object"})
         }
 
     },

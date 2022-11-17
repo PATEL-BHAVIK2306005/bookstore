@@ -7,29 +7,58 @@ const BookController = {
         res.json(found)
     },
     search: async (req,res) => {
+        const price = req.body.price
+        const name =req.body.name
+        if (!(name))
+        {
+            const result = await BookModel.find({
+                price: { $lte: price },
+                "$and": [
+                    { _id: { '$regex': req.body.firstLetterBook+".*", $options: 'i'} }, 
+                    { author: { '$regex': ".*"+req.body.author+".*", $options: 'i'} },
+                    { category: { '$regex': ".*"+req.body.genre+".*", $options: 'i'} },
+                ]
+            })
+            res.json(result)
+        }
+        else
+        {
+            const result = await BookModel.find({
+                price: { $lte: price },
+                "$and": [
+                    { _id: { '$regex': ".*"+req.body.name+".*", $options: 'i'} }, 
+                    { author: { '$regex': ".*"+req.body.author+".*", $options: 'i'} },
+                    { category: { '$regex': ".*"+req.body.genre+".*", $options: 'i'} },
+                ]
+            })
+            res.json(result)
+        }
+    },
+    /*searchByName: async (req,res) => {
         const result = await BookModel.find({
+            price: { $lte: price },
             "$and": [
-                { _id: { '$regex': ".*"+req.query.name+".*", $options: 'i'} }, 
-                { author: { '$regex': ".*"+req.query.author+".*", $options: 'i'} },
-                { category: { '$regex': ".*"+req.query.category+".*", $options: 'i'} },
+                { _id: { '$regex': ".*"+req.body.name+".*", $options: 'i'} }, 
+                { author: { '$regex': ".*"+req.body.author+".*", $options: 'i'} },
+                { category: { '$regex': ".*"+req.body.category+".*", $options: 'i'} },
             ]
         })
         res.json(result)
-    },
+    },*/
     list: async (req, res) =>{
         const allBooks = await BookModel.find()
         res.json(allBooks)
     },
     create: async(req, res) => {
         if (!(await loginService.isAdmin(req.session.username)))
-            res.send("Admin Only")
+            res.send({status:"Failed", error:"Admin only!"})
         else
         {
             const _id = req.body.name
             const check = await BookModel.exists({_id: _id})
             if (check)
             {
-                res.json("Object already exists")
+                res.send({status:"Failed", error:"object already exists"})
             }
             else{
                 const length = req.body.length
@@ -58,72 +87,98 @@ const BookController = {
                     })
                 }
                 catch(e){
-                    res.json(_id)
+                    res.send({status:"Failed", error:"could not create object"})
                  }
                 }
         }   
         },
         delete: async(req, res) => {
             if (!(await loginService.isAdmin(req.session.username)))
-                res.send("Admin Only")
+                res.send({status:"Failed", error:"Admin only!"})
             else
             {
                 const nameDelete = req.body.name
                 const output = await BookModel.deleteOne({_id: nameDelete})
                 if (output.deletedCount == 1 ){
-                    res.json("deletion succesfull!")
+                    res.json({status:"Success"})
                 }
-                else res.json("could not find object")
+                else res.send({status:"Failed", error:"could not find object"})
             }
         },
         update: async(req, res) => {
             if (!(await loginService.isAdmin(req.session.username)))
-                res.send("Admin Only")
+                res.send({status:"Failed", error:"Admin only!"})
             else
             {
-                id = req.body.id
-                const check = await BookModel.exists({_id: id})
+                const _id = req.body.name
+                const check = await BookModel.exists({_id: _id})
                 if (!check)
                 {
-                    res.json("Book does not exist")
+                    res.send({status:"Failed", error:"could not find object"})
                 }
                 else
                 {
-                    const currentName = req.body.currentName
-                    const newName = req.body.newName
-                    const newLength = req.body.newLength
-                    const newCover = req.body.newCover
-                    const newSummary = req.body.newSummary
-                    const newReleaseDate = req.body.newReleaseDate
-                    const newPrice = req.body.newPrice
-                    const newQuantity = req.body.newQuantity
-                    const output = await BookModel.findOneAndUpdate({_id: currentName}, {
-                        name: newName,
+                    const book = await BookModel.findOne({_id: _id})
+                    let newLength = req.body.newLength
+                    if (!(newLength))
+                        newLength = book.length
+
+                    let newCover = req.body.newCover
+                    if (!(newCover))
+                        newCover = book.cover
+
+                    let newSummary = req.body.newSummary
+                    if (!(newSummary))
+                        newSummary = book.summary
+
+                    let newReleaseDate = req.body.newReleaseDate
+                    if (!(newReleaseDate))
+                        newReleaseDate = book.relaseDate
+
+                    let newPrice = req.body.newPrice
+                    if (!(newPrice))
+                        newPrice = book.price
+
+                    let newQuantity = req.body.newQuantity
+                    if (!(newQuantity))
+                        newQuantity = book.quantity
+                    
+                    let newCategory = req.body.newCategory
+                    if (!(newCategory))
+                        newQuantity = book.quantity
+                    
+                    let newAuthor = req.body.newAuthor
+                    if (!(newAuthor))
+                        newAuthor = book.author
+
+                    const output = await BookModel.findOneAndUpdate({_id: _id}, {
                         length: newLength,
                         cover: newCover,
                         summary: newSummary,
                         releaseDate: newReleaseDate,
                         price: newPrice,
-                        quantity: newQuantity
+                        quantity: newQuantity,
+                        category: newCategory,
+                        author: newAuthor
                     })
 
                     if (output !== null){
-                        res.json("update successfull!")
+                        res.json({status:"Success"})
                     }
-                    else res.json("could not find object")
+                    else res.send({status:"Failed", error:"could not find object"})
                 }
             }
         },
         updateQuantity: async(req, res) => {
             if (!(await loginService.isLoggedIn(req.session.username)))
-                res.send("Must be logged in to purchase")
+                res.send({status:"Failed", error:"Please login!"})
             else
                 {
                     const id = req.body.name
                     const check = await BookModel.exists({_id: id})
                     if (!check)
                     {
-                        res.json("Book does not exist")
+                        res.send({status:"Failed", error:"could not find object"})
                     }
                     else
                     {
@@ -134,9 +189,9 @@ const BookController = {
                         })
     
                         if (output !== null){
-                            res.json("update successfull!")
+                            res.json({status:"Success"})
                         }
-                        else res.json("could not find object")
+                        else res.send({status:"Failed", error:"could not find object"})
                   
         }}}
 }

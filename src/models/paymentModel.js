@@ -7,20 +7,20 @@ const AccountPaymentSchema = mongoose.Schema({
     amount: Number,
     username:
     {
-        type:String,
-        ref:"Users"
+        type: String,
+        ref: "Users"
     },
     cart:
     [
         {
-            type:String,
-            ref:"Books"
+            type: String,
+            ref: "Books"
         }
     ],
-    completedTrasactions:[
+    completedTransactions:[
         {
-            type:String,
-            ref:"Books"
+            type: String,
+            ref: "Books"
         }
     ],
   });

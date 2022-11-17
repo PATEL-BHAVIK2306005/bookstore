@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Login Form</title>
-    <link rel="stylesheet" type="text/css" href="/login/css/style.css">
+    <title>Admin Login</title>
+    <link rel="stylesheet" type="text/css" href="/adminLogin/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
-    <script src="/login/js/login.js"></script>
+    <script src="/adminLogin/js/login.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -14,8 +14,8 @@
     <div class="container">
       <div class="login-content">
         <form>
-          <img src="img/avatar.svg">
-          <h2 class="title">Log In</h2>
+
+          <h2 class="title">Admin Log In</h2>
           <div class="input-div one">
             <div class="i">
               <i class="fas fa-user"></i>
@@ -32,8 +32,7 @@
               <input type="password" id="password" name="password" placeholder="Password" class="input">
             </div>
           </div>
-          <a href="/signUp"> Sign Up here</a>
-          <h2 id="wrongPassword" style="font-size:small; color:red; visibility:hidden">Passowrd is incorrect</h2>
+          <h2 id="wrongPassword" style="font-size:small; color:red; visibility:hidden">Passowrd is incorrect or the user is not an admin</h2>
           <button type="button" class="btn" onclick="login()">Login</button>
         </form>
       </div>

@@ -2,7 +2,7 @@ async function login (username, password)
 {
    const usernameA = $("#username").val()
    const passwordA =  $("#password").val()
-   const response = await fetch("http://localhost:3000/login", {
+   const response = await fetch("http://localhost:3000/loginAdmin", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -19,12 +19,9 @@ async function login (username, password)
                 $("#wrongPassword").css("visibility", "visible");
             }
             else{
-                window.location.replace("/home")
+                window.location.replace("/admin")
             }    
         })
-        
     })
 }
-
-
 

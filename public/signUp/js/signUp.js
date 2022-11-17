@@ -1,8 +1,10 @@
-async function login (username, password)
+async function signUp (username, password)
 {
    const usernameA = $("#username").val()
    const passwordA =  $("#password").val()
-   const response = await fetch("http://localhost:3000/login", {
+   const emailA =  $("#email").val()
+   const addressA =  $("#address").val()
+   const response = await fetch("http://localhost:3000/user/create", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -11,12 +13,14 @@ async function login (username, password)
           },
         body: JSON.stringify({
             username: usernameA,
-            password: passwordA
+            password: passwordA,
+            email: emailA,
+            address: addressA,
         })
     }).then((value )=> {
         value.json().then((output)=>{
             if (output.status === "Failed"){
-                $("#wrongPassword").css("visibility", "visible");
+                $("#somethingsWrong").css("visibility", "visible");
             }
             else{
                 window.location.replace("/home")
@@ -25,6 +29,4 @@ async function login (username, password)
         
     })
 }
-
-
 
