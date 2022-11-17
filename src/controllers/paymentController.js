@@ -87,7 +87,7 @@ const PaymentController = { //////////////////////////////////// NOTTT check
                 {
                     const payment = await PaymentModel.findOne({username: username})
                     const currentTransactions = payment.completedTransactions
-                    const date = new Date()
+                    const date = new Date().getMonth()
                     const items = (await payment.populate('cart')).cart
 
                     // Add the current cart items to completed transaction items
@@ -198,6 +198,16 @@ const PaymentController = { //////////////////////////////////// NOTTT check
              }
             }
         },
+        getPaymentDates: async(req, res) => {  // NOTTT
+            if (!(await loginService.isAdmin(req.session.username)))
+                res.send({status:"Failed",error:"Admin Only"})
+            else
+            {
+                const allPaymentDates = await PaymentModel.aggregate().sortByCount("date");
+                res.json(allPaymentDates)
+            }
+            
+        }
 }
 
 module.exports = PaymentController
