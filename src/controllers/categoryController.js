@@ -23,6 +23,10 @@ const CategoryController = {
         const allCategories = await CategoryModel.find()
         return allCategories;
     },
+    listCategoriesByAmount: async (req, res) =>{
+        const allCategories = await BookModel.aggregate().sortByCount("category");
+        res.json(allCategories)
+    },
     create: async(req, res) => {
         if (!(await loginService.isAdmin(req.session.username)))
             res.send({status:"Failed", error:"Admin Only"})
