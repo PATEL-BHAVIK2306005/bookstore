@@ -57,7 +57,6 @@ const UserController = {
             })
 
             if (output !== null){
-                req.session.username = username
                 res.json({status:"Success"})
             }
             else res.json({status:"Failed",error:"could not find object"})
