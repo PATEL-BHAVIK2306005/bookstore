@@ -26,7 +26,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));  
 const port = 3000
 
-app.get('/login', (req, res) => {
+app.get(['/login','/'], (req, res) => {
   res.render('login')
 })
 app.get('/signup', (req, res) => {
@@ -77,6 +77,23 @@ app.get('/admin/graph', async (req, res) => {
     }
   }
 })
+
+app.get('/admin/graphYear', async (req, res) => {
+  if (typeof req.session.username == 'undefined')
+    res.json({status:"Failed",error:"not logged in"})
+  else
+  {
+    const username = req.session.username
+    const isAdmin = loginService.isAdmin(username)
+    if (isAdmin){
+      res.render('adminGraphYear')
+    }
+    else{
+      res.json({status:"Failed",error:"User is not an admin"})
+    }
+  }
+})
+
 
 app.get('/account', async (req, res) => {
   res.render('account')
