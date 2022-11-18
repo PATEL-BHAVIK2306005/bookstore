@@ -43,7 +43,14 @@ app.get('/home', async (req, res) => {
   if (typeof req.session.username == 'undefined')
     res.json({status:"Failed",error:"not logged in"})
   else
-    res.render('home', {username: req.session.username,genres: await CategoryModel.find(), popularBooks: await BookModel.find().limit(10), authors:await AuthorModel.find().limit(10)})
+  {
+    const count = await BookModel.aggregate().sortByCount("category");
+        let result = {}
+        count.forEach((element, index) => {
+            result[element._id] = element.count
+     })
+    res.render('home', {username: req.session.username,genres: await CategoryModel.find(), genresCount: result, popularBooks: await BookModel.find().limit(10), authors:await AuthorModel.find().limit(10)})
+  }
 })
 
 app.get('/admin', async (req, res) => {

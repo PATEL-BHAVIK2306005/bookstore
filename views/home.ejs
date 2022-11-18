@@ -48,6 +48,7 @@
          
                         <div class="card-body text-black">
                             <h1 class="card-title"><%=genre._id%></h1>
+                            <h5>Books: <%=genresCount[genre._id]%></h5>
                             <a href="/genre/<%=genre._id%>" class="btn btn-primary">Genre Page</a>
                         </div>
 
@@ -74,6 +75,7 @@
                     <div class="card-body text-black">
                         <h1 class="card-title"><%=book._id%></h1>
                         <a href="/book/<%=book._id%>" class="btn btn-primary">Book Page</a>
+                        
                     </div>
 
                     
