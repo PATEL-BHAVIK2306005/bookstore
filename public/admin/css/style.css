@@ -7,7 +7,8 @@ h1{
    text-shadow: 2px 2px #f3bc57;
 }
 
-h2{
+a,h2{
+    color: black;
     font-family: 'Courier New', Courier, monospace;
 }
 
