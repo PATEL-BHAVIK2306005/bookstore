@@ -24,8 +24,12 @@ const CategoryController = {
         return allCategories;
     },
     listCategoriesByAmount: async (req, res) =>{
-        const allCategories = await BookModel.aggregate().sortByCount("category");
-        res.json(allCategories)
+        const count = await BookModel.aggregate().sortByCount("category");
+        let result = {}
+        count.forEach((element, index) => {
+            result[element._id] = element.count
+        })
+        res.json(result)
     },
     create: async(req, res) => {
         if (!(await loginService.isAdmin(req.session.username)))
