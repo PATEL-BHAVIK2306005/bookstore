@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <style> /* set the CSS */
 
-body { font: 12px Arial;}
+body { font: 12px Arial; color: black; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: antiquewhite;}
 
 path { 
     stroke: steelblue;
@@ -20,6 +20,8 @@ path {
 
 </style>
 <body>
+    <h2>How many books were written each year</h2>
+</body>
 
 <!-- load the d3.js library -->    
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
@@ -43,22 +45,9 @@ const Month = {
     "11": "Nov",
     "12": "Dec",
 }
-const MonthCount = {
-    "1": 0,
-    "2": 0,
-    "3": 0,
-    "4": 0,
-    "5": 0,
-    "6": 0,
-    "7": 0,
-    "8": 0,
-    "9": 0,
-    "10": 0,
-    "11": 0,
-    "12": 0,
-}
+const yearCount = {}
 
-const response =  fetch("http://localhost:3000/payment/getPaymentDates", {
+const response =  fetch("http://localhost:3000/books/listBookReleaseYears", {
     method: 'POST',
     headers: {
         'Accept': 'application/json',
@@ -69,7 +58,10 @@ const response =  fetch("http://localhost:3000/payment/getPaymentDates", {
     value.json().then((output)=>{
         console.log(output)
         output.forEach(function(d) {
-            MonthCount[d.date]++
+            if (yearCount[d])
+                yearCount[d] += 1
+            else
+                yearCount[d] = 1
         //d._id = parseDate(`1-${Month[d._id]}-22`);
         //d.count = +d.count;
     })
@@ -79,7 +71,7 @@ const response =  fetch("http://localhost:3000/payment/getPaymentDates", {
     height = 270 - margin.top - margin.bottom;
 
 // Parse the date / time
-var parseDate = d3.time.format("%d-%b-%y").parse;
+var parseDate = d3.time.format("%Y").parse;
 
 // Set the ranges
 var x = d3.time.scale().range([0, width]);
@@ -108,16 +100,17 @@ var svg = d3.select("body")
 
 
 arrayData = []
-    for (const [key, value] of Object.entries(MonthCount)) {
+    for (const [key, value] of Object.entries(yearCount)) {
         //console.log(`"${key}": ${value}`);
         data = {
-            date:`1-${Month[`${key}`]}-22`,
+            date:key,
             close:value
         }
-        print(data)
+        
         arrayData.push(data)
     }
 
+console.log(arrayData)
 arrayData.forEach(function(d) {
         d.date = parseDate(d.date);
         d.close = +d.close;
@@ -131,7 +124,7 @@ arrayData.forEach(function(d) {
     // Add the valueline path.
     svg.append("path")
         .attr("class", "line")
-        .attr("d", valueline(data));
+        .attr("d", valueline(arrayData));
 
     // Add the X Axis
     svg.append("g")
