@@ -26,7 +26,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));  
 const port = 3000
 
-app.get('/login', (req, res) => {
+app.get(['/login','/'], (req, res) => {
   res.render('login')
 })
 app.get('/signup', (req, res) => {
