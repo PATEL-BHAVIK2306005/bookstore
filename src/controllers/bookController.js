@@ -38,6 +38,14 @@ const BookController = {
         const allBooks = await BookModel.find()
         res.json(allBooks)
     },
+    listBookReleaseYears: async (req, res) =>{
+        const allBooks = await BookModel.find()
+        let dates = []
+        allBooks.forEach((book) => {
+            let date = ((book.relaseDate).toString()).slice(11,15)
+            dates.push(date)})
+        res.json(dates)
+    },
     create: async(req, res) => {
         if (!(await loginService.isAdmin(req.session.username)))
             res.send({status:"Failed", error:"Admin only!"})

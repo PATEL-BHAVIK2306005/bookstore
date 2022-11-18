@@ -163,6 +163,7 @@ app.post('/books/create', (req, res) => {BookController.create(req, res)});
 app.get('/books/:name', (req, res) => {BookController.findOne(req, res)});
 app.post('/books/delete', (req, res) => {BookController.delete(req, res)});
 app.post('/books/update', (req, res) => {BookController.update(req, res)});
+app.post('/books/listBookReleaseYears', (req, res) => {BookController.listBookReleaseYears(req, res)});
 //app.post('/books/searchByName', (req, res) => {BookController.searchByName(req, res)});
 
 //Author
@@ -210,7 +211,7 @@ const {RoleController} = require('./src/controllers')
 app.get('/role/list', (req, res) => {RoleController.list(req, res)});
 app.get('/role/admins', (req, res) => {RoleController.getAllAdmins(req, res)});
 app.get('/role/users', (req, res) => {RoleController.getAllCustomers(req, res)});
-app.get('/role/:name', (req, res) => {RoleController.find(req, res)});
+app.get('/role/:name', (req, res) => {RoleController.findOne(req, res)});
 app.post('/role/create', (req, res) => {RoleController.create(req, res)});
 app.post('/role/delete', (req, res) => {RoleController.delete(req, res)});
 app.post('/role/update', (req, res) => {RoleController.update(req, res)});
