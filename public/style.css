@@ -7,6 +7,10 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
   background-color: transparent !important;
+  height: 100%;
+}
+h5{
+  text-align: center;
 }
 
   .title {
@@ -79,6 +83,10 @@ body {
     white-space: nowrap;
     overflow: hidden;
 }
+.card:hover{
+  transform: scale(1.05);
+box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
   
   
   .card-img-top {
@@ -86,12 +94,19 @@ body {
       border-top-left-radius: calc(.25rem - 1px);
       border-top-right-radius: calc(.25rem - 1px);
   }
+  .card-img-top:hover {
+    opacity: 0.3;
+  }
+  .banner-content{
+    position:absolute;
+    top:0;
+    left:0;
+    display:none;
+  }
+  .card-img-top:hover + .banner-content{display:block;}
   .card-text{
     font-size:3px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-}
-.footer{
-
 }
