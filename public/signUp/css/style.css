@@ -7,6 +7,7 @@
 body{
     font-family: 'Poppins', sans-serif;
     overflow: hidden;
+	background: url("https://img.freepik.com/free-photo/beautiful-arrangement-different-books_23-2148883798.jpg?w=2000");
 }
 
 .wave{
@@ -68,7 +69,7 @@ form{
 }
 
 .i{
-	color: #d9d9d9;
+	color: #070101;
 	display: flex;
 	justify-content: center;
 	align-items: center;
