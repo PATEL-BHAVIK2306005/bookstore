@@ -43,6 +43,12 @@
 	flex-shrink: initial;
 	
 	
+  } 
+  .bookImageNew{
+    height: 130px;
+    width: 100px;
+    max-width: 100px; 
+    max-height: 130px;
   }
 
   /* The search bar */

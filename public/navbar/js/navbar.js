@@ -44,7 +44,7 @@ async function onSearch ()
                 element.href = "/book/" + item._id
                 element.innerHTML = `
                 <h2 id="bookTitle" class="bookTitle">${item._id}</h2>
-                <img class="bookImage" src="${item.cover}"></img>
+                <img class="bookImageNew" src="${item.cover}"></img>
                 <h1 class="innerBook">${item.price}</h1>
                 <a class="innerBook" href="/author/${item.author}">${item.author}</a>
                 `
